@@ -5,15 +5,9 @@ import Image from "next/image";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import type { Image as SanityImage } from "sanity";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
 import Link from "next/link";
-import AutoplayPlugin from "embla-carousel-autoplay";
-import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 
 interface Project {
   title: string;
@@ -24,7 +18,7 @@ interface Project {
   aspectRatio?: number;
 }
 
-export default function ProjectsCarousel() {
+export default function ProjectsGrid() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -44,7 +38,7 @@ export default function ProjectsCarousel() {
         const withImages = (data ?? []).filter(
           (p): p is Project => p.image != null && p.image.asset != null
         );
-        setProjects(withImages.reverse());
+        setProjects(withImages);
       } catch (error) {
         console.error("Error fetching projects:", error);
         setProjects([]);
@@ -56,197 +50,108 @@ export default function ProjectsCarousel() {
     fetchProjects();
   }, []);
 
-  const autoplayOptions = {
-    delay: 4000,
-    stopOnInteraction: false,
-    rootNode: (emblaRoot: HTMLElement) => emblaRoot.parentElement,
-  };
-
-  const plugins = [AutoplayPlugin(autoplayOptions)];
-
-  const fadeInUp = {
-    initial: { y: 20, opacity: 0 },
-    animate: { y: 0, opacity: 1 },
-    transition: { duration: 0.5 },
-  };
-
   if (isLoading) {
     return (
-      <div className="max-w-7xl mx-auto px-4 animate-pulse">
-        <div className="h-[600px] bg-gray-200 rounded-lg" />
+      <div className="max-w-[1920px] mx-auto px-4 md:px-12 py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="h-[600px] bg-gray-200 rounded-lg animate-pulse" />
+          ))}
+        </div>
       </div>
     );
   }
 
   if (projects.length === 0) {
     return (
-      <div className="max-w-7xl mx-auto px-4 py-20 text-center">
-        <p className="text-lg text-gray-600 mb-4">No projects yet.</p>
-        <p className="text-sm text-gray-500 mb-6">
-          Add projects with cover images in Sanity Studio to display them here.
+      <div className="max-w-7xl mx-auto px-4 py-20 text-center min-h-[50vh] flex flex-col items-center justify-center">
+        <p className="text-xl text-gray-600 mb-4 font-light">No projects found.</p>
+        <p className="text-sm text-gray-500 mb-8 max-w-md">
+          We are currently updating our portfolio. Please check back soon or contact us for recent work samples.
         </p>
-        <a
-          href="/studio"
-          className="inline-block px-6 py-3 border border-gray-900 rounded-full text-sm font-medium hover:bg-gray-900 hover:text-white transition-colors"
+        <Link
+          href="/contact"
+          className="inline-block px-8 py-3 bg-black text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-colors"
         >
-          Open Sanity Studio
-        </a>
+          Contact Us
+        </Link>
       </div>
     );
   }
 
   return (
-    <div className="relative py-20">
-      <div className="hidden lg:block">
-        <Carousel
-          opts={{
-            align: "start",
-            loop: true,
-            skipSnaps: false,
-            dragFree: true,
-          }}
-          plugins={plugins}
-          className="pl-[5vw]"
-        >
-          <CarouselContent className="-ml-4">
-            {[...projects, ...projects, ...projects].map((project, index) => {
-              const baseWidth = project.aspectRatio
-                ? project.aspectRatio * 600
-                : 600;
-              const aspectRatioModifier = Math.max(
-                Math.min(baseWidth / 600, 1.3),
-                0.8
-              );
-              const finalWidth = 30 * aspectRatioModifier;
-
-              return (
-                <CarouselItem
-                  key={`${project.projectSlug.current}-${index}`}
-                  className="pl-4"
-                  style={{
-                    flex: `0 0 ${finalWidth}vw`,
-                    maxWidth: `${finalWidth}vw`,
-                  }}
-                >
-                  <motion.div
-                    className="group cursor-pointer p-4 rounded-xl transition-all duration-300"
-                    whileHover={{ y: -5 }}
-                    initial="initial"
-                    animate="animate"
-                    variants={fadeInUp}
-                  >
-                    <Link href={`/projects/${project.projectSlug.current}`}>
-                      <div className="space-y-2 mb-4">
-                        <h3 className="text-2xl font-medium text-gray-900">
-                          {project.title}
-                        </h3>
-                        <p className="text-sm text-gray-600 tracking-wide">
-                          {project.location}
-                        </p>
-                      </div>
-
-                      <div
-                        className="relative overflow-hidden"
-                        style={{
-                          height: project.aspectRatio
-                            ? `${600 / project.aspectRatio}px`
-                            : "600px",
-                        }}
-                      >
-                        <Image
-                          src={
-                            urlFor(project.image)
-                              ?.width(Math.round(baseWidth))
-                              ?.height(600)
-                              ?.url() ?? ""
-                          }
-                          alt={
-                            project.image.imgAlt || project.title
-                          }
-                          fill
-                          className="object-cover transition-all duration-700 group-hover:scale-105"
-                          priority={index < 3}
-                        />
-
-                        {project.highlightImages?.[0] && (
-                          <Image
-                            src={
-                              urlFor(project.highlightImages[0])
-                                ?.width(600)
-                                ?.height(800)
-                                ?.url() ?? ""
-                            }
-                            alt={`Highlight of ${project.title}`}
-                            fill
-                            className="object-cover opacity-0 transition-all duration-700 group-hover:opacity-100"
-                            priority={index < 3}
-                          />
-                        )}
-
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      </div>
-                    </Link>
-
-                    <div className="mt-6 flex justify-end">
-                      <Link
-                        className={cn(
-                          "relative overflow-hidden text-sm font-medium",
-                          "text-gray-900 border border-black",
-                          "py-3 px-8 rounded-full uppercase tracking-wider",
-                          "transition-all duration-300 ease-out",
-                          "hover:bg-black hover:text-white",
-                          "group-hover:scale-105"
-                        )}
-                        href={`/projects/${project.projectSlug.current}`}
-                      >
-                        MORE
-                      </Link>
-                    </div>
-                  </motion.div>
-                </CarouselItem>
-              );
-            })}
-          </CarouselContent>
-        </Carousel>
-      </div>
-
-      <div className="md:hidden space-y-16">
+    <div className="max-w-[1920px] mx-auto px-4 md:px-12 py-20">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
         {projects.map((project, index) => (
           <motion.div
             key={project.projectSlug.current}
-            className="space-y-6 rounded-xl p-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            className="group flex flex-col"
           >
-            <div>
-              <h3 className="text-lg font-medium text-gray-900">
-                {project.title}
-              </h3>
-              <p className="text-sm text-gray-600">{project.location}</p>
+            {/* Header Info */}
+            <div className="mb-6 flex justify-between items-start">
+              <div className="space-y-1">
+                <h3 className="text-2xl font-medium text-gray-900 leading-tight">
+                  {project.title}
+                </h3>
+                <p className="text-sm text-gray-500 uppercase tracking-widest font-light">
+                  {project.location}
+                </p>
+              </div>
             </div>
 
-            <div className="relative h-[500px] overflow-hidden">
-              <Image
-                src={
-                  urlFor(project.image)
-                    ?.width(400)
-                    ?.height(500)
-                    ?.url() ?? ""
-                }
-                alt={project.image.imgAlt || project.title}
-                fill
-                className="object-cover"
-                priority={index < 2}
-              />
-            </div>
+            {/* Image Card */}
+            <Link 
+              href={`/projects/${project.projectSlug.current}`}
+              className="block relative w-full aspect-[3/4] overflow-hidden rounded-sm bg-gray-100 mb-6"
+            >
+              <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-105">
+                <Image
+                  src={
+                    urlFor(project.image)
+                      ?.width(800)
+                      ?.height(1067)
+                      ?.url() ?? ""
+                  }
+                  alt={project.image.imgAlt || project.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  priority={index < 3}
+                />
+                
+                {/* Hover Reveal Image */}
+                {project.highlightImages?.[0] && (
+                  <Image
+                    src={
+                      urlFor(project.highlightImages[0])
+                        ?.width(800)
+                        ?.height(1067)
+                        ?.url() ?? ""
+                    }
+                    alt={`Highlight of ${project.title}`}
+                    fill
+                    className="object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                  />
+                )}
+              </div>
+              
+              {/* Overlay */}
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+            </Link>
 
-            <div className="flex justify-end">
+            {/* Footer / CTA */}
+            <div className="mt-auto pt-4 border-t border-gray-200 flex justify-between items-center group-hover:border-black/20 transition-colors">
+              <span className="text-xs font-medium text-gray-400 group-hover:text-black transition-colors">
+                VIEW PROJECT
+              </span>
               <Link
-                className="text-sm font-medium text-gray-900 border border-black py-2 px-5 rounded-full uppercase"
                 href={`/projects/${project.projectSlug.current}`}
+                className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center group-hover:bg-black group-hover:border-black group-hover:text-white transition-all duration-300"
               >
-                More
+                <ArrowUpRight className="w-4 h-4" />
               </Link>
             </div>
           </motion.div>

@@ -1,19 +1,70 @@
 'use client'
 
 import { visionTool } from '@sanity/vision'
-import { defineConfig } from 'sanity'
+import { PluginOptions, defineConfig } from 'sanity'
+import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
+import {
+  presentationTool,
+  defineDocuments,
+  defineLocations,
+  type DocumentLocation,
+} from 'sanity/presentation'
 import { structureTool } from 'sanity/structure'
-import { apiVersion, dataset, projectId } from './sanity/env'
+
+import { apiVersion, dataset, projectId, studioUrl } from './sanity/env'
 import { schema } from './sanity/schemaTypes'
-import { structure } from './sanity/structure'
+import { pageStructure, singletonPlugin } from './sanity/plugins/settings'
+import { blogSettings } from './sanity/schemaTypes/blog'
+import { resolveHref } from './sanity/lib/utils'
+
+const blogLocation = {
+  title: "Blog",
+  href: "/blog",
+} satisfies DocumentLocation;
 
 export default defineConfig({
-  basePath: '/studio',
+  basePath: studioUrl,
   projectId,
   dataset,
   schema,
   plugins: [
-    structureTool({ structure }),
-    visionTool({ defaultApiVersion: apiVersion }),
-  ],
+    presentationTool({
+      resolve: {
+        mainDocuments: defineDocuments([
+          {
+            route: "/blog/posts/:slug",
+            filter: `_type == "post" && slug.current == $slug`,
+          },
+        ]),
+        locations: {
+          blogSettings: defineLocations({
+            locations: [blogLocation],
+            message: "This document is used on the blog pages",
+            tone: "caution",
+          }),
+          post: defineLocations({
+            select: {
+              title: "title",
+              slug: "slug.current",
+            },
+            resolve: (doc) => ({
+              locations: [
+                {
+                  title: doc?.title || "Untitled",
+                  href: resolveHref("post", doc?.slug)!,
+                },
+                blogLocation,
+              ],
+            }),
+          }),
+        },
+      },
+      previewUrl: { previewMode: { enable: "/api/draft-mode/enable" } },
+    }),
+    structureTool({ structure: pageStructure([blogSettings]) }),
+    singletonPlugin([blogSettings.name]),
+    unsplashImageAsset(),
+    process.env.NODE_ENV === 'development' &&
+      visionTool({ defaultApiVersion: apiVersion }),
+  ].filter(Boolean) as PluginOptions[],
 })

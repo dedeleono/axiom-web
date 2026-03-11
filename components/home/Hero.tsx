@@ -80,20 +80,22 @@ const Hero: React.FC = () => {
   if (!projectsData?.img) {
     return (
       <section className="relative w-full flex justify-center items-center overflow-visible bg-[#18181a] min-h-[600px]">
-        <div className="text-white text-center p-8">
-          <h1 className="text-4xl font-bold mb-4">
-            {projectsData?.heroText || "Welcome to Axiom Renovation"}
+        <div className="absolute inset-0 bg-black/40 z-10" />
+        <div className="text-white text-center p-8 z-20 max-w-4xl mx-auto">
+          <h2 className="text-sm md:text-base font-light tracking-widest mb-4 uppercase">
+            Welcome to Axiom Renovation | License: 1105006
+          </h2>
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+            {projectsData?.heroText || "We turn ideas into timeless living spaces"}
           </h1>
-          <p className="text-xl opacity-90">
-            {projectsData?.heroDescription ||
-              "Add a Home document with pageName &quot;home&quot; and a cover image in Sanity Studio to customize this section."}
+          <p className="text-xl md:text-2xl font-light mb-8 uppercase tracking-wide">
+            {projectsData?.heroDescription || "HOME RENOVATION COMPANY Serving the Bay Area"}
           </p>
-          <a
-            href="/studio"
-            className="inline-block mt-6 px-6 py-3 border border-white rounded-full text-sm font-medium hover:bg-white hover:text-black transition-colors"
-          >
-            Open Studio
-          </a>
+          <Link href={projectsData?.heroCtaUrl ?? "/contact"}>
+            <Button className="bg-white text-black hover:bg-gray-200 rounded-full px-8 py-6 text-lg font-medium transition-all">
+              {projectsData?.heroCtaLabel ?? "Book a Free Consultation"}
+            </Button>
+          </Link>
         </div>
       </section>
     );
@@ -117,43 +119,34 @@ const Hero: React.FC = () => {
   }
 
   return (
-    <section className="relative w-full flex justify-center items-center overflow-visible">
+    <section className="relative w-full h-screen flex justify-center items-center overflow-hidden">
+      <div className="absolute inset-0 bg-black/30 z-10" />
       {/* Native img to avoid Next.js Image loader issues with Sanity CDN */}
       <img
         src={imageUrl}
         alt={projectsData.img.imgAlt || "Hero image"}
-        className="w-full md:h-[700px] h-[calc(100vh)] rounded-md object-cover md:object-center object-[30%_center]"
+        className="absolute inset-0 w-full h-full object-cover"
         fetchPriority="high"
       />
-      {(projectsData.heroText ||
-        projectsData.heroSubText1 ||
-        projectsData.heroSubText2 ||
-        projectsData.heroDescription) && (
-        <div className="absolute text-white text-center font-geist">
-          {projectsData.heroText && (
-            <h1 className="text-4xl font-bold mb-4 tracking-tight">{projectsData.heroText}</h1>
-          )}
-          {projectsData.heroSubText1 && (
-            <p className="text-xl font-light">{projectsData.heroSubText1}</p>
-          )}
-          {projectsData.heroSubText2 && (
-            <p className="text-xl font-light">{projectsData.heroSubText2}</p>
-          )}
-          {projectsData.heroDescription && (
-            <p className="text-lg mt-2 font-light">{projectsData.heroDescription}</p>
-          )}
-          <div className="mt-8">
-            <Link href={projectsData.heroCtaUrl ?? "/contact"}>
-              <Button className="bg-[#f25e40] text-white hover:bg-[#f25e40] cursor-pointer rounded-lg px-8 py-6 text-lg font-medium transition-all transform hover:scale-105">
-                {projectsData.heroCtaLabel ?? "Start Your Project"}
-              </Button>
-            </Link>
-          </div>
-        </div>
-      )}
+      <div className="relative z-20 text-white text-center px-4 max-w-5xl mx-auto mt-20">
+          <h2 className="text-sm md:text-base font-medium tracking-widest mb-6 uppercase">
+            {projectsData.heroSubText1 || "Welcome to Axiom Renovation | License: 1105006"}
+          </h2>
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+            {projectsData.heroText || "We turn ideas into timeless living spaces"}
+          </h1>
+          <p className="text-xl md:text-2xl font-light mb-10 uppercase tracking-wide">
+            {projectsData.heroDescription || "HOME RENOVATION COMPANY Serving the Bay Area"}
+          </p>
+          <Link href={projectsData.heroCtaUrl ?? "/contact"}>
+            <Button className="bg-white text-black hover:bg-gray-200 rounded-full px-8 py-6 text-lg font-medium transition-all transform hover:scale-105">
+              {projectsData.heroCtaLabel ?? "Book a Free Consultation"}
+            </Button>
+          </Link>
+      </div>
 
       <div
-        className="absolute bottom-8 animate-bounce cursor-pointer"
+        className="absolute bottom-8 z-20 animate-bounce cursor-pointer"
         onClick={scrollToNextSection}
         role="button"
         tabIndex={0}

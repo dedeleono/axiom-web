@@ -15,30 +15,37 @@ import React from "react";
 const testimonials = [
   {
     quote:
-      "Axiom transformed our outdated kitchen into a modern masterpiece. The attention to detail and craftsmanship were exceptional. They truly turned our ideas into a timeless space.",
-    author: "Sarah Jenkins",
-    role: "Homeowner, San Francisco",
+      "It was a relief to work with such a dependable and trustworthy team. Amit kept every promise, from timelines to budget and quality. Their integrity and professionalism shone through every stage of our project.",
+    author: "My Account",
+    role: "July 10, 2024",
     rating: 5,
   },
   {
     quote:
-      "Professional, creative, and reliable. The team at Axiom guided us through every step of our home addition. We couldn't be happier with the result.",
-    author: "Michael & Jessica Chen",
-    role: "Homeowners, Palo Alto",
+      "What set them apart was their excellent communication. Ben kept us updated throughout the process, answering all our questions promptly and clearly. Their customer service is just as outstanding as their craftsmanship.",
+    author: "Freddy Monhorn",
+    role: "July 2, 2024",
     rating: 5,
   },
   {
     quote:
-      "Their philosophy of 'innovative, enduring cultural experiences' really shines through in their work. It's not just a renovation; it's a lifestyle upgrade.",
-    author: "David Thompson",
-    role: "Real Estate Developer",
+      "Choosing them for our bathroom remodel was the best decision we could have made. The process was incredibly smooth and stress-free, thanks to their organized and efficient team. The result? A stunning bathroom that feels like a spa retreat!",
+    author: "Jorge Barragan Jr",
+    role: "July 2, 2024",
     rating: 5,
   },
   {
     quote:
-      "We were impressed by their transparency and project management. No surprises, just quality work delivered on time.",
-    author: "Emily Rodriguez",
-    role: "Homeowner, Marin County",
+      "They exceeded my expectations with how quickly they completed our bathroom renovation. Amit and the team managed to do it with minimal disruption to our daily lives, which was a huge plus. The speed did not compromise the quality; everything was done perfectly.",
+    author: "luis lee",
+    role: "July 2, 2024",
+    rating: 5,
+  },
+  {
+    quote:
+      "They brought innovative designs that transformed our space into something unique and highly functional. Their creative solutions made the most of our available space, enhancing both its utility and beauty.",
+    author: "josiah foncannon",
+    role: "July 2, 2024",
     rating: 5,
   },
 ];
@@ -48,24 +55,9 @@ export default function Testimonials() {
     <div className="max-w-7xl mx-auto px-8 py-20 font-geist">
       <Button
         variant="ghost"
-        className="text-black hover:bg-transparent hover:text-black p-0 mb-12"
+        className="text-black hover:bg-transparent hover:text-black p-0 mb-12 uppercase tracking-widest text-xs font-semibold"
       >
-        <span className="text-sm font-geist-mono">TESTIMONIALS</span>
-        <div className="w-2 h-2">
-          <svg
-            width="4"
-            height="4"
-            viewBox="0 0 8 8"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="scale-50 transform-gpu"
-          >
-            <path
-              d="M6.26784 1.54193L6.22778 1.50188C6.22778 1.50188 6.25782 2.65332 5.01627 4.13517L0.871089 0L0 0.871089L4.14518 5.01627C2.66333 6.25782 1.5219 6.19775 1.51189 6.22778L1.55194 6.26784C6.38798 6.84856 8 8 8 8C8 8 6.84856 6.37797 6.26784 1.55194V1.54193Z"
-              fill="#000000"
-            />
-          </svg>
-        </div>
+        What they say about us.
       </Button>
 
       <div className="relative">

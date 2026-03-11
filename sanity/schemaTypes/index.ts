@@ -5,7 +5,8 @@ import whoWeAre from './whoWeAre'
 import awards from './awards'
 import home from './home'
 import innovation from './innovation'
+import { post, author, blogSettings } from './blog'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [project, philosophy, whoWeAre, awards, home, innovation],
+  types: [project, philosophy, whoWeAre, awards, home, innovation, post, author, blogSettings],
 }

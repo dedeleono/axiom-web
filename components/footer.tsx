@@ -3,105 +3,94 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import PhoneDialog from "./phone-dialog";
-import { PhoneDialogHandle } from "./phone-dialog";
+import PhoneDialog, { PhoneDialogHandle } from "./phone-dialog";
 import { useRef } from "react";
+import { Facebook, Instagram, Youtube, Twitter } from "lucide-react"; // Using Twitter icon for Tiktok fallback or generic
 
 export default function Footer() {
   const dialogRef = useRef<PhoneDialogHandle>(null);
 
+  const areas = [
+    "Santa Clara County, CA", "Alameda County, CA", "Contra Costa County, CA",
+    "San Francisco County, CA", "San Mateo County, CA", "Sonoma County, CA",
+    "Solano County, CA", "Marin County, CA", "Napa County, CA",
+    "San Jose, CA", "Sunnyvale, CA", "Mountain View, CA",
+    "Milipitas, CA", "Palo Alto, CA", "Cupertino, CA",
+    "Los Gatos, CA", "Los Altos, CA", "Saratoga, CA",
+    "Oakland, CA", "Fremont, CA", "Berkeley, CA",
+    "San Mateo, CA", "Daly City, CA", "Redwood City, CA",
+    "Menlo Park, CA", "Atherton, CA", "Hillsborough, CA"
+  ];
+
   return (
-    <footer className="px-8 py-8 text-sm text-left relative text-black">
-      <div className="border-t border-black/70 flex flex-col md:grid md:grid-cols-5 gap-8">
-        <div className="space-y-2 md:col-span-1 flex flex-col pt-8">
-          <Link href="/" className="font-light font-geist-mono hover:text-gray-500 transition-colors">
-            WHO WE ARE
+    <footer className="bg-white text-black pt-20 pb-10 border-t border-gray-200 font-geist">
+      <div className="max-w-7xl mx-auto px-8 grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+        {/* Brand / Links */}
+        <div className="space-y-6">
+          <Link href="/" className="block">
+            <h3 className="text-2xl font-bold font-geist-mono">Axiom Renovation</h3>
           </Link>
-          <Link href="/projects" className="font-light font-geist-mono hover:text-gray-500 transition-colors">
-            PROJECTS
-          </Link>
-          <Link href="/innovation" className="font-light font-geist-mono hover:text-gray-500 transition-colors">
-            INNOVATION
-          </Link>
-          <Link href="/contact" className="font-light font-geist-mono hover:text-gray-500 transition-colors">
-            CONTACT
-          </Link>
+          <div className="flex flex-col space-y-2 text-sm text-gray-600">
+             <Link href="/blogs" className="hover:text-black transition-colors">Newsroom & Article</Link>
+             <Link href="/privacy-policy" className="hover:text-black transition-colors">Privacy Policy</Link>
+          </div>
         </div>
-        <div className="md:col-span-4 grid grid-cols-4 gap-4 md:border-none border-t border-black/70">
-          <div className="col-span-2 md:border-l border-black/70 pl-10 py-8">
-            <h3 className="font-light mb-4 font-geist-mono text-sm md:text-base">
-              EXPERIENCE CENTER
-            </h3>
-            <p className="mb-4 text-gray-700 font-geist font-light text-xs md:text-sm">
-              Bay Area, California
-              <br />
-              Serving the greater San Francisco region
-            </p>
-            <div className="gap-2 flex flex-row">
-              <Button
-                variant="outline"
-                size="sm"
-                className="rounded-full bg-transparent border-black/70 hover:border-white text-black hover:bg-[#f25e40] hover:text-white transition-colors cursor-pointer"
-                onClick={() => dialogRef.current?.open()}
-              >
-                CALL
-              </Button>
-              <a
-                href="mailto:info@axiomrenovation.com"
-                className="inline-flex items-center justify-center rounded-full bg-transparent border border-black/70 hover:border-white text-black px-3 h-8 text-xs font-medium hover:bg-[#f25e40] hover:text-white transition-colors"
-              >
-                EMAIL
-              </a>
-            </div>
+
+        {/* Areas We Serve */}
+        <div className="col-span-1 md:col-span-2">
+          <h4 className="font-bold mb-6 text-sm uppercase tracking-widest">Areas We Serve</h4>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-2 text-sm text-gray-600">
+            {areas.map((area, index) => (
+              <span key={index} className="hover:text-black cursor-default">{area}</span>
+            ))}
           </div>
-          <div className="col-span-2 border-l border-black/70 pl-10 py-8">
-            <h3 className="font-light mb-4 font-geist-mono text-sm md:text-base">
-              SOCIAL
-            </h3>
-            <div className="flex space-x-4 mb-4">
-              <Link
-                href="https://www.facebook.com/axiomrenovationinc?_rdr"
-                className="hover:opacity-80 transition-opacity"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Image
-                  src="/facebook.svg"
-                  alt="Facebook"
-                  width={24}
-                  height={24}
-                  className="w-4 h-4 object-contain"
-                />
-              </Link>
-              <Link
-                href="https://www.instagram.com/axiomrenovation/"
-                className="hover:opacity-80 transition-opacity"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Image
-                  src="/insta.svg"
-                  alt="Instagram"
-                  width={24}
-                  height={24}
-                  className="w-4 h-4 object-contain"
-                />
-              </Link>
+        </div>
+
+        {/* Contact Info */}
+        <div className="space-y-8">
+           <h4 className="font-bold mb-6 text-sm uppercase tracking-widest">Find us here!</h4>
+           
+           <div className="space-y-4 text-sm text-gray-600">
+              <div>
+                <p>4030 Moorpark Ave, San Jose, CA Suite 102</p>
+                <p>408-702-2022</p>
+                <p>office@axiom-renovation.com</p>
+              </div>
               
-            </div>
-            <p className="font-semibold text-xs font-geist-mono text-black">
-              INFO@AXIOMRENOVATION.COM
-            </p>
-          </div>
+              <div className="flex space-x-4">
+                 <Link href="https://www.instagram.com/axiomrenovation/" target="_blank" className="hover:text-black"><Instagram className="w-5 h-5" /></Link>
+                 <Link href="https://www.facebook.com/axiomrenovationinc" target="_blank" className="hover:text-black"><Facebook className="w-5 h-5" /></Link>
+                 <Link href="https://www.youtube.com/channel/UC8W6hYToT7_TEv6P6xKMM4Q" target="_blank" className="hover:text-black"><Youtube className="w-5 h-5" /></Link>
+                 {/* Tiktok icon placeholder */}
+                 <Link href="https://www.tiktok.com/@axiomrenovation" target="_blank" className="hover:text-black"><span className="font-bold text-xs border border-current rounded px-1">Tk</span></Link>
+              </div>
+           </div>
+
+           <div className="space-y-4 text-sm text-gray-600 border-t pt-4">
+              <div>
+                <p>17515 Ventura Blvd, Encino, CA 91316</p>
+                <p>408-702-2022</p>
+                <p>office@axiom-renovation.com</p>
+              </div>
+           </div>
         </div>
       </div>
-      <div className="pt-8 border-t border-black/70">
-        <div className="flex flex-row justify-between items-center font-geist text-gray-700 font-light text-xs">
-          <p>&copy; {new Date().getFullYear()} Axiom Renovation</p>
-          <Link href="/privacy-policy" className="hover:text-white hover:underline transition-colors">
-            Privacy Policy
-          </Link>
-        </div>
+
+      <div className="max-w-7xl mx-auto px-8 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
+         <p>650-405-3956 All rights reserved @axiom renovation</p>
+         <div className="flex items-center gap-4 mt-4 md:mt-0">
+            <Button
+                variant="outline"
+                size="sm"
+                className="rounded-full border-gray-300 text-black hover:bg-black hover:text-white transition-colors"
+                onClick={() => dialogRef.current?.open()}
+            >
+                Contact Us
+            </Button>
+            <Link href="https://api.whatsapp.com/send/?phone=14087022022" target="_blank" className="text-green-600 font-bold hover:underline">
+               Whatsapp
+            </Link>
+         </div>
       </div>
       <PhoneDialog ref={dialogRef} />
     </footer>

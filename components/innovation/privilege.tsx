@@ -8,7 +8,7 @@ import type { Image as SanityImage } from "sanity";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, PlayCircle } from "lucide-react";
+import { ChevronLeft, ChevronRight, PlayCircle, Hammer, Ruler, PenTool, Home } from "lucide-react";
 
 interface Feature {
   title: string;
@@ -155,6 +155,13 @@ export default function Privilege() {
     }
   };
 
+  // Helper to get random icon based on index
+  const getFallbackIcon = (index: number) => {
+    const icons = [Hammer, Ruler, PenTool, Home];
+    const Icon = icons[index % icons.length];
+    return <Icon className="w-12 h-12 text-[#f25e40] opacity-50" strokeWidth={1} />;
+  };
+
   return (
     <React.Fragment>
       <div className="max-w-7xl pb-12 relative mx-10 font-geist">
@@ -251,7 +258,6 @@ export default function Privilege() {
                               className="object-cover"
                               priority
                            />
-                           {/* Overlay gradient for text legibility if needed, currently clean */}
                         </motion.div>
                      </AnimatePresence>
                      
@@ -357,32 +363,54 @@ export default function Privilege() {
             </div>
           </div>
 
-          {/* Types of Jobs / Features Section */}
+          {/* Types of Jobs / Features Section (Bento Grid) */}
           {selected?.features && selected.features.length > 0 && (
              <div className="mask-overlap relative z-20 px-8 md:px-16 py-20 border-t border-gray-800 bg-[#121213]">
                 <div className="max-w-7xl mx-auto">
                    <h3 className="text-3xl font-bold mb-12 text-white border-l-4 border-[#f25e40] pl-6">
                       {selected.featuresTitle || "Services Offered"}
                    </h3>
-                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                      {selected.features.map((feature, idx) => (
-                         <div key={idx} className="bg-white/5 rounded-xl overflow-hidden hover:bg-white/10 transition-colors group border border-white/5 hover:border-white/20">
-                            {feature.image && (
-                               <div className="relative h-48 w-full overflow-hidden">
-                                  <Image
-                                     src={urlFor(feature.image)?.url() ?? ""}
-                                     alt={feature.title}
-                                     fill
-                                     className="object-cover transition-transform duration-500 group-hover:scale-105"
-                                  />
-                               </div>
-                            )}
-                            <div className="p-8">
-                               <h4 className="text-xl font-bold mb-4 text-white group-hover:text-[#f25e40] transition-colors">{feature.title}</h4>
-                               <p className="text-sm text-gray-400 leading-relaxed font-light">{feature.description}</p>
-                            </div>
-                         </div>
-                      ))}
+                   <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
+                      {selected.features.map((feature, idx) => {
+                         const isLarge = idx === 0 || idx === 3;
+                         return (
+                           <div 
+                              key={idx} 
+                              className={`relative overflow-hidden rounded-3xl bg-white/5 border border-white/10 group ${isLarge ? 'md:col-span-4' : 'md:col-span-2'} hover:border-[#f25e40]/50 transition-colors duration-500`}
+                           >
+                              {/* Content Container */}
+                              <div className={`relative h-full flex ${isLarge ? 'flex-col md:flex-row' : 'flex-col'}`}>
+                                  {/* Image or Fallback Icon */}
+                                  <div className={`relative overflow-hidden bg-black/20 ${isLarge ? 'md:w-1/2 h-64 md:h-auto' : 'w-full h-56'} flex items-center justify-center`}>
+                                     {feature.image ? (
+                                        <Image
+                                           src={urlFor(feature.image)?.url() ?? ""}
+                                           alt={feature.title}
+                                           fill
+                                           className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                        />
+                                     ) : (
+                                        <div className="flex flex-col items-center gap-4 p-8">
+                                           {getFallbackIcon(idx)}
+                                        </div>
+                                     )}
+                                     <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-500" />
+                                  </div>
+
+                                  {/* Text Content */}
+                                  <div className={`p-8 relative flex flex-col justify-center ${isLarge ? 'md:w-1/2' : 'w-full'}`}>
+                                     <h4 className="text-2xl font-bold mb-4 text-white group-hover:text-[#f25e40] transition-colors flex items-center gap-2 leading-tight">
+                                        {feature.title}
+                                        <ChevronRight className="w-5 h-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-[#f25e40]" />
+                                     </h4>
+                                     <p className="text-base text-gray-400 leading-relaxed font-light group-hover:text-gray-300 transition-colors line-clamp-4">
+                                        {feature.description}
+                                     </p>
+                                  </div>
+                              </div>
+                           </div>
+                         );
+                      })}
                    </div>
                 </div>
              </div>
@@ -401,11 +429,11 @@ export default function Privilege() {
                             {/* Timeline Dot */}
                             <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-gray-600 border-4 border-[#0a0a0b] group-hover:bg-[#f25e40] transition-colors" />
                             
-                            <div className="flex flex-col md:flex-row gap-4 md:gap-8 items-start">
-                               <span className="text-[#f25e40] font-bold text-sm uppercase tracking-widest mt-1 min-w-[80px]">
-                                  {step.step || `Step ${idx + 1}`}
-                               </span>
+                            <div className="flex flex-col gap-2 items-start">
                                <div>
+                                  <small className="text-[#f25e40] font-bold text-xs uppercase tracking-widest block mb-1">
+                                     {step.step || `Step ${idx + 1}`}
+                                  </small>
                                   <h4 className="text-xl font-bold text-white mb-3 group-hover:text-[#f25e40] transition-colors">
                                      {step.title}
                                   </h4>

@@ -5,7 +5,7 @@ import Philosophy from "@/components/home/philosophy";
 import Services from "@/components/home/services";
 import ServicesIntro from "@/components/home/services-intro";
 import InspirationCTA from "@/components/home/inspiration-cta";
-import WhyChooseUs from "@/components/home/why-choose-us";
+import WhyChooseUsGrid from "@/components/home/why-choose-us-grid";
 import Testimonials from "@/components/home/testimonials";
 import Footer from "@/components/footer";
 import Hero from "@/components/home/Hero";
@@ -45,16 +45,16 @@ export default async function Home() {
           <WhoWeAre />
         </section>
 
-        <section className="mask-overlap bg-white relative z-10 pt-10">
+        <section className="mask-overlap bg-white relative z-20 pt-10">
           <Services />
         </section>
 
-        <section className="mask-overlap bg-white relative z-10 pt-10">
+        {/* <section className="mask-overlap bg-white relative z-10 pt-10">
           <InspirationCTA />
-        </section>
+        </section> */}
 
-        <section className="mask-overlap bg-[#f6f6f6] relative z-10 pt-10">
-          <WhyChooseUs />
+        <section className="mask-overlap bg-[#f6f6f6] relative z-20 pt-10">
+          <WhyChooseUsGrid />
         </section>
 
         <section className="mask-overlap bg-white relative z-10 pt-10">

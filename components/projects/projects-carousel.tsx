@@ -105,7 +105,7 @@ export default function ProjectsGrid() {
             {/* Image Card */}
             <Link 
               href={`/projects/${project.projectSlug.current}`}
-              className="block relative w-full aspect-[3/4] overflow-hidden rounded-sm bg-gray-100 mb-6"
+              className="block relative w-full aspect-3/4 overflow-hidden rounded-sm bg-gray-100 mb-6"
             >
               <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-105">
                 <Image

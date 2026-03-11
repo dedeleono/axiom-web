@@ -47,7 +47,7 @@ export default function Contact() {
           }}
         >
           <Image
-            src="/contact.png"
+            src="/portfolio/santa-clara-adu.jpg"
             alt="contact"
             className="h-full w-full object-cover"
             width={1920}
@@ -55,7 +55,7 @@ export default function Contact() {
             priority
           />
         </motion.div>
-        <div className="absolute inset-0 bg-black md:bg-opacity-30 bg-opacity-60" />
+        <div className="absolute inset-0 bg-black/40" />
 
         <div className="absolute inset-0 flex flex-col md:flex-row justify-center md:justify-between items-center px-4 md:px-16 py-8 md:py-0 mt-20 md:m-0">
           <motion.div
@@ -80,7 +80,7 @@ export default function Contact() {
           </motion.div>
 
           <motion.div
-            className="w-[300px] md:w-1/2 bg-black backdrop-blur-md p-4 md:p-8 mt-8 md:mt-0"
+            className="w-[300px] md:w-1/2 bg-black backdrop-blur-md p-4 md:p-8 mt-8 md:mt-0 rounded-xl"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{

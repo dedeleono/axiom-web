@@ -61,7 +61,7 @@ export default async function Home() {
           <Testimonials />
         </section>
 
-        <section className="mask-overlap bg-white relative z-10 pt-10">
+        <section className="mask-overlap bg-[#f25e40] relative z-10 pt-10">
           <Philosophy />
         </section>
 
@@ -74,7 +74,7 @@ export default async function Home() {
         </section> */}
       </main>
 
-      <section className="mask-overlap bg-white mt-auto pt-10">
+      <section className="mask-overlap bg-white mt-auto pt-10 relative z-20">
         <Footer />
       </section>
     </div>

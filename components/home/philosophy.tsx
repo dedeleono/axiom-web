@@ -3,12 +3,12 @@ import { Button } from "@/components/ui/button";
 
 export default function Philosophy() {
   return (
-    <div className="max-w-7xl mx-auto px-8 py-20 font-geist">
+    <div className="max-w-7xl mx-auto px-8 py-20 font-geist text-white">
       <div className="flex flex-col md:flex-row gap-16">
         <div className="md:w-1/3">
           <Button
             variant="ghost"
-            className="text-black hover:bg-transparent hover:text-black p-0 mb-4 uppercase tracking-widest text-xs font-semibold"
+            className="text-white hover:bg-transparent hover:text-white p-0 mb-4 uppercase tracking-widest text-xs font-semibold"
           >
             Philosophy
           </Button>
@@ -17,7 +17,7 @@ export default function Philosophy() {
           </h2>
         </div>
 
-        <div className="md:w-2/3 space-y-6 text-gray-600 font-light leading-relaxed text-lg">
+        <div className="md:w-2/3 space-y-6 text-white/90 font-light leading-relaxed text-lg">
           <p>
             A beautifully designed room has the power to influence your state of mind. The colors, textures, and layout of your space can inspire calm, creativity, and focus. When your environment reflects your personality and preferences, it becomes more than just a room—it transforms into a sanctuary that nurtures your well-being and promotes clarity of thought.
           </p>

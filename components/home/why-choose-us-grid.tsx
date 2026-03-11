@@ -5,6 +5,7 @@ import Image from "next/image";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import type { Image as SanityImage } from "sanity";
+import { Button } from "../ui/button";
 
 interface Stat {
   value: string;
@@ -84,9 +85,20 @@ export default function WhyChooseUsGrid() {
 
   return (
     <div className="max-w-7xl mx-auto px-8 py-20 font-geist">
-      <div className="mb-12">
-        <h2 className="text-4xl font-bold mb-4">{content.heading}</h2>
-        <p className="text-gray-500 max-w-xl">{content.subheading}</p>
+      
+      <div className="flex flex-col md:flex-row justify-between items-end mb-16">
+        <div>
+          <Button
+            variant="ghost"
+            className="text-black hover:bg-transparent hover:text-black p-0 mb-4 uppercase tracking-widest text-xs font-semibold"
+          >
+            {content.subheading}
+          </Button>
+          <h2 className="text-4xl md:text-5xl font-bold max-w-2xl leading-tight">
+            {content.heading}
+          </h2>
+        </div>
+
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-auto lg:h-[500px]">

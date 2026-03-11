@@ -87,7 +87,7 @@ export default function WhoWeAre() {
           </div>
 
           <Link href={data.buttonLink || "/projects"}>
-            <Button className="mt-4 rounded-full px-8 py-6 text-base bg-black text-white hover:bg-gray-800 transition-all">
+            <Button className="mt-4 rounded-full px-8 py-6 text-base bg-black text-[#f25e40] hover:text-white hover:bg-[#f25e40] transition-all cursor-pointer">
               {data.buttonText || "Our Portfolio"}
             </Button>
           </Link>

@@ -70,12 +70,7 @@ export default function Services() {
             We are the experts in good taste!
           </h2>
         </div>
-        <Link href="/contact" className="hidden md:block">
-          <Button className="rounded-full px-6 py-6 text-base group bg-black text-white hover:bg-gray-800 transition-all">
-            Start Your Project
-            <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-          </Button>
-        </Link>
+        
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 h-[500px]">

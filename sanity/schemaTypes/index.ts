@@ -1,0 +1,11 @@
+import type { SchemaTypeDefinition } from 'sanity'
+import project from './project'
+import philosophy from './philosophy'
+import whoWeAre from './whoWeAre'
+import awards from './awards'
+import home from './home'
+import innovation from './innovation'
+
+export const schema: { types: SchemaTypeDefinition[] } = {
+  types: [project, philosophy, whoWeAre, awards, home, innovation],
+}

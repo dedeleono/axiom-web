@@ -48,7 +48,7 @@ export default function Contact() {
         >
           <Image
             src="/portfolio/santa-clara-adu.jpg"
-            alt="contact"
+            alt="Santa Clara ADU project - contact Axiom Renovation for Bay Area home remodeling"
             className="h-full w-full object-cover"
             width={1920}
             height={1080}
@@ -68,14 +68,10 @@ export default function Contact() {
               ease: [0.4, 0, 0.2, 1],
             }}
           >
-            <h1 className="text-[1.6rem] md:text-[2.2rem] lg:text-[2.8rem] font-semibold uppercase ml-1">
-              Crafting
-            </h1>
-            <h1 className="text-[1.6rem] md:text-[2.2rem] lg:text-[2.8rem] font-semibold text-right uppercase mr-5">
-              Tomorrow&apos;s
-            </h1>
-            <h1 className="text-[1.6rem] md:text-[2.2rem] lg:text-[2.8rem] font-semibold ml-4 md:ml-0 lg:ml-4 uppercase text-nowrap">
-              Spaces Together
+            <h1 className="text-[1.6rem] md:text-[2.2rem] lg:text-[2.8rem] font-semibold uppercase">
+              <span className="block ml-1">Crafting</span>
+              <span className="block text-right mr-5">Tomorrow&apos;s</span>
+              <span className="block ml-4 md:ml-0 lg:ml-4 text-nowrap">Spaces Together</span>
             </h1>
           </motion.div>
 

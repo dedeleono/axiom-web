@@ -119,9 +119,9 @@ export default function Services() {
                 <p className="text-gray-200 text-sm leading-relaxed mb-6 font-light">
                   {service.description}
                 </p>
-                <div className="flex items-center text-sm font-medium hover:underline underline-offset-4">
-                  Learn more <ArrowRight className="ml-2 w-4 h-4" />
-                </div>
+                <span className="flex items-center text-sm font-medium hover:underline underline-offset-4">
+                  Learn more about {service.title} <ArrowRight className="ml-2 w-4 h-4" />
+                </span>
               </div>
             </div>
           </Link>

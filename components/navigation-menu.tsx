@@ -56,7 +56,7 @@ const NavigationMenu: React.FC = () => {
               <div className="mt-8 pt-8 w-full flex justify-center">
                 <Image
                   src="/isotipo.svg"
-                  alt="Logo"
+                  alt="Axiom Renovation logo"
                   width={100}
                   height={100}
                   className="w-5"

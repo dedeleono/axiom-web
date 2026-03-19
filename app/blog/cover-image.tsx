@@ -13,7 +13,7 @@ export default function CoverImage(props: CoverImageProps) {
       className="h-auto w-full rounded-xl"
       width={2000}
       height={1000}
-      alt={source?.alt || ""}
+      alt={source?.alt || "Blog post cover image"}
       src={urlForImage(source)?.height(1000).width(2000).url() as string}
       sizes="100vw"
       priority={priority}

@@ -1,8 +1,18 @@
 export default {
   name: 'innovation',
-  title: 'Innovation',
+  title: 'Service',
   type: 'document',
   fields: [
+    {
+      name: 'slug',
+      title: 'URL Slug',
+      type: 'slug',
+      description: 'Used for the page URL (e.g. bathroom-remodeling, kitchen-remodeling, home-addition). Optional: falls back to title match if empty.',
+      options: {
+        source: 'title',
+        maxLength: 96,
+      },
+    },
     {
       name: 'title',
       title: 'Title',
@@ -108,6 +118,34 @@ export default {
     {
       name: 'historyText',
       title: 'History/Quality Text',
+      type: 'text',
+    },
+    {
+      name: 'heroImage',
+      title: 'Hero Image',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Optional. Falls back to Cover Image if empty.',
+    },
+    {
+      name: 'heroText',
+      title: 'Hero Text',
+      type: 'text',
+      description: 'Optional. Falls back to title if empty.',
+    },
+    {
+      name: 'heroSubText1',
+      title: 'Hero Sub Text 1',
+      type: 'text',
+    },
+    {
+      name: 'heroSubText2',
+      title: 'Hero Sub Text 2',
+      type: 'text',
+    },
+    {
+      name: 'heroDescription',
+      title: 'Hero Description',
       type: 'text',
     }
   ],

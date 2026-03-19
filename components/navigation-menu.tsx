@@ -7,7 +7,13 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
 const NavigationMenu: React.FC = () => {
-  const menuItems = ["WHO WE ARE", "PROJECTS", "INNOVATION", "BLOG", "CONTACT"];
+  const menuItems = [
+    { label: "WHO WE ARE", href: "/" },
+    { label: "PROJECTS", href: "/projects" },
+    { label: "SERVICES", href: "/bathroom-remodeling" },
+    { label: "BLOG", href: "/blog" },
+    { label: "CONTACT", href: "/contact" },
+  ];
 
   return (
     <>
@@ -16,14 +22,10 @@ const NavigationMenu: React.FC = () => {
         {menuItems.map((item, index) => (
           <Link
             key={index}
-            href={
-              item === "WHO WE ARE"
-                ? "/"
-                : `/${item.toLowerCase().replace(/\s+/g, "-")}`
-            }
+            href={item.href}
             className="text-sm font-medium text-black hover:text-gray-600 transition-colors font-geist-mono tracking-wide"
           >
-            {item}
+            {item.label}
           </Link>
         ))}
       </div>
@@ -45,14 +47,10 @@ const NavigationMenu: React.FC = () => {
               {menuItems.map((item, index) => (
                 <Link
                   key={index}
-                  href={
-                    item === "WHO WE ARE"
-                      ? "/"
-                      : `/${item.toLowerCase().replace(/\s+/g, "-")}`
-                  }
+                  href={item.href}
                   className="text-2xl font-medium text-white hover:text-gray-300 text-center w-full font-geist-mono"
                 >
-                  {item}
+                  {item.label}
                 </Link>
               ))}
               <div className="mt-8 pt-8 w-full flex justify-center">

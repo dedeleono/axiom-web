@@ -47,8 +47,8 @@ export default function Services() {
 
   if (isLoading) {
     return (
-      <div className="max-w-7xl mx-auto px-8 py-20 font-geist mb-20 flex justify-center">
-        <div className="w-12 h-12 border-4 border-gray-200 border-t-black rounded-full animate-spin" />
+      <div className="max-w-7xl mx-auto px-8 py-24 md:py-32 font-geist mb-24 flex justify-center">
+        <div className="w-12 h-12 border-4 border-brand-light-gray border-t-brand-black rounded-full animate-spin" />
       </div>
     );
   }
@@ -57,23 +57,23 @@ export default function Services() {
   if (services.length === 0) return null;
 
   return (
-    <div className="max-w-7xl mx-auto px-8 py-20 font-geist mb-20">
-      <div className="flex flex-col md:flex-row justify-between items-end mb-16">
+    <div className="max-w-7xl mx-auto px-8 py-24 md:py-32 font-geist mb-24">
+      <div className="flex flex-col md:flex-row justify-between items-end mb-20">
         <div>
           <Button
             variant="ghost"
-            className="text-black hover:bg-transparent hover:text-black p-0 mb-4 uppercase tracking-widest text-xs font-semibold"
+            className="text-brand-black hover:bg-transparent hover:text-brand-black p-0 mb-4 uppercase tracking-widest text-xs font-semibold"
           >
             Services
           </Button>
-          <h2 className="text-4xl md:text-5xl font-bold max-w-2xl leading-tight">
+          <h2 className="text-4xl md:text-5xl font-bold max-w-2xl leading-tight tracking-tight text-brand-black">
             We are the experts in good taste!
           </h2>
         </div>
         
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 h-[500px]">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 h-[500px]">
         {services.map((service, index) => (
           <Link href={service.link || "/contact"} key={index} className="group relative block h-full w-full overflow-hidden rounded-2xl">
             {/* Background Images Container */}
@@ -130,7 +130,7 @@ export default function Services() {
 
       <div className="mt-12 md:hidden">
         <Link href="/contact" className="w-full block">
-          <Button className="w-full rounded-full py-6 text-base bg-black text-white hover:bg-gray-800 transition-all">
+          <Button className="w-full rounded-full py-6 text-base bg-brand-black text-white hover:bg-brand-dark-gray transition-all">
             Start Your Project
           </Button>
         </Link>

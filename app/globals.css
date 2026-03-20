@@ -116,11 +116,20 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-brand-orange: #F25623;
+  --color-brand-black: #171717;
+  --color-brand-dark-gray: #4D4D4D;
+  --color-brand-light-gray: #DEDEDE;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 
   body {

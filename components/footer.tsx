@@ -23,34 +23,34 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-white text-black pt-20 pb-10 border-t border-gray-200 font-geist">
+    <footer className="bg-white text-brand-black pt-20 pb-10 border-t border-brand-light-gray font-geist">
       <div className="max-w-7xl mx-auto px-8 grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
         {/* Brand / Links */}
         <div className="space-y-6">
           <Link href="/" className="block">
             <h3 className="text-2xl font-bold font-geist-mono">Axiom Renovation</h3>
           </Link>
-          <div className="flex flex-col space-y-2 text-sm text-gray-600">
-             <Link href="/blogs" className="hover:text-black transition-colors">Newsroom & Article</Link>
-             <Link href="/privacy-policy" className="hover:text-black transition-colors">Privacy Policy</Link>
+          <div className="flex flex-col space-y-2 text-sm text-brand-dark-gray">
+             <Link href="/blogs" className="hover:text-brand-black transition-colors">Newsroom & Article</Link>
+             <Link href="/privacy-policy" className="hover:text-brand-black transition-colors">Privacy Policy</Link>
           </div>
         </div>
 
         {/* Areas We Serve */}
         <div className="col-span-1 md:col-span-2">
-          <h4 className="font-bold mb-6 text-sm uppercase tracking-widest">Areas We Serve</h4>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-2 text-sm text-gray-600">
+          <h4 className="font-bold mb-6 text-sm uppercase tracking-widest text-brand-black">Areas We Serve</h4>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-2 text-sm text-brand-dark-gray">
             {areas.map((area, index) => (
-              <span key={index} className="hover:text-black cursor-default">{area}</span>
+              <span key={index} className="hover:text-brand-black cursor-default">{area}</span>
             ))}
           </div>
         </div>
 
         {/* Contact Info */}
         <div className="space-y-8">
-           <h4 className="font-bold mb-6 text-sm uppercase tracking-widest">Find us here!</h4>
+           <h4 className="font-bold mb-6 text-sm uppercase tracking-widest text-brand-black">Find us here!</h4>
            
-           <div className="space-y-4 text-sm text-gray-600">
+           <div className="space-y-4 text-sm text-brand-dark-gray">
               <div>
                 <p>4030 Moorpark Ave, San Jose, CA Suite 102</p>
                 <p>408-702-2022</p>
@@ -58,15 +58,15 @@ export default function Footer() {
               </div>
               
               <div className="flex space-x-4">
-                 <Link href="https://www.instagram.com/axiomrenovation/" target="_blank" className="hover:text-black"><Instagram className="w-5 h-5" /></Link>
-                 <Link href="https://www.facebook.com/axiomrenovationinc" target="_blank" className="hover:text-black"><Facebook className="w-5 h-5" /></Link>
-                 <Link href="https://www.youtube.com/channel/UC8W6hYToT7_TEv6P6xKMM4Q" target="_blank" className="hover:text-black"><Youtube className="w-5 h-5" /></Link>
+                 <Link href="https://www.instagram.com/axiomrenovation/" target="_blank" className="hover:text-brand-orange text-brand-black"><Instagram className="w-5 h-5" /></Link>
+                 <Link href="https://www.facebook.com/axiomrenovationinc" target="_blank" className="hover:text-brand-orange text-brand-black"><Facebook className="w-5 h-5" /></Link>
+                 <Link href="https://www.youtube.com/channel/UC8W6hYToT7_TEv6P6xKMM4Q" target="_blank" className="hover:text-brand-orange text-brand-black"><Youtube className="w-5 h-5" /></Link>
                  {/* Tiktok icon placeholder */}
-                 <Link href="https://www.tiktok.com/@axiomrenovation" target="_blank" className="hover:text-black"><span className="font-bold text-xs border border-current rounded px-1">Tk</span></Link>
+                 <Link href="https://www.tiktok.com/@axiomrenovation" target="_blank" className="hover:text-brand-orange text-brand-black"><span className="font-bold text-xs border border-current rounded px-1">Tk</span></Link>
               </div>
            </div>
 
-           <div className="space-y-4 text-sm text-gray-600 border-t pt-4">
+           <div className="space-y-4 text-sm text-brand-dark-gray border-t border-brand-light-gray pt-4">
               <div>
                 <p>17515 Ventura Blvd, Encino, CA 91316</p>
                 <p>408-702-2022</p>
@@ -76,13 +76,13 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-8 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
+      <div className="max-w-7xl mx-auto px-8 pt-8 border-t border-brand-light-gray flex flex-col md:flex-row justify-between items-center text-xs text-brand-dark-gray">
          <p>650-405-3956 All rights reserved @axiom renovation</p>
          <div className="flex items-center gap-4 mt-4 md:mt-0">
             <Button
                 variant="outline"
                 size="sm"
-                className="rounded-full border-gray-300 text-black hover:bg-black hover:text-white transition-colors"
+                className="rounded-full border-brand-light-gray text-brand-black hover:bg-brand-black hover:text-white transition-colors"
                 onClick={() => dialogRef.current?.open()}
             >
                 Contact Us

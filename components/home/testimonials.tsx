@@ -52,10 +52,10 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <div className="max-w-7xl mx-auto px-8 py-20 font-geist">
+    <div className="max-w-7xl mx-auto px-8 py-24 md:py-32 font-geist">
       <Button
         variant="ghost"
-        className="text-black hover:bg-transparent hover:text-black p-0 mb-12 uppercase tracking-widest text-xs font-semibold"
+        className="text-brand-black hover:bg-transparent hover:text-brand-black p-0 mb-16 uppercase tracking-widest text-xs font-semibold"
       >
         What they say about us.
       </Button>
@@ -71,13 +71,13 @@ export default function Testimonials() {
           <CarouselContent className="-ml-4">
             {testimonials.map((testimonial, index) => (
               <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
-                <div className="h-full p-8 bg-[#f9f9f9] rounded-2xl flex flex-col justify-between min-h-[300px]">
+                <div className="h-full p-8 bg-brand-light-gray rounded-2xl flex flex-col justify-between min-h-[300px]">
                   <div>
                     <div className="flex space-x-1 mb-6">
                       {[...Array(testimonial.rating)].map((_, i) => (
                         <Star
                           key={i}
-                          className="w-4 h-4 fill-black text-black"
+                          className="w-4 h-4 fill-brand-orange text-brand-orange"
                         />
                       ))}
                     </div>
@@ -86,16 +86,16 @@ export default function Testimonials() {
                     </p>
                   </div>
                   <div>
-                    <p className="font-bold">{testimonial.author}</p>
-                    <p className="text-sm text-gray-500">{testimonial.role}</p>
+                    <p className="font-bold text-brand-black">{testimonial.author}</p>
+                    <p className="text-sm text-brand-dark-gray">{testimonial.role}</p>
                   </div>
                 </div>
               </CarouselItem>
             ))}
           </CarouselContent>
           <div className="absolute -top-16 right-0 flex gap-2">
-            <CarouselPrevious className="relative left-0 top-0 translate-y-0 h-10 w-10 border-black hover:bg-black hover:text-white" />
-            <CarouselNext className="relative right-0 top-0 translate-y-0 h-10 w-10 border-black hover:bg-black hover:text-white" />
+            <CarouselPrevious className="relative left-0 top-0 translate-y-0 h-10 w-10 border-brand-black text-brand-black hover:bg-brand-black hover:text-white" />
+            <CarouselNext className="relative right-0 top-0 translate-y-0 h-10 w-10 border-brand-black text-brand-black hover:bg-brand-black hover:text-white" />
           </div>
         </Carousel>
       </div>

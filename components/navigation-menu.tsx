@@ -4,11 +4,14 @@ import React from "react";
 import Link from "next/link";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 
-const NavigationMenu: React.FC = () => {
+interface NavigationMenuProps {
+  scrolled?: boolean;
+}
+
+const NavigationMenu: React.FC<NavigationMenuProps> = ({ scrolled = true }) => {
   const menuItems = [
-    { label: "WHO WE ARE", href: "/" },
+    { label: "ABOUT", href: "/" },
     { label: "PROJECTS", href: "/projects" },
     { label: "SERVICES", href: "/bathroom-remodeling" },
     { label: "BLOG", href: "/blog" },
@@ -18,12 +21,14 @@ const NavigationMenu: React.FC = () => {
   return (
     <>
       {/* Desktop Menu */}
-      <div className="hidden md:flex items-center space-x-8">
+      <div className="hidden md:flex items-center space-x-10">
         {menuItems.map((item, index) => (
           <Link
             key={index}
             href={item.href}
-            className="text-sm font-medium text-black hover:text-gray-600 transition-colors font-geist-mono tracking-wide"
+            className={`text-xs font-medium transition-colors font-geist-mono tracking-widest uppercase ${
+              scrolled ? "text-black hover:text-brand-orange" : "text-white hover:text-white/70"
+            }`}
           >
             {item.label}
           </Link>
@@ -37,7 +42,11 @@ const NavigationMenu: React.FC = () => {
             <Button
               variant="outline"
               size="icon"
-              className="text-xs w-auto py-2 px-3 rounded-full border-[#1e1e1e]"
+              className={`text-xs w-auto py-2 px-4 rounded-none border transition-colors ${
+                scrolled 
+                  ? "border-black text-black hover:bg-black hover:text-white" 
+                  : "border-white text-white hover:bg-white hover:text-black bg-transparent"
+              }`}
             >
               MENU
             </Button>

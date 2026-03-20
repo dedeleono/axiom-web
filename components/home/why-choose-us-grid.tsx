@@ -6,6 +6,7 @@ import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import type { Image as SanityImage } from "sanity";
 import { Button } from "../ui/button";
+import { motion } from "framer-motion";
 
 interface Stat {
   value: string;
@@ -61,8 +62,8 @@ export default function WhyChooseUsGrid() {
 
   if (isLoading) {
     return (
-      <div className="max-w-7xl mx-auto px-8 py-20 min-h-[600px] flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-gray-200 border-t-black rounded-full animate-spin" />
+      <div className="max-w-7xl mx-auto px-8 py-24 md:py-32 min-h-[600px] flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-brand-light-gray border-t-brand-black rounded-full animate-spin" />
       </div>
     );
   }
@@ -84,30 +85,42 @@ export default function WhyChooseUsGrid() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-8 py-20 font-geist">
+    <div className="max-w-7xl mx-auto px-8 py-24 md:py-32 font-geist">
       
-      <div className="flex flex-col md:flex-row justify-between items-end mb-16">
+      <motion.div 
+        className="flex flex-col md:flex-row justify-between items-end mb-20"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        viewport={{ once: true, margin: "-100px" }}
+      >
         <div>
           <Button
             variant="ghost"
-            className="text-black hover:bg-transparent hover:text-black p-0 mb-4 uppercase tracking-widest text-xs font-semibold"
+            className="text-brand-black hover:bg-transparent hover:text-brand-black p-0 mb-4 uppercase tracking-widest text-xs font-semibold"
           >
             {content.subheading}
           </Button>
-          <h2 className="text-4xl md:text-5xl font-bold max-w-2xl leading-tight">
+          <h2 className="text-4xl md:text-5xl font-bold max-w-2xl leading-tight tracking-tight text-brand-black">
             {content.heading}
           </h2>
         </div>
 
-      </div>
+      </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-auto lg:h-[500px]">
+      <motion.div 
+        className="grid grid-cols-1 lg:grid-cols-4 gap-8 h-auto lg:h-[500px]"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+        viewport={{ once: true, margin: "-100px" }}
+      >
         {/* Left Column Group (Spans 3 cols) */}
-        <div className="lg:col-span-3 flex flex-col gap-6 h-full">
+        <div className="lg:col-span-3 flex flex-col gap-8 h-full">
           {/* Top Row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 flex-1">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 flex-1">
             {/* Blue Box */}
-            <div className="bg-[#f25e40] rounded-3xl p-8 flex flex-col justify-between text-white relative overflow-hidden group">
+            <div className="bg-brand-orange rounded-3xl p-8 flex flex-col justify-between text-white relative overflow-hidden group">
                <div className="relative z-10">
                   <h3 className="text-5xl font-bold mb-2">{content.stat1?.value}</h3>
                </div>
@@ -119,41 +132,41 @@ export default function WhyChooseUsGrid() {
             </div>
 
             {/* White Box (Top) */}
-            <div className="bg-[#f6f6f6] rounded-3xl p-8 flex flex-col justify-between text-black group hover:bg-gray-100 transition-colors">
-              <h3 className="text-5xl font-bold mb-2 text-[#f25e40]">{content.stat2?.value}</h3>
-               <p className="text-sm font-medium border-t border-gray-200 pt-4 mt-auto">
+            <div className="bg-brand-light-gray rounded-3xl p-8 flex flex-col justify-between text-brand-black group transition-colors">
+              <h3 className="text-5xl font-bold mb-2 text-brand-orange">{content.stat2?.value}</h3>
+               <p className="text-sm font-medium border-t border-brand-dark-gray/20 pt-4 mt-auto">
                  {content.stat2?.label}
                </p>
             </div>
           </div>
 
           {/* Bottom Row */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 flex-1">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 flex-1">
             {/* White Box (Bottom Left) */}
-            <div className="bg-[#f6f6f6] rounded-3xl p-8 flex flex-col justify-between text-black hover:bg-gray-100 transition-colors">
-              <h3 className="text-4xl font-bold mb-2 text-[#f25e40]">{content.stat3?.value}</h3>
-               <p className="text-xs font-medium border-t border-gray-200 pt-4 mt-auto">
+            <div className="bg-brand-light-gray rounded-3xl p-8 flex flex-col justify-between text-brand-black transition-colors">
+              <h3 className="text-4xl font-bold mb-2 text-brand-orange">{content.stat3?.value}</h3>
+               <p className="text-xs font-medium border-t border-brand-dark-gray/20 pt-4 mt-auto">
                  {content.stat3?.label}
                </p>
             </div>
 
             {/* Text Card (Middle) */}
-            <div className="bg-[#f6f6f6] rounded-3xl p-8 flex flex-col justify-between text-black hover:bg-gray-100 transition-colors">
+            <div className="bg-brand-light-gray rounded-3xl p-8 flex flex-col justify-between text-brand-black transition-colors">
                <div>
                   <h4 className="font-bold mb-3 text-sm">{content.textCard?.title}</h4>
-                  <p className="text-xs text-gray-500 leading-relaxed italic">
+                  <p className="text-xs text-brand-dark-gray leading-relaxed italic">
                     {content.textCard?.description}
                   </p>
                </div>
-               <p className="text-xs font-bold mt-4 pt-4 border-t border-gray-200">
+               <p className="text-xs font-bold mt-4 pt-4 border-t border-brand-dark-gray/20">
                  {content.textCard?.author}
                </p>
             </div>
 
             {/* Green Box */}
-            <div className="bg-[#1f1e1f] rounded-3xl p-8 flex flex-col justify-between text-white group overflow-hidden relative">
+            <div className="bg-brand-black rounded-3xl p-8 flex flex-col justify-between text-white group overflow-hidden relative">
                <div className="relative z-10">
-                <h3 className="text-3xl font-bold mb-2 text-[#f25e40]">{content.stat4?.value}</h3>
+                <h3 className="text-3xl font-bold mb-2 text-brand-orange">{content.stat4?.value}</h3>
                </div>
                <p className="text-xs font-medium border-t border-white/10 pt-4 mt-auto relative z-10">
                  {content.stat4?.label}
@@ -174,13 +187,13 @@ export default function WhyChooseUsGrid() {
               className="object-cover transition-transform duration-700 group-hover:scale-105"
             />
           ) : (
-            <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400">
+            <div className="w-full h-full bg-brand-light-gray flex items-center justify-center text-brand-dark-gray">
                <span className="text-sm">Image Placeholder</span>
             </div>
           )}
           {/* Overlay elements from design if needed, keeping clean for now */}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

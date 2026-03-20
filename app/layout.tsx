@@ -3,6 +3,7 @@ import { geist, geistMono } from "./fonts";
 import "./globals.css";
 import ScrollToTop from "@/components/scroll-to-top";
 import { Toaster } from "sonner";
+import SmoothScrolling from "@/components/smooth-scrolling";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://axiom-web-six.vercel.app";
 
@@ -46,7 +47,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
-      <body className="font-geist antialiased">{children}</body>
+      <body className="font-geist antialiased">
+        <SmoothScrolling>
+          {children}
+        </SmoothScrolling>
+      </body>
       <ScrollToTop />
       <Toaster />
     </html>

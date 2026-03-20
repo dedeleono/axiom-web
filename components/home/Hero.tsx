@@ -72,27 +72,27 @@ const Hero: React.FC = () => {
 
   if (isLoading) {
     return (
-      <section className="w-full h-[600px] bg-gray-100 animate-pulse" />
+      <section className="w-full h-[600px] bg-brand-light-gray animate-pulse" />
     );
   }
 
   // Fallback when no home document or no image
   if (!projectsData?.img) {
     return (
-      <section className="relative w-full flex justify-center items-center overflow-visible bg-[#18181a] min-h-[600px]">
+      <section className="relative w-full flex justify-center items-center overflow-visible bg-brand-black min-h-[600px]">
         <div className="absolute inset-0 bg-black/40 z-10" />
         <div className="text-white text-center p-8 z-20 max-w-4xl mx-auto">
           <h2 className="text-sm md:text-base font-light tracking-widest mb-4 uppercase">
             Welcome to Axiom Renovation | License: 1105006
           </h2>
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight tracking-tight">
             {projectsData?.heroText || "We turn ideas into timeless living spaces"}
           </h1>
           <p className="text-xl md:text-2xl font-light mb-8 uppercase tracking-wide">
             {projectsData?.heroDescription || "HOME RENOVATION COMPANY Serving the Bay Area"}
           </p>
           <Link href={projectsData?.heroCtaUrl ?? "/contact"}>
-            <Button className="bg-white text-black hover:bg-gray-200 rounded-full px-8 py-6 text-lg font-medium transition-all">
+            <Button className="bg-white text-brand-black hover:bg-brand-light-gray rounded-full px-8 py-6 text-lg font-medium transition-all">
               {projectsData?.heroCtaLabel ?? "Book a Free Consultation"}
             </Button>
           </Link>
@@ -105,7 +105,7 @@ const Hero: React.FC = () => {
 
   if (!imageUrl) {
     return (
-      <section className="relative w-full flex justify-center items-center overflow-visible bg-[#18181a] min-h-[600px]">
+      <section className="relative w-full flex justify-center items-center overflow-visible bg-brand-black min-h-[600px]">
         <div className="text-white text-center p-8">
           <h1 className="text-4xl font-bold mb-4">
             {projectsData.heroText || "Image URL could not be generated"}
@@ -119,8 +119,8 @@ const Hero: React.FC = () => {
   }
 
   return (
-    <section className="relative w-full h-screen flex justify-center items-center overflow-hidden">
-      <div className="absolute inset-0 bg-black/30 z-10" />
+    <section className="relative w-full h-screen flex overflow-hidden">
+      <div className="absolute inset-0 bg-black/40 z-10" />
       {/* Native img to avoid Next.js Image loader issues with Sanity CDN */}
       <img
         src={imageUrl}
@@ -128,30 +128,34 @@ const Hero: React.FC = () => {
         className="absolute inset-0 w-full h-full object-cover"
         fetchPriority="high"
       />
-      <div className="relative z-20 text-white text-center px-4 max-w-5xl mx-auto mt-20">
-          <h2 className="text-sm md:text-base font-medium tracking-widest mb-6 uppercase">
+      
+      <div className="absolute z-20 top-[25%] md:top-[30%] left-8 md:left-24 text-white text-left">
+          <h2 className="text-xs md:text-sm font-medium tracking-[0.3em] mb-6 uppercase text-white/80">
             {projectsData.heroSubText1 || "Welcome to Axiom Renovation | License: 1105006"}
           </h2>
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+          <h1 className="text-5xl md:text-[6rem] lg:text-[8rem] font-light mb-6 leading-[0.9] tracking-tighter uppercase max-w-4xl">
             {projectsData.heroText || "We turn ideas into timeless living spaces"}
           </h1>
-          <p className="text-xl md:text-2xl font-light mb-10 uppercase tracking-wide">
+          <p className="text-sm md:text-base font-light uppercase tracking-widest text-white/80">
             {projectsData.heroDescription || "HOME RENOVATION COMPANY Serving the Bay Area"}
           </p>
+      </div>
+
+      <div className="absolute bottom-12 right-8 md:right-24 z-20 hidden md:block">
           <Link href={projectsData.heroCtaUrl ?? "/contact"}>
-          <Button className="bg-[#f25e40] text-white hover:bg-gray-200 hover:text-[#f25e40] rounded-full px-8 py-6 text-lg font-medium transition-all transform hover:scale-105 cursor-pointer">
-              {projectsData.heroCtaLabel ?? "Book a Free Consultation"}
+            <Button className="bg-white text-black hover:bg-brand-orange cursor-pointer hover:text-white hover:border-brand-orange border border-white rounded-none px-12 py-7 text-xs font-semibold tracking-widest uppercase transition-colors duration-300">
+              {projectsData.heroCtaLabel ?? "Get In Touch"}
             </Button>
           </Link>
       </div>
 
-      <div
-        className="absolute bottom-8 z-20 animate-bounce cursor-pointer"
-        onClick={scrollToNextSection}
-        role="button"
-        tabIndex={0}
-      >
-        <ChevronDown className="w-8 h-8 text-white" />
+      {/* Mobile CTA */}
+      <div className="absolute bottom-12 left-8 right-8 z-20 md:hidden">
+          <Link href={projectsData.heroCtaUrl ?? "/contact"}>
+            <Button className="bg-white w-full text-black hover:bg-brand-orange hover:text-white hover:border-brand-orange border border-white rounded-none px-8 py-6 text-xs font-semibold tracking-widest uppercase transition-colors duration-300">
+              {projectsData.heroCtaLabel ?? "Get In Touch"}
+            </Button>
+          </Link>
       </div>
     </section>
   );

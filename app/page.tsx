@@ -32,7 +32,7 @@ export default async function Home() {
   // const projects = await getProjects();
 
   return (
-    <div className="min-h-screen bg-white text-gray-900">
+    <div className="min-h-screen bg-white text-brand-black">
       <Header />
       <main className="w-full mx-auto">
         <Hero />
@@ -41,7 +41,7 @@ export default async function Home() {
           <ServicesIntro />
         </section>
 
-        <section className="mask-overlap bg-[#f6f6f6] relative z-20 pt-10">
+        <section className="mask-overlap bg-brand-light-gray relative z-20 pt-10">
           <WhoWeAre />
         </section>
 
@@ -53,7 +53,7 @@ export default async function Home() {
           <InspirationCTA />
         </section> */}
 
-        <section className="mask-overlap bg-[#f6f6f6] relative z-20 pt-10">
+        <section className="mask-overlap bg-brand-light-gray relative z-20 pt-10">
           <WhyChooseUsGrid />
         </section>
 
@@ -61,7 +61,7 @@ export default async function Home() {
           <Testimonials />
         </section>
 
-        <section className="mask-overlap bg-[#f25e40] relative z-10 pt-10">
+        <section className="mask-overlap bg-brand-orange relative z-10 pt-10">
           <Philosophy />
         </section>
 

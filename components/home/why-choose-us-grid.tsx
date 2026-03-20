@@ -95,7 +95,7 @@ export default function WhyChooseUsGrid() {
             <h3 className="text-4xl md:text-5xl font-light md:text-right mb-8 text-brand-orange break-words">{content.stat1?.value}</h3>
             <div>
               <h4 className="text-sm font-semibold tracking-widest uppercase mb-4 text-[#D1D1D1]">{content.stat1?.label}</h4>
-              <p className="text-[#A1A1A1] font-light text-sm leading-relaxed">{content.stat1?.description || "We craft designs that transcend trends, ensuring elegance and relevance for years to come."}</p>
+              <p className="text-[#A1A1A1] font-light text-sm leading-relaxed">{"We craft designs that transcend trends, ensuring elegance and relevance for years to come."}</p>
             </div>
           </div>
           
@@ -104,7 +104,7 @@ export default function WhyChooseUsGrid() {
             <h3 className="text-4xl md:text-5xl font-light md:text-right mb-8 text-brand-orange break-words">{content.stat2?.value}</h3>
             <div>
               <h4 className="text-sm font-semibold tracking-widest uppercase mb-4 text-[#D1D1D1]">{content.stat2?.label}</h4>
-              <p className="text-[#A1A1A1] font-light text-sm leading-relaxed">{content.stat2?.description || "We shape spaces with precision and harmony, balancing function and artistry in every detail."}</p>
+              <p className="text-[#A1A1A1] font-light text-sm leading-relaxed">{"We shape spaces with precision and harmony, balancing function and artistry in every detail."}</p>
             </div>
           </div>
 
@@ -113,7 +113,7 @@ export default function WhyChooseUsGrid() {
             <h3 className="text-4xl md:text-5xl font-light md:text-right mb-8 text-brand-orange break-words">{content.stat3?.value}</h3>
             <div>
               <h4 className="text-sm font-semibold tracking-widest uppercase mb-4 text-[#D1D1D1]">{content.stat3?.label}</h4>
-              <p className="text-[#A1A1A1] font-light text-sm leading-relaxed">{content.stat3?.description || "We create interiors that breathe life, offering comfort, resonance, and belonging."}</p>
+              <p className="text-[#A1A1A1] font-light text-sm leading-relaxed">{"We create interiors that breathe life, offering comfort, resonance, and belonging."}</p>
             </div>
           </div>
 
@@ -121,7 +121,7 @@ export default function WhyChooseUsGrid() {
           <div className="bg-brand-orange p-8 md:p-12 lg:p-16 flex flex-col justify-between text-white min-h-[300px] md:min-h-[350px] cursor-pointer hover:bg-[#e04f1e] transition-colors md:border-r lg:border-r-0 lg:border-t border-[#3A3A3A]">
             <h3 className="text-sm font-semibold tracking-[0.2em] uppercase md:text-right mb-8 break-words">{content.stat4?.value}</h3>
             <div>
-              <p className="text-brand-black/90 font-medium text-sm leading-relaxed">{content.stat4?.description || "Each project reflects beauty, balance, and meaning, transforming spaces into experiences that truly endure."}</p>
+              <p className="text-brand-black/90 font-medium text-sm leading-relaxed">{"Each project reflects beauty, balance, and meaning, transforming spaces into experiences that truly endure."}</p>
             </div>
           </div>
         </div>

@@ -91,7 +91,7 @@ export default function WhyChooseUsGrid() {
         {/* Left Column - 2x2 Grid */}
         <div className="w-full lg:w-[55%] grid grid-cols-1 md:grid-cols-2 overflow-hidden -mt-8 rounded-t-[2rem] lg:rounded-tr-none lg:rounded-tl-[2rem] relative z-10">
           {/* Box 1 */}
-          <div className="border-b border-r border-[#3A3A3A] bg-[#222] p-8 md:p-12 lg:p-16 flex flex-col justify-between aspect-square lg:aspect-auto hover:bg-[#2A2A2A] transition-colors">
+          <div className="border-b border-r border-[#3A3A3A] bg-[#222] p-8 pt-16 md:p-12 md:pt-20 lg:p-16 lg:pt-24 flex flex-col justify-between min-h-[300px] md:min-h-[350px] hover:bg-[#2A2A2A] transition-colors">
             <h3 className="text-4xl md:text-5xl font-light md:text-right mb-8 text-brand-orange break-words">{content.stat1?.value}</h3>
             <div>
               <h4 className="text-sm font-semibold tracking-widest uppercase mb-4 text-[#D1D1D1]">{content.stat1?.label}</h4>
@@ -100,7 +100,7 @@ export default function WhyChooseUsGrid() {
           </div>
           
           {/* Box 2 */}
-          <div className="border-b lg:border-r-0 border-r border-[#3A3A3A] bg-[#222] p-8 md:p-12 lg:p-16 flex flex-col justify-between aspect-square lg:aspect-auto hover:bg-[#2A2A2A] transition-colors">
+          <div className="border-b lg:border-r-0 border-r border-[#3A3A3A] bg-[#222] p-8 md:p-12 md:pt-20 lg:p-16 lg:pt-24 flex flex-col justify-between min-h-[300px] md:min-h-[350px] hover:bg-[#2A2A2A] transition-colors">
             <h3 className="text-4xl md:text-5xl font-light md:text-right mb-8 text-brand-orange break-words">{content.stat2?.value}</h3>
             <div>
               <h4 className="text-sm font-semibold tracking-widest uppercase mb-4 text-[#D1D1D1]">{content.stat2?.label}</h4>
@@ -109,7 +109,7 @@ export default function WhyChooseUsGrid() {
           </div>
 
           {/* Box 3 */}
-          <div className="border-b md:border-b-0 border-r border-[#3A3A3A] bg-[#222] p-8 md:p-12 lg:p-16 flex flex-col justify-between aspect-square lg:aspect-auto hover:bg-[#2A2A2A] transition-colors">
+          <div className="border-b md:border-b-0 border-r border-[#3A3A3A] bg-[#222] p-8 md:p-12 lg:p-16 flex flex-col justify-between min-h-[300px] md:min-h-[350px] hover:bg-[#2A2A2A] transition-colors">
             <h3 className="text-4xl md:text-5xl font-light md:text-right mb-8 text-brand-orange break-words">{content.stat3?.value}</h3>
             <div>
               <h4 className="text-sm font-semibold tracking-widest uppercase mb-4 text-[#D1D1D1]">{content.stat3?.label}</h4>
@@ -118,7 +118,7 @@ export default function WhyChooseUsGrid() {
           </div>
 
           {/* Box 4 (Accent) */}
-          <div className="bg-brand-orange p-8 md:p-12 lg:p-16 flex flex-col justify-between text-white aspect-square lg:aspect-auto cursor-pointer hover:bg-[#e04f1e] transition-colors md:border-r lg:border-r-0 lg:border-t border-[#3A3A3A]">
+          <div className="bg-brand-orange p-8 md:p-12 lg:p-16 flex flex-col justify-between text-white min-h-[300px] md:min-h-[350px] cursor-pointer hover:bg-[#e04f1e] transition-colors md:border-r lg:border-r-0 lg:border-t border-[#3A3A3A]">
             <h3 className="text-sm font-semibold tracking-[0.2em] uppercase md:text-right mb-8 break-words">{content.stat4?.value}</h3>
             <div>
               <p className="text-brand-black/90 font-medium text-sm leading-relaxed">{content.stat4?.description || "Each project reflects beauty, balance, and meaning, transforming spaces into experiences that truly endure."}</p>
@@ -127,7 +127,7 @@ export default function WhyChooseUsGrid() {
         </div>
 
         {/* Right Column - Text & Image */}
-        <div className="w-full lg:w-[45%] flex flex-col justify-between pt-12 lg:pt-24 px-8 md:px-16 lg:px-24">
+        <div className="w-full lg:w-[45%] flex flex-col justify-between pt-12 lg:pt-24 px-8 md:px-16 lg:px-24 pb-16 lg:pb-0">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

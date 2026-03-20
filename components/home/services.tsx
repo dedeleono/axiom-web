@@ -105,14 +105,14 @@ export default function Services() {
               </div>
 
               {/* Content Container */}
-              <div className="absolute inset-0 w-full h-full p-8 md:p-12 flex flex-col justify-between text-white z-10 transition-all duration-700 ease-in-out">
+              <div className="absolute inset-0 w-full h-full p-8 md:p-12 flex flex-col justify-end text-white z-10 transition-all duration-700 ease-in-out">
                 {/* Title - Always visible */}
-                <h3 className="text-3xl md:text-4xl font-light text-white group-hover:text-brand-orange transition-colors duration-500">
+                <h3 className="text-3xl md:text-4xl font-light mb-4 text-white group-hover:text-brand-orange transition-colors duration-500">
                   {service.title}
                 </h3>
 
                 {/* Hover Content - Hidden by default, slides up and fades in */}
-                <div className="overflow-hidden max-h-[0px] opacity-0 group-hover:max-h-[300px] group-hover:opacity-100 transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] mt-auto">
+                <div className="overflow-hidden max-h-[0px] opacity-0 group-hover:max-h-[300px] group-hover:opacity-100 transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)]">
                   <p className="text-white/90 text-base leading-relaxed mb-8 font-normal">
                     {service.description}
                   </p>

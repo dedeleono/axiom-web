@@ -323,9 +323,13 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
                 {service.features.map((feature, idx) => {
                   const isLarge = idx === 0 || idx === 3;
                   return (
-                    <div
+                    <motion.div
                       key={idx}
                       className={`relative overflow-hidden rounded-[1rem] bg-[#222] border border-[#3A3A3A] group ${isLarge ? "md:col-span-4" : "md:col-span-2"} hover:bg-[#2A2A2A] hover:border-[#4A4A4A] transition-colors duration-500`}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: (idx % 3) * 0.15 }}
+                      viewport={{ once: true, margin: "-50px" }}
                     >
                       <div className={`relative h-full flex ${isLarge ? "flex-col md:flex-row" : "flex-col"}`}>
                         <div
@@ -356,7 +360,7 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
                           </p>
                         </div>
                       </div>
-                    </div>
+                    </motion.div>
                   );
                 })}
               </div>
@@ -372,7 +376,14 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
               </h3>
               <div className="relative border-l border-[#333] ml-4 md:ml-12 space-y-16">
                 {service.process.map((step, idx) => (
-                  <div key={idx} className="relative pl-10 md:pl-16 group">
+                  <motion.div 
+                    key={idx} 
+                    className="relative pl-10 md:pl-16 group"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: idx * 0.1 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                  >
                     <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-[#333] group-hover:bg-brand-orange transition-colors duration-300" />
                     <div className="flex flex-col gap-2 items-start">
                       <div>
@@ -387,7 +398,7 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
                         </p>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
               <div className="mt-24 text-left md:ml-12 pl-4 md:pl-16">

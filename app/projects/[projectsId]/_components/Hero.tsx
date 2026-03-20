@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import type { ProjectData } from "@/lib/interfaces";
+import { motion } from "framer-motion";
 
 interface HeroProps {
   project: ProjectData;
@@ -11,16 +12,24 @@ interface HeroProps {
 export default function Hero({ project }: HeroProps) {
   return (
     <section className="w-full flex justify-center items-center overflow-visible">
-      {project.image && project.image.asset && (
-        <Image
-          src={urlFor(project.image)?.url() ?? ""}
-          alt={`${project.title} hero image`}
-          width={1200}
-          height={600}
-          className="w-full md:h-[500px] h-[700px] rounded-md object-cover md:object-center object-[30%_center]"
-          priority
-        />
-      )}
+      <motion.div 
+        className="relative w-full h-[600px] md:h-[700px]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        {project.image && project.image.asset ? (
+          <Image
+            src={urlFor(project.image)?.url() ?? ""}
+            alt={`${project.title} hero image`}
+            fill
+            className="object-cover md:object-center object-[30%_center]"
+            priority
+          />
+        ) : (
+          <div className="w-full h-full bg-[#18181a]" />
+        )}
+      </motion.div>
     </section>
   );
 }

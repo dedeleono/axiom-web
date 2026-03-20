@@ -14,13 +14,13 @@ export default function ServicesLayout({
 
       <main className="w-full mx-auto">
         <ServiceHero />
-        <section className="bg-white pt-8">
+        <section className="mask-overlap bg-white relative z-20 pt-10">
           <ServiceTabs />
           {children}
         </section>
       </main>
 
-      <section className="bg-white relative z-20">
+      <section className="mask-overlap bg-white mt-auto pt-10 relative z-20">
         <Footer />
       </section>
     </div>

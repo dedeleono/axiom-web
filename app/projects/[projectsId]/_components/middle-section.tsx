@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import type { SanityImageObject } from "@/lib/interfaces";
+import { motion } from "framer-motion";
 import {
   Carousel,
   CarouselContent,
@@ -36,7 +37,7 @@ const MobileImages = ({ images }: { images?: SanityImageObject[] }) => {
               src={src}
               alt={`Project image ${index + 1}`}
               fill
-              className="object-cover rounded-sm"
+              className="object-cover rounded-none"
               priority={index < 2}
             />
           </div>
@@ -104,62 +105,84 @@ export default function MiddleSection({
   return (
     <React.Fragment>
       <div className="max-w-7xl min-h-[calc(100vh-100px)] relative mx-10">
-        <div className="flex justify-between items-center w-full py-4 flex-wrap gap-5">
-          <div className="flex flex-col items-center gap-2">
-            <div className="text-sm font-medium flex flex-col items-start text-gray-500">
+        <motion.div 
+          className="flex justify-start md:justify-between items-start md:items-center w-full py-8 md:py-12 flex-wrap gap-8 md:gap-5 border-b border-[#EBEBEB]"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <div className="flex flex-col items-start gap-1">
+            <span className="text-xs font-semibold uppercase tracking-widest text-brand-dark-gray">
               Location
-              <span className="text-base text-black">{location}</span>
-            </div>
+            </span>
+            <span className="text-base md:text-lg text-brand-black font-light">{location}</span>
           </div>
-          <div className="flex flex-col items-center gap-2">
-            <div className="text-sm font-medium flex flex-col items-start text-gray-500">
+          <div className="flex flex-col items-start gap-1">
+            <span className="text-xs font-semibold uppercase tracking-widest text-brand-dark-gray">
               Year
-              <span className="text-base text-black">{year}</span>
-            </div>
+            </span>
+            <span className="text-base md:text-lg text-brand-black font-light">{year}</span>
           </div>
-          <div className="flex flex-col items-center gap-2">
-            <div className="text-sm font-medium flex flex-col items-start text-gray-500">
+          <div className="flex flex-col items-start gap-1">
+            <span className="text-xs font-semibold uppercase tracking-widest text-brand-dark-gray">
               Project
-              <span className="text-base text-black">{projectType}</span>
-            </div>
+            </span>
+            <span className="text-base md:text-lg text-brand-black font-light">{projectType}</span>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="my-16 pt-10">
-          <h1 className="md:text-5xl text-3xl font-bold leading-tight">
+        <motion.div 
+          className="my-16 md:my-24"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          viewport={{ once: true }}
+        >
+          <h1 className="md:text-6xl lg:text-7xl text-4xl font-light leading-tight tracking-tight text-brand-black">
             <span className="block uppercase">{title}</span>
           </h1>
-        </div>
+        </motion.div>
 
-        <div className="flex flex-col space-y-16 max-w-7xl mx-auto md:px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+        <div className="flex flex-col space-y-16 max-w-7xl mx-auto md:px-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
             <div className="hidden md:block md:col-span-1" />
-            <div className="col-span-1">
+            <motion.div 
+              className="col-span-1"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
               {description1?.split("\n").map((paragraph, index) => (
                 <p
                   key={index}
-                  className="text-gray-700 text-sm md:text-base leading-relaxed mb-4 md:-translate-x-2 md:max-w-[75%] pl-20 md:pl-0"
+                  className="text-brand-dark-gray font-light text-base md:text-lg leading-relaxed mb-6 md:max-w-[85%]"
                 >
                   {paragraph}
                 </p>
               ))}
-            </div>
+            </motion.div>
           </div>
 
-          <div className="grid grid-cols-2 md:gap-5 gap-3">
+          <div className="grid grid-cols-2 md:gap-8 gap-4 mb-8 md:mb-16">
             {highlghtImages?.map((image, index) => (
-              <div
+              <motion.div
                 key={index}
                 className={`col-span-1 flex ${
                   index === 0 ? "justify-end" : "justify-start"
                 }`}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: index * 0.2 }}
+                viewport={{ once: true, margin: "-100px" }}
               >
-                <div className="w-full md:w-2/3 md:mb-40 mb-28 mt-10">
+                <div className={`w-full md:w-4/5 ${index === 0 ? "mt-0 md:mt-0" : "mt-12 md:mt-32"}`}>
                   <div
                     className={
                       index === 0
-                        ? "aspect-square relative"
-                        : "relative h-[250px] md:h-[475px]"
+                        ? "aspect-[4/5] relative"
+                        : "relative aspect-[3/4]"
                     }
                   >
                     <Image
@@ -171,28 +194,40 @@ export default function MiddleSection({
                     />
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-            <div className="col-span-1">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
+            <motion.div 
+              className="col-span-1"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
               {description2?.split("\n").map((paragraph, index) => (
                 <p
                   key={index}
-                  className="text-gray-700 leading-relaxed mb-4 md:max-w-[65%] pr-28 text-sm md:text-base md:pr-0"
+                  className="text-brand-dark-gray font-light text-base md:text-lg leading-relaxed mb-6 md:max-w-[85%]"
                 >
                   {paragraph}
                 </p>
               ))}
-            </div>
+            </motion.div>
             <div className="hidden md:block md:col-span-1" />
           </div>
 
-          <div className="w-full pb-20">
+          <motion.div 
+            className="w-full pb-20"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
             <MobileImages images={images} />
             <DesktopCarousel images={images} />
-          </div>
+          </motion.div>
         </div>
       </div>
     </React.Fragment>

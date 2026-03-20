@@ -72,8 +72,14 @@ export default function ServiceTabs() {
 
   return (
     <div className="w-full bg-white relative z-20 pb-8">
-      <div className="max-w-7xl mx-auto flex flex-row flex-wrap justify-center items-center gap-8 md:gap-16 pt-8 pb-12 px-4">
-        {services.map((service) => {
+      <motion.div 
+        className="max-w-7xl mx-auto flex flex-row flex-wrap justify-center items-center gap-8 md:gap-16 pt-8 pb-12 px-4"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        viewport={{ once: true }}
+      >
+        {services.map((service, index) => {
           const isActive = currentSlug === service.slug;
           return (
             <Link
@@ -83,6 +89,9 @@ export default function ServiceTabs() {
             >
               <motion.div
                 className="flex flex-col items-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -114,7 +123,7 @@ export default function ServiceTabs() {
             </Link>
           );
         })}
-      </div>
+      </motion.div>
     </div>
   );
 }

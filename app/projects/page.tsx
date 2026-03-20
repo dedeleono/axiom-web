@@ -14,15 +14,15 @@ export default function ProjectsPage() {
     <div className="min-h-screen bg-white text-gray-900">
       <Header />
 
-      <main className="max-w-[1920px] mx-auto">
+      <main className="w-full mx-auto">
         <Hero />
 
-        <section className="mask-overlap bg-[#f6f6f6] pt-[2rem] mb-[-2rem]">
+        <section className="mask-overlap bg-white relative z-20 pt-10">
           <ProjectsCarousel />
         </section>
       </main>
 
-      <section className="mask-overlap bg-white mt-auto pt-[2rem] mb-[-2rem]">
+      <section className="mask-overlap bg-white mt-auto pt-10 relative z-20">
         <Footer />
       </section>
     </div>

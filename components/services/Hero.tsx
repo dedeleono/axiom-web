@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 
+import { motion } from "framer-motion";
+
 const SERVICE_SLUGS = ["bathroom-remodeling", "kitchen-remodeling", "home-addition"] as const;
 
 interface HomeHeroData {
@@ -103,7 +105,12 @@ export default function ServiceHero() {
 
         {(heroText || heroSubText1 || heroSubText2 || heroDescription) && (
           <div className="absolute inset-0 flex flex-col items-center justify-center text-white bg-black/40">
-            <div className="w-full max-w-screen-2xl mx-auto px-8 md:px-24 z-10 font-geist-mono">
+            <motion.div 
+              className="w-full max-w-screen-2xl mx-auto px-8 md:px-24 z-10 font-geist-mono"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
               {heroText && (
                 <h1 className="text-4xl md:text-6xl font-light mb-6 text-left max-w-4xl leading-tight tracking-tight uppercase">
                   {heroText}
@@ -124,7 +131,7 @@ export default function ServiceHero() {
                   {heroDescription}
                 </p>
               )}
-            </div>
+            </motion.div>
           </div>
         )}
       </div>

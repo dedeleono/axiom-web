@@ -80,23 +80,24 @@ export default function ProjectsGrid() {
   }
 
   return (
-    <div className="max-w-[1920px] mx-auto px-4 md:px-12 py-20">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+    <div className="w-full max-w-[100%] mx-auto px-8 md:px-16 lg:px-24 py-24 md:py-32">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-24">
         {projects.map((project, index) => (
           <motion.div
             key={project.projectSlug.current}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.7, delay: (index % 3) * 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="group flex flex-col"
           >
             {/* Header Info */}
             <div className="mb-6 flex justify-between items-start">
-              <div className="space-y-1">
-                <h3 className="text-2xl font-medium text-gray-900 leading-tight">
+              <div className="space-y-2">
+                <h3 className="text-2xl md:text-3xl font-light text-brand-black leading-tight group-hover:text-brand-orange transition-colors duration-300">
                   {project.title}
                 </h3>
-                <p className="text-sm text-gray-500 uppercase tracking-widest font-light">
+                <p className="text-xs text-brand-dark-gray uppercase tracking-widest font-semibold">
                   {project.location}
                 </p>
               </div>
@@ -105,9 +106,9 @@ export default function ProjectsGrid() {
             {/* Image Card */}
             <Link 
               href={`/projects/${project.projectSlug.current}`}
-              className="block relative w-full aspect-3/4 overflow-hidden rounded-sm bg-gray-100 mb-6"
+              className="block relative w-full aspect-[4/5] overflow-hidden rounded-none bg-brand-light-gray mb-6"
             >
-              <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-105">
+              <div className="absolute inset-0 transition-transform duration-[1.5s] ease-[0.16,1,0.3,1] group-hover:scale-[1.03]">
                 <Image
                   src={
                     urlFor(project.image)
@@ -143,15 +144,15 @@ export default function ProjectsGrid() {
             </Link>
 
             {/* Footer / CTA */}
-            <div className="mt-auto pt-4 border-t border-gray-200 flex justify-between items-center group-hover:border-black/20 transition-colors">
-              <span className="text-xs font-medium text-gray-400 group-hover:text-black transition-colors">
-                VIEW PROJECT
+            <div className="mt-auto pt-6 border-t border-[#EBEBEB] flex justify-between items-center group-hover:border-brand-black transition-colors duration-500">
+              <span className="text-xs font-semibold tracking-widest text-brand-dark-gray group-hover:text-brand-black transition-colors duration-500 uppercase">
+                View Project
               </span>
               <Link
                 href={`/projects/${project.projectSlug.current}`}
-                className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center group-hover:bg-black group-hover:border-black group-hover:text-white transition-all duration-300"
+                className="w-12 h-12 rounded-full border border-[#EBEBEB] flex items-center justify-center group-hover:bg-brand-orange group-hover:border-brand-orange group-hover:text-white transition-all duration-500 text-brand-black"
               >
-                <ArrowUpRight className="w-4 h-4" />
+                <ArrowUpRight className="w-5 h-5" />
               </Link>
             </div>
           </motion.div>

@@ -71,8 +71,8 @@ export default function ServiceTabs() {
   }
 
   return (
-    <div className="max-w-7xl pb-12 relative mx-10 font-geist">
-      <div className="flex flex-row flex-wrap justify-center items-center w-full gap-8 md:gap-16 pt-8 pb-12">
+    <div className="w-full bg-white relative z-20 pb-8">
+      <div className="max-w-7xl mx-auto flex flex-row flex-wrap justify-center items-center gap-8 md:gap-16 pt-8 pb-12 px-4">
         {services.map((service) => {
           const isActive = currentSlug === service.slug;
           return (
@@ -83,12 +83,12 @@ export default function ServiceTabs() {
             >
               <motion.div
                 className="flex flex-col items-center"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <div
-                  className={`relative w-20 h-20 md:w-24 md:h-24 p-4  transition-all duration-300 ${
-                    isActive ? "bg-[#f25e40] shadow-xl scale-105 rounded-xl" : "bg-gray-100 group-hover:bg-gray-200 rounded-md"
+                  className={`relative w-20 h-20 md:w-24 md:h-24 p-4 transition-all duration-300 rounded-[1rem] ${
+                    isActive ? "bg-brand-orange shadow-lg" : "bg-[#F5F5F5] group-hover:bg-[#EBEBEB]"
                   }`}
                 >
                   {service.icon && (
@@ -96,16 +96,16 @@ export default function ServiceTabs() {
                       src={urlFor(service.icon)?.auto("format")?.fit("max")?.url() ?? ""}
                       alt={service.title}
                       fill
-                      className={`object-contain p-4 ${isActive ? "invert" : ""}`}
+                      className={`object-contain p-5 ${isActive ? "brightness-0 invert" : ""}`}
                       sizes="(max-width: 768px) 80px, 96px"
                     />
                   )}
                 </div>
                 <h3
-                  className={`mt-6 text-center font-medium text-base transition-colors ${
+                  className={`mt-6 text-center text-xs md:text-sm tracking-widest uppercase transition-colors ${
                     isActive
-                      ? "text-black font-bold "
-                      : "text-gray-500 group-hover:text-black"
+                      ? "text-brand-black font-semibold"
+                      : "text-brand-dark-gray group-hover:text-brand-black font-medium"
                   }`}
                 >
                   {service.title}

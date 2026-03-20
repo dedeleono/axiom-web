@@ -170,7 +170,7 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
       >
         <div className="grid grid-cols-1 md:grid-cols-2">
           <motion.div
-            className="relative w-full h-[500px] md:h-auto md:min-h-[800px] bg-zinc-900 overflow-hidden group"
+            className="relative w-full h-[500px] md:h-auto md:min-h-[800px] bg-brand-black overflow-hidden group"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4 }}
@@ -247,8 +247,8 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
             {service.videoUrl && (
               <div className="absolute top-8 right-8 z-20">
                 <Link href={service.videoUrl} target="_blank">
-                  <Button className="bg-[#f25e40] hover:bg-[#d14024] text-white rounded-full px-6 py-6 flex items-center gap-2 shadow-lg hover:scale-105 transition-transform">
-                    <PlayCircle className="w-6 h-6" />
+                  <Button className="bg-brand-orange hover:bg-[#e04f1e] text-white rounded-full px-8 py-6 flex items-center gap-3 shadow-lg hover:scale-105 transition-transform text-xs tracking-widest uppercase font-semibold">
+                    <PlayCircle className="w-5 h-5" />
                     Watch Video
                   </Button>
                 </Link>
@@ -314,45 +314,44 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
         </div>
 
         {service.features && service.features.length > 0 && (
-          <div className="mask-overlap relative z-20 px-8 md:px-16 py-20 border-t border-gray-800 bg-[#121213]">
-            <div className="max-w-7xl mx-auto">
-              <h3 className="text-3xl font-bold mb-12 text-white border-l-4 border-[#f25e40] pl-6">
+          <div className="mask-overlap relative z-20 px-8 md:px-16 lg:px-24 py-24 md:py-32 bg-[#1A1A1A]">
+            <div className="max-w-[95%] xl:max-w-screen-2xl mx-auto">
+              <h3 className="text-4xl md:text-5xl font-light tracking-tight mb-16 text-white border-l-[3px] border-brand-orange pl-8">
                 {service.featuresTitle || "Services Offered"}
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-6 gap-6 md:gap-8">
                 {service.features.map((feature, idx) => {
                   const isLarge = idx === 0 || idx === 3;
                   return (
                     <div
                       key={idx}
-                      className={`relative overflow-hidden rounded-3xl bg-white/5 border border-white/10 group ${isLarge ? "md:col-span-4" : "md:col-span-2"} hover:border-[#f25e40]/50 transition-colors duration-500`}
+                      className={`relative overflow-hidden rounded-[1rem] bg-[#222] border border-[#3A3A3A] group ${isLarge ? "md:col-span-4" : "md:col-span-2"} hover:bg-[#2A2A2A] hover:border-[#4A4A4A] transition-colors duration-500`}
                     >
                       <div className={`relative h-full flex ${isLarge ? "flex-col md:flex-row" : "flex-col"}`}>
                         <div
-                          className={`relative overflow-hidden bg-black/20 ${isLarge ? "md:w-1/2 h-64 md:h-auto" : "w-full h-56"} flex items-center justify-center`}
+                          className={`relative overflow-hidden ${isLarge ? "md:w-1/2 h-64 md:h-auto" : "w-full h-56"} flex items-center justify-center bg-[#1A1A1A]`}
                         >
                           {feature.image ? (
                             <Image
                               src={urlFor(feature.image)?.url() ?? ""}
                               alt={feature.title}
                               fill
-                              className="object-cover transition-transform duration-700 group-hover:scale-110"
+                              className="object-cover opacity-80 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105"
                             />
                           ) : (
                             <div className="flex flex-col items-center gap-4 p-8">
                               {getFallbackIcon(idx)}
                             </div>
                           )}
-                          <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-500" />
                         </div>
-                        <div className={`p-8 relative flex flex-col justify-center ${isLarge ? "md:w-1/2" : "w-full"}`}>
-                          <h4 className="text-2xl font-bold mb-4 text-white group-hover:text-[#f25e40] transition-colors flex items-center gap-2 leading-tight">
+                        <div className={`p-8 md:p-12 relative flex flex-col justify-center ${isLarge ? "md:w-1/2" : "w-full"}`}>
+                          <h4 className="text-2xl md:text-3xl font-light mb-6 text-white group-hover:text-brand-orange transition-colors flex items-center gap-4 leading-tight">
                             {feature.title}
-                            <span className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-[#f25e40]">
+                            <span className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-brand-orange">
                               →
                             </span>
                           </h4>
-                          <p className="text-base text-gray-400 leading-relaxed font-light group-hover:text-gray-300 transition-colors line-clamp-4">
+                          <p className="text-base text-[#D1D1D1] leading-relaxed font-light line-clamp-4">
                             {feature.description}
                           </p>
                         </div>
@@ -366,24 +365,24 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
         )}
 
         {service.process && service.process.length > 0 && (
-          <div className="mask-overlap relative z-10 px-8 md:px-16 py-20 pb-40 border-t border-gray-800 bg-[#0a0a0b]">
-            <div className="max-w-7xl mx-auto">
-              <h3 className="text-3xl font-bold mb-16 text-white border-l-4 border-[#f25e40] pl-6">
+          <div className="mask-overlap relative z-10 px-8 md:px-16 lg:px-24 py-24 md:py-32 pb-40 bg-[#111]">
+            <div className="max-w-[95%] xl:max-w-screen-2xl mx-auto">
+              <h3 className="text-4xl md:text-5xl font-light tracking-tight mb-20 text-white border-l-[3px] border-brand-orange pl-8">
                 {service.processTitle || "Our Process"}
               </h3>
-              <div className="relative border-l-2 border-gray-800 ml-4 md:ml-12 space-y-12">
+              <div className="relative border-l border-[#333] ml-4 md:ml-12 space-y-16">
                 {service.process.map((step, idx) => (
-                  <div key={idx} className="relative pl-8 md:pl-12 group">
-                    <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-gray-600 border-4 border-[#0a0a0b] group-hover:bg-[#f25e40] transition-colors" />
+                  <div key={idx} className="relative pl-10 md:pl-16 group">
+                    <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-[#333] group-hover:bg-brand-orange transition-colors duration-300" />
                     <div className="flex flex-col gap-2 items-start">
                       <div>
-                        <small className="text-[#f25e40] font-bold text-xs uppercase tracking-widest block mb-1">
+                        <small className="text-brand-orange font-semibold text-xs uppercase tracking-widest block mb-4">
                           {step.step || `Step ${idx + 1}`}
                         </small>
-                        <h4 className="text-xl font-bold text-white mb-3 group-hover:text-[#f25e40] transition-colors">
+                        <h4 className="text-2xl md:text-3xl font-light text-white mb-4 group-hover:text-brand-orange transition-colors duration-300">
                           {step.title}
                         </h4>
-                        <p className="text-gray-400 leading-relaxed max-w-2xl font-light">
+                        <p className="text-[#D1D1D1] text-base leading-relaxed max-w-3xl font-light">
                           {step.description}
                         </p>
                       </div>
@@ -391,9 +390,9 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
                   </div>
                 ))}
               </div>
-              <div className="mt-16 text-center">
+              <div className="mt-24 text-left md:ml-12 pl-4 md:pl-16">
                 <Link href="/contact">
-                  <Button className="rounded-full px-12 py-8 text-lg bg-[#f25e40] text-white hover:bg-[#d14024] transition-all shadow-lg hover:shadow-orange-900/20 transform hover:-translate-y-1">
+                  <Button className="rounded-full px-12 py-8 text-sm tracking-widest uppercase font-semibold bg-brand-orange text-white hover:bg-[#e04f1e] transition-colors duration-300">
                     Start Your Project Today
                   </Button>
                 </Link>

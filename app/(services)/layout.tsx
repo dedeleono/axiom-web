@@ -12,15 +12,15 @@ export default function ServicesLayout({
     <div className="min-h-screen bg-white text-gray-900">
       <Header />
 
-      <main className="max-w-[1920px] mx-auto">
+      <main className="w-full mx-auto">
         <ServiceHero />
-        <section className="mask-overlap bg-[#f6f6f6] pt-[2rem] mb-[-2rem]">
+        <section className="bg-white pt-8">
           <ServiceTabs />
           {children}
         </section>
       </main>
 
-      <section className="mask-overlap bg-white mt-auto pt-[2rem] mb-[-2rem]">
+      <section className="bg-white relative z-20">
         <Footer />
       </section>
     </div>

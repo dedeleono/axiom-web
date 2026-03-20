@@ -14,7 +14,7 @@ const NavigationMenu: React.FC<NavigationMenuProps> = ({ scrolled = true }) => {
   const menuItems = [
     { label: "ABOUT", href: "/" },
     { label: "PROJECTS", href: "/projects" },
-    { label: "SERVICES", href: "/bathroom-remodeling" },
+    { label: "SERVICES", href: "/services" },
     { label: "BLOG", href: "/blog" },
     { label: "CONTACT", href: "/contact" },
   ];

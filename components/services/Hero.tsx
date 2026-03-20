@@ -35,14 +35,14 @@ export default function ServiceHero() {
       try {
         const pathSlug = pathname === "/" ? "" : pathname.slice(1).toLowerCase();
 
-        const pageName = SERVICE_SLUGS.includes(pathSlug as (typeof SERVICE_SLUGS)[number])
-          ? "innovation"
-          : pathname === "/"
-            ? "home"
-            : pathSlug;
+        const pageName =
+          SERVICE_SLUGS.includes(pathSlug as (typeof SERVICE_SLUGS)[number])
+            ? "innovation"
+            : pathname === "/"
+              ? "home"
+              : pathSlug;
 
-        const data = await client.fetch<HomeHeroData | null>(
-          `*[_type == "home" && pageName == $pageName][0]{
+        const heroQuery = `*[_type == "home" && pageName == $pageName][0]{
             _id,
             title,
             pageName,
@@ -55,9 +55,17 @@ export default function ServiceHero() {
             heroSubText1,
             heroSubText2,
             heroDescription
-          }`,
-          { pageName }
-        );
+          }`;
+
+        let data = await client.fetch<HomeHeroData | null>(heroQuery, { pageName });
+
+        /** Services hub (/services): prefer a Sanity doc with pageName "services"; else reuse innovation hero. */
+        if (!data && pageName === "services") {
+          data = await client.fetch<HomeHeroData | null>(heroQuery, {
+            pageName: "innovation",
+          });
+        }
+
         setHeroData(data);
       } catch (error) {
         console.error("Error fetching hero data:", error);

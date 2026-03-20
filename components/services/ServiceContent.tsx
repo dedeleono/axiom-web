@@ -8,7 +8,7 @@ import type { Image as SanityImage } from "sanity";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, PlayCircle, Hammer, Ruler, PenTool, Home } from "lucide-react";
+import { ChevronLeft, ChevronRight, PlayCircle, Hammer, Ruler, PenTool, Home, ArrowUpRight } from "lucide-react";
 
 interface Feature {
   title: string;
@@ -43,6 +43,12 @@ interface ServiceContentProps {
   slug: string;
 }
 
+const containerClass =
+  "max-w-[95%] xl:max-w-screen-2xl mx-auto px-8 md:px-16 lg:px-24";
+
+const cardClass =
+  "group flex flex-col h-full p-8 md:p-10 rounded-2xl border border-brand-light-gray bg-white hover:border-brand-black/20 hover:shadow-[0_24px_80px_-24px_rgba(0,0,0,0.12)] transition-all duration-500";
+
 export default function ServiceContent({ slug }: ServiceContentProps) {
   const [service, setService] = useState<ServiceData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -50,9 +56,9 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
   const [galleryIndex, setGalleryIndex] = useState(0);
 
   const contentVariants = {
-    initial: { opacity: 0, x: 20 },
-    animate: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -20 },
+    initial: { opacity: 0, y: 12 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -12 },
   };
 
   useEffect(() => {
@@ -126,20 +132,20 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
   const getFallbackIcon = (index: number) => {
     const icons = [Hammer, Ruler, PenTool, Home];
     const Icon = icons[index % icons.length];
-    return <Icon className="w-12 h-12 text-[#f25e40] opacity-50" strokeWidth={1} />;
+    return <Icon className="w-10 h-10 text-brand-orange/80" strokeWidth={1} />;
   };
 
   if (isLoading) {
     return (
-      <div className="min-h-[600px] flex items-center justify-center bg-[#18181a]">
-        <div className="w-16 h-16 border-4 border-gray-600 border-t-white rounded-full animate-spin" />
+      <div className="min-h-[480px] flex items-center justify-center bg-white">
+        <div className="w-12 h-12 border-2 border-brand-light-gray border-t-brand-black rounded-full animate-spin" />
       </div>
     );
   }
 
   if (error || !service) {
     return (
-      <div className="min-h-[600px] flex items-center justify-center bg-[#18181a] text-red-400">
+      <div className="min-h-[480px] flex items-center justify-center bg-white text-brand-dark-gray px-8">
         {error ?? "Service not found"}
       </div>
     );
@@ -161,253 +167,301 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
     <AnimatePresence mode="wait">
       <motion.div
         key={slug}
-        className="bg-[#18181a] text-white min-h-[600px] font-geist"
+        className="bg-white text-brand-black min-h-[600px] font-geist"
         initial="initial"
         animate="animate"
         exit="exit"
         variants={contentVariants}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
+        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       >
-        <div className="grid grid-cols-1 md:grid-cols-2">
-          <motion.div
-            className="relative w-full h-[500px] md:h-auto md:min-h-[800px] bg-brand-black overflow-hidden group"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4 }}
-          >
-            {service.gallery && service.gallery.length > 0 ? (
-              <div className="relative w-full h-full">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={galleryIndex}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute inset-0"
-                  >
-                    <Image
-                      src={urlFor(service.gallery[galleryIndex])?.url() ?? ""}
-                      alt={`Gallery ${galleryIndex + 1}`}
-                      fill
-                      className="object-cover"
-                      priority
-                    />
-                  </motion.div>
-                </AnimatePresence>
-                {service.gallery.length > 1 && (
-                  <div className="absolute inset-x-0 bottom-8 flex justify-center gap-4 z-10">
-                    <Button
-                      size="icon"
-                      variant="ghost"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        prevGalleryImage();
-                      }}
-                      className="bg-black/50 hover:bg-black text-white rounded-full"
-                    >
-                      <ChevronLeft className="w-6 h-6" />
-                    </Button>
-                    <div className="flex gap-2 items-center">
-                      {service.gallery.map((_, idx) => (
-                        <div
-                          key={idx}
-                          className={`w-2 h-2 rounded-full transition-all ${idx === galleryIndex ? "bg-white w-4" : "bg-white/50"}`}
-                        />
-                      ))}
-                    </div>
-                    <Button
-                      size="icon"
-                      variant="ghost"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        nextGalleryImage();
-                      }}
-                      className="bg-black/50 hover:bg-black text-white rounded-full"
-                    >
-                      <ChevronRight className="w-6 h-6" />
-                    </Button>
-                  </div>
-                )}
-              </div>
-            ) : service.image ? (
-              <Image
-                src={urlFor(service.image)?.url() ?? ""}
-                alt={service.title}
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-            ) : (
-              <div className="absolute inset-0 flex items-center justify-center text-zinc-500 text-sm">
-                No image
-              </div>
-            )}
-
-            {service.videoUrl && (
-              <div className="absolute top-8 right-8 z-20">
-                <Link href={service.videoUrl} target="_blank">
-                  <Button className="bg-brand-orange hover:bg-[#e04f1e] text-white rounded-full px-8 py-6 flex items-center gap-3 shadow-lg hover:scale-105 transition-transform text-xs tracking-widest uppercase font-semibold">
-                    <PlayCircle className="w-5 h-5" />
-                    Watch Video
-                  </Button>
-                </Link>
-              </div>
-            )}
-          </motion.div>
-
-          <div className="flex flex-col p-8 md:p-16 space-y-12 bg-[#18181a]">
+        {/* Intro — hub-aligned split */}
+        <div className={`${containerClass} pt-4 md:pt-10 pb-16 md:pb-24`}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.1 }}
+              className="relative w-full min-h-[420px] lg:min-h-[560px] rounded-2xl overflow-hidden border border-brand-light-gray bg-brand-light-gray/30 shadow-[0_24px_80px_-24px_rgba(0,0,0,0.08)]"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
             >
-              <h2 className="text-4xl md:text-5xl font-bold mb-8 text-white leading-tight">
+              {service.gallery && service.gallery.length > 0 ? (
+                <div className="relative w-full h-full min-h-[420px] lg:min-h-[560px]">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={galleryIndex}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.35 }}
+                      className="absolute inset-0"
+                    >
+                      <Image
+                        src={urlFor(service.gallery[galleryIndex])?.url() ?? ""}
+                        alt={`Gallery ${galleryIndex + 1}`}
+                        fill
+                        className="object-cover"
+                        priority
+                      />
+                    </motion.div>
+                  </AnimatePresence>
+                  {service.gallery.length > 1 && (
+                    <div className="absolute inset-x-0 bottom-6 flex justify-center gap-3 z-10">
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          prevGalleryImage();
+                        }}
+                        className="bg-white/90 hover:bg-white text-brand-black rounded-full border border-brand-light-gray shadow-sm"
+                        aria-label="Previous image"
+                      >
+                        <ChevronLeft className="w-5 h-5" />
+                      </Button>
+                      <div className="flex gap-2 items-center px-2">
+                        {service.gallery.map((_, idx) => (
+                          <div
+                            key={idx}
+                            className={`h-1.5 rounded-full transition-all ${idx === galleryIndex ? "bg-brand-orange w-6" : "bg-white/80 w-1.5"}`}
+                          />
+                        ))}
+                      </div>
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          nextGalleryImage();
+                        }}
+                        className="bg-white/90 hover:bg-white text-brand-black rounded-full border border-brand-light-gray shadow-sm"
+                        aria-label="Next image"
+                      >
+                        <ChevronRight className="w-5 h-5" />
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              ) : service.image ? (
+                <div className="relative w-full min-h-[420px] lg:min-h-[560px]">
+                  <Image
+                    src={urlFor(service.image)?.url() ?? ""}
+                    alt={service.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
+                </div>
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center text-brand-dark-gray text-sm">
+                  No image
+                </div>
+              )}
+
+              {service.videoUrl && (
+                <div className="absolute top-6 right-6 z-20">
+                  <Link href={service.videoUrl} target="_blank" rel="noopener noreferrer">
+                    <Button
+                      type="button"
+                      className="bg-brand-orange hover:bg-[#e04f1e] text-white rounded-full px-6 py-5 flex items-center gap-2 text-xs tracking-widest uppercase font-semibold shadow-lg"
+                    >
+                      <PlayCircle className="w-5 h-5" />
+                      Watch Video
+                    </Button>
+                  </Link>
+                </div>
+              )}
+            </motion.div>
+
+            <motion.div
+              className="flex flex-col"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.55, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-brand-dark-gray mb-6">
+                Overview
+              </p>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-brand-black leading-[1.05] mb-8">
                 {service.title}
               </h2>
-              <div className="text-gray-300 md:text-lg text-base leading-relaxed space-y-4 font-light">
+              <div className="text-brand-dark-gray font-light text-lg md:text-xl leading-relaxed space-y-6 max-w-xl">
                 {(service.description ?? "").split("\n").map((paragraph, i) => (
                   <p key={i}>{paragraph}</p>
                 ))}
               </div>
-              <Link href="/contact" className="inline-block mt-10">
-                <Button className="rounded-full px-10 py-7 text-lg bg-white text-black hover:bg-gray-200 transition-colors font-medium">
-                  Book a Free Consultation
-                </Button>
+              <Link
+                href="/contact"
+                className="inline-flex mt-10 items-center justify-center rounded-full border border-brand-black bg-brand-black px-10 py-5 text-xs font-semibold uppercase tracking-[0.2em] text-white transition-colors hover:bg-brand-orange hover:border-brand-orange"
+              >
+                Book a free consultation
               </Link>
             </motion.div>
-
-            {(service.aboutText || service.historyText) && (
-              <motion.div
-                className="space-y-10 pt-10 border-t border-gray-800"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
-              >
-                {service.aboutText && (
-                  <div>
-                    <h3 className="text-2xl font-bold mb-4 text-[#f25e40]">
-                      {service.aboutTitle || "Our Approach"}
-                    </h3>
-                    <div className="text-base text-gray-400 leading-relaxed space-y-4 font-light">
-                      {service.aboutText.split("\n").map((p, i) => (
-                        <p key={i}>{p}</p>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {service.historyText && (
-                  <div>
-                    <h3 className="text-2xl font-bold mb-4 text-[#f25e40]">
-                      {service.historyTitle || "Why Choose Us"}
-                    </h3>
-                    <div className="text-base text-gray-400 leading-relaxed space-y-4 font-light">
-                      {service.historyText.split("\n").map((p, i) => (
-                        <p key={i}>{p}</p>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </motion.div>
-            )}
           </div>
+
+          {(service.aboutText || service.historyText) && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 lg:gap-24 mt-20 md:mt-28 pt-12 border-t border-brand-light-gray">
+              {service.aboutText && (
+                <motion.div
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <p className="text-xs font-semibold uppercase tracking-[0.25em] text-brand-dark-gray mb-6">
+                    {service.aboutTitle || "Our approach"}
+                  </p>
+                  <div className="text-brand-dark-gray font-light leading-relaxed space-y-5 text-base md:text-lg">
+                    {service.aboutText.split("\n").map((p, i) => (
+                      <p key={i}>{p}</p>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+              {service.historyText && (
+                <motion.div
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.05 }}
+                >
+                  <p className="text-xs font-semibold uppercase tracking-[0.25em] text-brand-dark-gray mb-6">
+                    {service.historyTitle || "Why choose us"}
+                  </p>
+                  <div className="text-brand-dark-gray font-light leading-relaxed space-y-5 text-base md:text-lg">
+                    {service.historyText.split("\n").map((p, i) => (
+                      <p key={i}>{p}</p>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </div>
+          )}
         </div>
 
         {service.features && service.features.length > 0 && (
-          <div className="mask-overlap relative z-20 px-8 md:px-16 lg:px-24 py-24 md:py-32 bg-[#1A1A1A]">
-            <div className="max-w-[95%] xl:max-w-screen-2xl mx-auto">
-              <h3 className="text-4xl md:text-5xl font-light tracking-tight mb-16 text-white border-l-[3px] border-brand-orange pl-8">
-                {service.featuresTitle || "Services Offered"}
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-6 gap-6 md:gap-8">
-                {service.features.map((feature, idx) => {
-                  const isLarge = idx === 0 || idx === 3;
-                  return (
-                    <motion.div
-                      key={idx}
-                      className={`relative overflow-hidden rounded-[1rem] bg-[#222] border border-[#3A3A3A] group ${isLarge ? "md:col-span-4" : "md:col-span-2"} hover:bg-[#2A2A2A] hover:border-[#4A4A4A] transition-colors duration-500`}
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: (idx % 3) * 0.15 }}
-                      viewport={{ once: true, margin: "-50px" }}
-                    >
-                      <div className={`relative h-full flex ${isLarge ? "flex-col md:flex-row" : "flex-col"}`}>
-                        <div
-                          className={`relative overflow-hidden ${isLarge ? "md:w-1/2 h-64 md:h-auto" : "w-full h-56"} flex items-center justify-center bg-[#1A1A1A]`}
-                        >
-                          {feature.image ? (
-                            <Image
-                              src={urlFor(feature.image)?.url() ?? ""}
-                              alt={feature.title}
-                              fill
-                              className="object-cover opacity-80 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105"
-                            />
-                          ) : (
-                            <div className="flex flex-col items-center gap-4 p-8">
-                              {getFallbackIcon(idx)}
-                            </div>
-                          )}
-                        </div>
-                        <div className={`p-8 md:p-12 relative flex flex-col justify-center ${isLarge ? "md:w-1/2" : "w-full"}`}>
-                          <h4 className="text-2xl md:text-3xl font-light mb-6 text-white group-hover:text-brand-orange transition-colors flex items-center gap-4 leading-tight">
-                            {feature.title}
-                            <span className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-brand-orange">
-                              →
-                            </span>
-                          </h4>
-                          <p className="text-base text-[#D1D1D1] leading-relaxed font-light line-clamp-4">
-                            {feature.description}
-                          </p>
-                        </div>
+          <div className="border-t border-brand-light-gray bg-white py-16 md:py-24">
+            <div className={containerClass}>
+              <motion.div
+                className="max-w-3xl mb-12 md:mb-16"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <p className="text-xs font-semibold uppercase tracking-[0.25em] text-brand-dark-gray mb-6">
+                  Capabilities
+                </p>
+                <h3 className="text-3xl md:text-5xl font-light tracking-tight text-brand-black leading-[1.1]">
+                  {service.featuresTitle || "What we offer"}
+                </h3>
+              </motion.div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                {service.features.map((feature, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 28 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-40px" }}
+                    transition={{ duration: 0.5, delay: (idx % 3) * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                    className={cardClass}
+                  >
+                    {feature.image ? (
+                      <div className="relative -mx-8 -mt-8 mb-6 aspect-[16/10] overflow-hidden rounded-t-2xl border-b border-brand-light-gray md:-mx-10 md:-mt-10">
+                        <Image
+                          src={urlFor(feature.image)?.url() ?? ""}
+                          alt={feature.title}
+                          fill
+                          className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                        />
                       </div>
-                    </motion.div>
-                  );
-                })}
+                    ) : (
+                      <div className="flex justify-center py-6 mb-2">{getFallbackIcon(idx)}</div>
+                    )}
+                    <div className="flex justify-between items-start gap-3 mb-4">
+                      <h4 className="text-xl md:text-2xl font-light text-brand-black tracking-tight group-hover:text-brand-orange transition-colors duration-300">
+                        {feature.title}
+                      </h4>
+                      <span className="shrink-0 w-10 h-10 rounded-full border border-brand-light-gray flex items-center justify-center text-brand-black opacity-0 group-hover:opacity-100 group-hover:bg-brand-orange group-hover:border-brand-orange group-hover:text-white transition-all duration-300">
+                        <ArrowUpRight className="w-4 h-4" aria-hidden />
+                      </span>
+                    </div>
+                    <p className="text-brand-dark-gray font-light leading-relaxed text-base">{feature.description}</p>
+                  </motion.div>
+                ))}
               </div>
             </div>
           </div>
         )}
 
         {service.process && service.process.length > 0 && (
-          <div className="mask-overlap relative z-10 px-8 md:px-16 lg:px-24 py-24 md:py-32 pb-40 bg-[#111]">
-            <div className="max-w-[95%] xl:max-w-screen-2xl mx-auto">
-              <h3 className="text-4xl md:text-5xl font-light tracking-tight mb-20 text-white border-l-[3px] border-brand-orange pl-8">
-                {service.processTitle || "Our Process"}
-              </h3>
-              <div className="relative border-l border-[#333] ml-4 md:ml-12 space-y-16">
+          <div className="mask-overlap bg-[#F5F5F5] relative z-10 pt-10 pb-20 md:pb-28">
+            <div className={`${containerClass} py-16 md:py-20`}>
+              <motion.div
+                className="max-w-3xl mb-14 md:mb-20"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.55 }}
+              >
+                <p className="text-xs font-semibold uppercase tracking-[0.25em] text-brand-dark-gray mb-6">
+                  Process
+                </p>
+                <h3 className="text-3xl md:text-5xl font-light tracking-tight text-brand-black leading-[1.1]">
+                  {service.processTitle || "How we work"}
+                </h3>
+              </motion.div>
+
+              {/* Editorial timeline — no card chrome; rhythm + dividers */}
+              <div className="max-w-4xl">
                 {service.process.map((step, idx) => (
-                  <motion.div 
-                    key={idx} 
-                    className="relative pl-10 md:pl-16 group"
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6, delay: idx * 0.1 }}
-                    viewport={{ once: true, margin: "-50px" }}
+                  <motion.div
+                    key={idx}
+                    className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 py-10 md:py-14 border-b border-black/[0.06] last:border-b-0 first:pt-0"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-40px" }}
+                    transition={{ duration: 0.45, delay: Math.min(idx * 0.04, 0.2) }}
                   >
-                    <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-[#333] group-hover:bg-brand-orange transition-colors duration-300" />
-                    <div className="flex flex-col gap-2 items-start">
-                      <div>
-                        <small className="text-brand-orange font-semibold text-xs uppercase tracking-widest block mb-4">
-                          {step.step || `Step ${idx + 1}`}
-                        </small>
-                        <h4 className="text-2xl md:text-3xl font-light text-white mb-4 group-hover:text-brand-orange transition-colors duration-300">
-                          {step.title}
-                        </h4>
-                        <p className="text-[#D1D1D1] text-base leading-relaxed max-w-3xl font-light">
-                          {step.description}
-                        </p>
-                      </div>
+                    <div className="md:col-span-3 flex flex-row md:flex-col md:items-start justify-between md:justify-start gap-3 md:gap-4">
+                      <span
+                        className="text-5xl md:text-6xl lg:text-7xl font-light leading-none text-brand-light-gray tabular-nums select-none"
+                        aria-hidden
+                      >
+                        {String(idx + 1).padStart(2, "0")}
+                      </span>
+                      <p className="text-[11px] md:text-xs font-semibold uppercase tracking-[0.28em] text-brand-orange md:max-w-[12rem]">
+                        {step.step || `Step ${idx + 1}`}
+                      </p>
+                    </div>
+                    <div className="md:col-span-9 md:pt-2">
+                      <h4 className="text-xl md:text-3xl font-light text-brand-black tracking-tight mb-4 md:mb-5">
+                        {step.title}
+                      </h4>
+                      <p className="text-brand-dark-gray font-light leading-relaxed text-base md:text-lg max-w-2xl">
+                        {step.description}
+                      </p>
                     </div>
                   </motion.div>
                 ))}
               </div>
-              <div className="mt-24 text-left md:ml-12 pl-4 md:pl-16">
-                <Link href="/contact">
-                  <Button className="rounded-full px-12 py-8 text-sm tracking-widest uppercase font-semibold bg-brand-orange text-white hover:bg-[#e04f1e] transition-colors duration-300">
-                    Start Your Project Today
-                  </Button>
+
+              <motion.div
+                className="mt-12 md:mt-16 pt-12 border-t border-black/[0.08]"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+              >
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center justify-center rounded-full bg-brand-orange px-10 py-5 text-xs font-semibold uppercase tracking-[0.2em] text-white transition-colors hover:bg-[#e04f1e]"
+                >
+                  Start your project
                 </Link>
-              </div>
+              </motion.div>
             </div>
           </div>
         )}

@@ -15,7 +15,7 @@ export default function ServicesLayout({
       <main className="w-full mx-auto">
         <ServiceHero />
         <section className="mask-overlap bg-white relative z-20 pt-10">
-          <ServiceTabs />
+          
           {children}
         </section>
       </main>

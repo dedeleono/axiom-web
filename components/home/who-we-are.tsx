@@ -50,16 +50,8 @@ export default function WhoWeAre() {
 
   if (isLoading) {
     return (
-      <div className="max-w-7xl mx-auto px-8 py-24 md:py-32 font-geist">
-        <div className="flex flex-col md:flex-row gap-20 mb-24">
-          <div className="md:w-1/2 space-y-8 animate-pulse">
-            <div className="h-4 w-24 bg-brand-light-gray rounded" />
-            <div className="h-12 w-3/4 bg-brand-light-gray rounded" />
-            <div className="h-32 w-full bg-brand-light-gray rounded" />
-            <div className="h-12 w-40 bg-brand-light-gray rounded" />
-          </div>
-          <div className="md:w-1/2 h-[600px] bg-brand-light-gray rounded-lg animate-pulse" />
-        </div>
+      <div className="w-full bg-[#f2f2f2] min-h-[600px] flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-gray-300 border-t-brand-black rounded-full animate-spin" />
       </div>
     );
   }
@@ -68,76 +60,60 @@ export default function WhoWeAre() {
   if (!data) return null;
 
   return (
-    <div className="max-w-7xl mx-auto px-8 py-24 md:py-32 font-geist">
-      <div className="flex flex-col md:flex-row gap-20 mb-24">
+    <div className="w-full bg-[#EBEBEB] py-0 md:py-0">
+      <div className="max-w-[100%] mx-auto flex flex-col md:flex-row min-h-[600px] md:min-h-[800px] gap-0">
         {/* Left Column - Text Content */}
         <motion.div 
-          className="md:w-1/2 space-y-8"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="md:w-1/2 p-8 md:p-16 lg:p-32 flex flex-col justify-center"
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true, margin: "-100px" }}
         >
-          <Button
-            variant="ghost"
-            className="text-brand-black hover:bg-transparent hover:text-brand-black p-0 mb-4 uppercase tracking-widest text-xs font-semibold"
-          >
+          <span className="text-xs font-bold uppercase tracking-[0.2em] mb-6 text-brand-black">
             About Us
-          </Button>
+          </span>
           
-          <h2 className="text-4xl md:text-5xl font-bold leading-tight tracking-tight text-brand-black">
+          <h2 className="text-5xl md:text-7xl font-light leading-[1.1] tracking-tight text-brand-black mb-8">
             {data.title}
           </h2>
 
-          <div className="space-y-6 text-brand-dark-gray font-light leading-relaxed text-lg whitespace-pre-wrap">
+          <div className="space-y-6 text-[#4A4A4A] font-light leading-relaxed text-lg whitespace-pre-wrap max-w-xl">
             {data.description}
           </div>
 
           <Link href={data.buttonLink || "/projects"}>
-            <Button className="mt-4 rounded-full px-8 py-6 text-base bg-brand-black text-brand-orange hover:text-white hover:bg-brand-orange transition-all cursor-pointer">
-              {data.buttonText || "Our Portfolio"}
-            </Button>
-          </Link>
+          <Button className="mt-12 rounded-none px-12 py-8 text-xs tracking-[0.2em] font-semibold uppercase bg-brand-black text-white hover:bg-brand-orange transition-colors duration-300">
+            {data.buttonText || "Our Portfolio"}
+          </Button>
+        </Link>
 
-          <div className="pt-12">
-            <p className="text-gray-500 uppercase tracking-widest text-sm mb-2">Years Experience</p>
-            <div className="text-6xl font-bold text-brand-black">
-              {data.yearsExperience} <span className="text-brand-orange">+</span>
-            </div>
+        <div className="mt-20 pt-8 border-t border-[#D1D1D1]">
+          <p className="text-[#8A8A8A] uppercase tracking-widest text-xs mb-2">Years Experience</p>
+          <div className="text-6xl md:text-7xl font-light text-brand-black">
+            {data.yearsExperience} <span className="text-brand-orange text-5xl md:text-6xl">+</span>
           </div>
-        </motion.div>
+        </div>
+      </motion.div>
 
-        {/* Right Column - Images */}
-        <motion.div 
-          className="md:w-1/2 relative h-[600px] md:h-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-          viewport={{ once: true, margin: "-100px" }}
+      {/* Right Column - Images */}
+      <motion.div 
+        className="md:w-1/2 relative min-h-[500px] md:min-h-full w-full md:-mt-8 md:rounded-tr-[2rem] overflow-hidden"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          viewport={{ once: true }}
         >
            {data.img ? (
               <Image
                 src={urlFor(data.img)?.url() ?? ""}
                 alt={data.img.alt || "About Us Main Image"}
-                className="object-cover rounded-lg w-full h-full shadow-lg"
-                width={800}
-                height={1000}
+                className="object-cover w-full h-full"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
            ) : (
-             <div className="bg-brand-light-gray w-full h-full rounded-lg" />
-           )}
-           
-           {/* Overlapping small image */}
-           {data.secondaryImage && (
-              <div className="absolute -bottom-12 -left-12 w-1/2 h-1/2 hidden md:block border-8 border-white rounded-lg overflow-hidden shadow-2xl">
-                <Image
-                  src={urlFor(data.secondaryImage)?.url() ?? ""}
-                  alt={data.secondaryImage.alt || "About Us Detail Image"}
-                  className="object-cover w-full h-full"
-                  width={400}
-                  height={500}
-                />
-              </div>
+             <div className="bg-[#D1D1D1] w-full h-full" />
            )}
         </motion.div>
       </div>

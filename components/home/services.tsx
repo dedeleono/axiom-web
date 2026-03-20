@@ -47,8 +47,8 @@ export default function Services() {
 
   if (isLoading) {
     return (
-      <div className="max-w-7xl mx-auto px-8 py-24 md:py-32 font-geist mb-24 flex justify-center">
-        <div className="w-12 h-12 border-4 border-brand-light-gray border-t-brand-black rounded-full animate-spin" />
+      <div className="w-full bg-[#1A1A1A] py-32 flex items-center justify-center min-h-[600px]">
+        <div className="w-12 h-12 border-4 border-white/20 border-t-white rounded-full animate-spin" />
       </div>
     );
   }
@@ -57,83 +57,82 @@ export default function Services() {
   if (services.length === 0) return null;
 
   return (
-    <div className="max-w-7xl mx-auto px-8 py-24 md:py-32 font-geist mb-24">
-      <div className="flex flex-col md:flex-row justify-between items-end mb-20">
-        <div>
-          <Button
-            variant="ghost"
-            className="text-brand-black hover:bg-transparent hover:text-brand-black p-0 mb-4 uppercase tracking-widest text-xs font-semibold"
-          >
-            Services
-          </Button>
-          <h2 className="text-4xl md:text-5xl font-bold max-w-2xl leading-tight tracking-tight text-brand-black">
-            We are the experts in good taste!
-          </h2>
+    <div className="w-full bg-brand-black py-24 md:py-32 font-geist">
+      <div className="max-w-[100%] mx-auto px-0">
+        <div className="mb-16 md:mb-24 flex flex-col md:flex-row justify-between items-end px-8 md:px-16 lg:px-24">
+          <div>
+            <motion.h2 
+              className="text-5xl md:text-7xl font-light tracking-tight text-white mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              Services
+            </motion.h2>
+            <motion.div 
+              className="w-24 h-[1px] bg-brand-orange"
+              initial={{ width: 0 }}
+              whileInView={{ width: 96 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+            />
+          </div>
         </div>
         
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 h-[500px]">
-        {services.map((service, index) => (
-          <Link href={service.link || "/contact"} key={index} className="group relative block h-full w-full overflow-hidden rounded-2xl">
-            {/* Background Images Container */}
-            <div className="absolute inset-0 w-full h-full">
-              {/* Default Image - Visible by default, fades out on hover */}
-              <div className="absolute inset-0 w-full h-full transition-opacity duration-500 ease-in-out group-hover:opacity-0">
-                {service.defaultImage && (
-                  <Image
-                    src={urlFor(service.defaultImage)?.url() ?? ""}
-                    alt={service.title}
-                    fill
-                    className="object-cover"
-                  />
-                )}
-                {/* Overlay for default state text readability if needed, or keeping it clean as per request */}
-                <div className="absolute inset-0 bg-black/10" /> 
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-[#3A3A3A]">
+          {services.map((service, index) => (
+          <Link href={service.link || "/contact"} key={index}>
+            <motion.div 
+              className="group relative block w-full overflow-hidden rounded-none min-h-[500px] md:min-h-[600px] cursor-pointer border-r last:border-r-0 border-b md:border-b-0 border-[#3A3A3A]"
+              initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: index * 0.2, ease: [0.16, 1, 0.3, 1] }}
+                viewport={{ once: true, margin: "-50px" }}
+              >
+                {/* Background Images Container */}
+                <div className="absolute inset-0 w-full h-full">
+                  {service.defaultImage && (
+                    <Image
+                      src={urlFor(service.defaultImage)?.url() ?? ""}
+                      alt={service.title}
+                      fill
+                      className="object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105"
+                    />
+                  )}
+                {/* Deep dark gradient starting higher up for that moody editorial look */}
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/40 to-brand-black/60 opacity-80 group-hover:from-brand-black group-hover:via-brand-black/80 group-hover:to-brand-black/70 transition-all duration-500" /> 
               </div>
 
-              {/* Hover Image - Hidden by default, fades in on hover */}
-              <div className="absolute inset-0 w-full h-full opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100">
-                {service.hoverImage && (
-                  <Image
-                    src={urlFor(service.hoverImage)?.url() ?? ""}
-                    alt={service.title}
-                    fill
-                    className="object-cover"
-                  />
-                )}
-                {/* Darker overlay on hover for text readability */}
-                <div className="absolute inset-0 bg-black/40" />
-              </div>
-            </div>
+              {/* Content Container */}
+              <div className="absolute inset-0 w-full h-full p-8 md:p-12 flex flex-col justify-between text-white z-10 transition-all duration-700 ease-in-out">
+                {/* Title - Always visible */}
+                <h3 className="text-3xl md:text-4xl font-light text-white group-hover:text-brand-orange transition-colors duration-500">
+                  {service.title}
+                </h3>
 
-            {/* Content Container */}
-            <div className="relative h-full w-full p-8 flex flex-col justify-end text-white z-10">
-              {/* Title - Always visible */}
-              <h3 className="text-3xl font-bold mb-4 drop-shadow-md transform transition-transform duration-500 group-hover:-translate-y-2">
-                {service.title}
-              </h3>
-
-              {/* Hover Content - Hidden by default, slides up and fades in */}
-              <div className="overflow-hidden max-h-0 opacity-0 group-hover:max-h-[200px] group-hover:opacity-100 transition-all duration-500 ease-in-out">
-                <p className="text-gray-200 text-sm leading-relaxed mb-6 font-light">
-                  {service.description}
-                </p>
-                <span className="flex items-center text-sm font-medium hover:underline underline-offset-4">
-                  Learn more about {service.title} <ArrowRight className="ml-2 w-4 h-4" />
-                </span>
+                {/* Hover Content - Hidden by default, slides up and fades in */}
+                <div className="overflow-hidden max-h-[0px] opacity-0 group-hover:max-h-[300px] group-hover:opacity-100 transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] mt-auto">
+                  <p className="text-white/90 text-base leading-relaxed mb-8 font-normal">
+                    {service.description}
+                  </p>
+                  <span className="flex items-center text-xs font-semibold uppercase tracking-[0.2em] text-white hover:text-brand-orange transition-colors">
+                    Learn more <ArrowRight className="ml-3 w-4 h-4" />
+                  </span>
+                </div>
               </div>
-            </div>
+              </motion.div>
+            </Link>
+          ))}
+        </div>
+
+        <div className="mt-16 text-center md:hidden">
+          <Link href="/contact" className="inline-block">
+            <Button className="rounded-none px-10 py-6 text-xs tracking-[0.2em] font-semibold uppercase border border-white bg-transparent text-white hover:bg-white hover:text-black transition-all">
+              Start Your Project
+            </Button>
           </Link>
-        ))}
-      </div>
-
-      <div className="mt-12 md:hidden">
-        <Link href="/contact" className="w-full block">
-          <Button className="w-full rounded-full py-6 text-base bg-brand-black text-white hover:bg-brand-dark-gray transition-all">
-            Start Your Project
-          </Button>
-        </Link>
+        </div>
       </div>
     </div>
   );

@@ -21,7 +21,7 @@ export default function Philosophy() {
           >
             Philosophy
           </Button>
-          <h2 className="text-4xl md:text-5xl font-bold leading-tight tracking-tight mb-6">
+          <h2 className="text-4xl md:text-6xl font-light leading-tight tracking-tight mb-6 max-w-lg">
             A beautiful room means a beautiful mind.
           </h2>
         </motion.div>

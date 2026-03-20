@@ -41,19 +41,15 @@ export default async function Home() {
           <ServicesIntro />
         </section>
 
-        <section className="mask-overlap bg-brand-light-gray relative z-20 pt-10">
+        <section className="mask-overlap bg-[#EBEBEB] relative z-20 pt-0">
           <WhoWeAre />
         </section>
 
-        <section className="mask-overlap bg-white relative z-20 pt-10">
+        <section className="mask-overlap bg-brand-black relative z-20 pt-0">
           <Services />
         </section>
 
-        {/* <section className="mask-overlap bg-white relative z-10 pt-10">
-          <InspirationCTA />
-        </section> */}
-
-        <section className="mask-overlap bg-brand-light-gray relative z-20 pt-10">
+        <section className="mask-overlap bg-[#262626] relative z-20 pt-0">
           <WhyChooseUsGrid />
         </section>
 
@@ -64,14 +60,6 @@ export default async function Home() {
         <section className="mask-overlap bg-brand-orange relative z-10 pt-10">
           <Philosophy />
         </section>
-
-        {/* <section>
-          <Projects initialSlides={projects} />
-        </section> */}
-
-        {/* <section className="mask-overlap bg-black mt-auto pt-[2rem] mb-[-2rem]">
-          <Awards />
-        </section> */}
       </main>
 
       <section className="mask-overlap bg-white mt-auto pt-10 relative z-20">

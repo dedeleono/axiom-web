@@ -7,24 +7,7 @@ import ContactForm from "@/components/contact-form";
 export default function Contact() {
   return (
     <div className="relative max-h-screen h-screen w-full overflow-hidden bg-black">
-      <div className="absolute top-28 left-8 z-10 flex flex-row items-center space-x-3 text-white">
-        <span className="text-sm font-semibold">Contact</span>
-        <div className="w-2 h-2">
-          <svg
-            width="24"
-            height="15"
-            viewBox="0 0 8 8"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="scale-50 transform-gpu"
-          >
-            <path
-              d="M6.26784 1.54193L6.22778 1.50188C6.22778 1.50188 6.25782 2.65332 5.01627 4.13517L0.871089 0L0 0.871089L4.14518 5.01627C2.66333 6.25782 1.5219 6.19775 1.51189 6.22778L1.55194 6.26784C6.38798 6.84856 8 8 8 8C8 8 6.84856 6.37797 6.26784 1.55194V1.54193Z"
-              fill="#ffffff"
-            />
-          </svg>
-        </div>
-      </div>
+      
 
       <motion.div
         className="absolute inset-0 top-20 md:top-0"

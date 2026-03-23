@@ -34,9 +34,12 @@ export interface SanityImageObject {
 
 export interface ProjectData {
   title: string;
-  location: string;
-  year: string;
-  projectType: string;
+  /** Scope of work (comma-separated or sentence). */
+  services?: string;
+  /** Timeline / duration (e.g. 6–8 weeks). */
+  lengthOfProject?: string;
+  /** Budget range or tier. */
+  budget?: string;
   description1: string;
   description2?: string;
   image: SanityImageObject;

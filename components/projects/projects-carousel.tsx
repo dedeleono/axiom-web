@@ -11,7 +11,7 @@ import { ArrowUpRight } from "lucide-react";
 
 interface Project {
   title: string;
-  location: string;
+  services?: string;
   projectSlug: { current: string };
   image: SanityImage & { imgAlt?: string };
   highlightImages: (SanityImage & { imgAlt?: string })[];
@@ -28,7 +28,7 @@ export default function ProjectsGrid() {
         const data = await client.fetch<Project[]>(`
           *[_type == "project"] | order(order asc) {
             title,
-            location,
+            "services": coalesce(services, projectType, ""),
             projectSlug,
             image,
             highlightImages,
@@ -97,8 +97,8 @@ export default function ProjectsGrid() {
                 <h3 className="text-2xl md:text-3xl font-light text-brand-black leading-tight group-hover:text-brand-orange transition-colors duration-300">
                   {project.title}
                 </h3>
-                <p className="text-xs text-brand-dark-gray uppercase tracking-widest font-semibold">
-                  {project.location}
+                <p className="text-xs text-brand-dark-gray font-medium leading-relaxed line-clamp-2">
+                  {project.services?.trim() ? project.services : "—"}
                 </p>
               </div>
             </div>

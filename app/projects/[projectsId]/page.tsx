@@ -9,9 +9,9 @@ async function getProject(slug: string) {
   return client.fetch<ProjectData>(
     `*[_type == "project" && projectSlug.current == $slug][0]{
       title,
-      location,
-      year,
-      projectType,
+      "services": coalesce(services, projectType, ""),
+      "lengthOfProject": coalesce(lengthOfProject, year, ""),
+      "budget": coalesce(budget, ""),
       description1,
       description2,
       image{
@@ -56,14 +56,14 @@ export default async function ProjectPage({
 
         <section className="mask-overlap bg-white relative z-20 pt-10">
           <MiddleSection
-            year={project.year}
             title={project.title}
-            location={project.location}
+            services={project.services ?? ""}
+            lengthOfProject={project.lengthOfProject ?? ""}
+            budget={project.budget ?? ""}
             description1={project.description1}
             description2={project.description2}
             images={project.projectCarouselImages}
             highlghtImages={project.highlightImages}
-            projectType={project.projectType}
           />
         </section>
       </main>

@@ -174,18 +174,22 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
         variants={contentVariants}
         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       >
-        {/* Intro — hub-aligned split */}
-        <div className={`${containerClass} pt-4 md:pt-10 pb-16 md:pb-24`}>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+        {/* Intro — split: image full-bleed to the left on lg; copy stays in normal gutters */}
+        <div
+          className={`w-full pt-4 md:pt-10 ${
+            service.aboutText || service.historyText ? "" : "pb-16 md:pb-24"
+          }`}
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-0 lg:items-stretch">
             <motion.div
-              className="relative w-full min-h-[420px] lg:min-h-[560px] rounded-2xl overflow-hidden border border-brand-light-gray bg-brand-light-gray/30 shadow-[0_24px_80px_-24px_rgba(0,0,0,0.08)]"
+              className="relative w-full min-h-[420px] lg:min-h-[560px] lg:h-full overflow-hidden rounded-2xl border border-brand-light-gray bg-brand-light-gray/30 shadow-[0_24px_80px_-24px_rgba(0,0,0,0.08)] mx-4 sm:mx-6 md:mx-8 lg:mx-0 lg:rounded-l-none lg:rounded-r-2xl lg:border-l-0 lg:shadow-[0_20px_60px_-28px_rgba(0,0,0,0.1)]"
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
             >
               {service.gallery && service.gallery.length > 0 ? (
-                <div className="relative w-full h-full min-h-[420px] lg:min-h-[560px]">
+                <div className="relative w-full h-full min-h-[420px] lg:min-h-0">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={galleryIndex}
@@ -244,7 +248,7 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
                   )}
                 </div>
               ) : service.image ? (
-                <div className="relative w-full min-h-[420px] lg:min-h-[560px]">
+                <div className="relative w-full h-full min-h-[420px] lg:min-h-0">
                   <Image
                     src={urlFor(service.image)?.url() ?? ""}
                     alt={service.title}
@@ -275,7 +279,7 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
             </motion.div>
 
             <motion.div
-              className="flex flex-col"
+              className="flex flex-col px-8 md:px-16 lg:pl-10 xl:pl-14 lg:pr-16 xl:pr-24 lg:py-2 lg:justify-center"
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
@@ -300,8 +304,10 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
               </Link>
             </motion.div>
           </div>
+        </div>
 
-          {(service.aboutText || service.historyText) && (
+        {(service.aboutText || service.historyText) && (
+          <div className={`${containerClass} pb-16 md:pb-24`}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 lg:gap-24 mt-20 md:mt-28 pt-12 border-t border-brand-light-gray">
               {service.aboutText && (
                 <motion.div
@@ -338,8 +344,8 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
                 </motion.div>
               )}
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
         {service.features && service.features.length > 0 && (
           <div className="border-t border-brand-light-gray bg-white py-16 md:py-24">

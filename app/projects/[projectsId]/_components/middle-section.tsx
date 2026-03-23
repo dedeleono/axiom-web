@@ -14,14 +14,17 @@ import { cn } from "@/lib/utils";
 
 interface MiddleSectionProps {
   title: string;
-  location: string;
-  year: string;
+  services: string;
+  lengthOfProject: string;
+  budget: string;
   description1: string;
   description2?: string;
   images?: SanityImageObject[];
   highlghtImages: SanityImageObject[];
-  projectType: string;
 }
+
+const metaValue = (value: string) =>
+  value.trim().length > 0 ? value : "—";
 
 const MobileImages = ({ images }: { images?: SanityImageObject[] }) => {
   const validImages = images?.filter((img) => urlFor(img)?.url()) ?? [];
@@ -94,41 +97,47 @@ const DesktopCarousel = ({ images }: { images?: SanityImageObject[] }) => {
 
 export default function MiddleSection({
   title,
-  location,
-  year,
+  services,
+  lengthOfProject,
+  budget,
   description1,
   description2,
   images,
   highlghtImages,
-  projectType,
 }: MiddleSectionProps) {
   return (
     <React.Fragment>
       <div className="max-w-7xl min-h-[calc(100vh-100px)] relative mx-10">
         <motion.div 
-          className="flex justify-start md:justify-between items-start md:items-center w-full py-8 md:py-12 flex-wrap gap-8 md:gap-5 border-b border-[#EBEBEB]"
+          className="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-10 lg:gap-12 w-full py-8 md:py-12 border-b border-[#EBEBEB]"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <div className="flex flex-col items-start gap-1">
+          <div className="flex flex-col items-start gap-1.5 min-w-0 sm:max-w-none">
             <span className="text-xs font-semibold uppercase tracking-widest text-brand-dark-gray">
-              Location
+              Services
             </span>
-            <span className="text-base md:text-lg text-brand-black font-light">{location}</span>
+            <span className="text-base md:text-lg text-brand-black font-light leading-snug">
+              {metaValue(services)}
+            </span>
           </div>
-          <div className="flex flex-col items-start gap-1">
+          <div className="flex flex-col items-start gap-1.5">
             <span className="text-xs font-semibold uppercase tracking-widest text-brand-dark-gray">
-              Year
+              Length of project
             </span>
-            <span className="text-base md:text-lg text-brand-black font-light">{year}</span>
+            <span className="text-base md:text-lg text-brand-black font-light">
+              {metaValue(lengthOfProject)}
+            </span>
           </div>
-          <div className="flex flex-col items-start gap-1">
+          <div className="flex flex-col items-start gap-1.5">
             <span className="text-xs font-semibold uppercase tracking-widest text-brand-dark-gray">
-              Project
+              Budget
             </span>
-            <span className="text-base md:text-lg text-brand-black font-light">{projectType}</span>
+            <span className="text-base md:text-lg text-brand-black font-light">
+              {metaValue(budget)}
+            </span>
           </div>
         </motion.div>
 

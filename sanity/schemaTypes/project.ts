@@ -33,23 +33,25 @@ export default {
       validation: (Rule: { required: () => unknown }) => Rule.required(),
     },
     {
-      name: 'location',
-      title: 'Location',
+      name: 'services',
+      title: 'Services',
       type: 'string',
+      description:
+        'Scope of work for this project (e.g. flooring, lighting, cabinetry, bathroom remodel).',
       validation: (Rule: { required: () => unknown }) => Rule.required(),
     },
     {
-      name: 'year',
-      title: 'Year',
+      name: 'lengthOfProject',
+      title: 'Length of project',
       type: 'string',
-      validation: (Rule: { required: () => unknown }) =>
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (Rule.required() as any).regex(/^\d{4}$/),
+      description: 'Timeline or duration (e.g. 6–8 weeks).',
+      validation: (Rule: { required: () => unknown }) => Rule.required(),
     },
     {
-      name: 'projectType',
-      title: 'Project Type',
+      name: 'budget',
+      title: 'Budget',
       type: 'string',
+      description: 'Budget range or tier (e.g. $54k–$65k).',
       validation: (Rule: { required: () => unknown }) => Rule.required(),
     },
     {

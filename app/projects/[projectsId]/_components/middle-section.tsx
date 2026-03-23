@@ -26,13 +26,31 @@ interface MiddleSectionProps {
 const metaValue = (value: string) =>
   value.trim().length > 0 ? value : "—";
 
+/**
+ * Sanity `urlFor` throws if `asset` is null/undefined (reads `_ref` internally).
+ * Arrays from GROQ may also contain null entries.
+ */
+function getSanityImageUrl(
+  img: SanityImageObject | null | undefined
+): string | null {
+  if (img == null || img.asset == null) return null;
+  try {
+    const url = urlFor(img)?.url();
+    return url && url.length > 0 ? url : null;
+  } catch {
+    return null;
+  }
+}
+
 const MobileImages = ({ images }: { images?: SanityImageObject[] }) => {
-  const validImages = images?.filter((img) => urlFor(img)?.url()) ?? [];
+  const validImages =
+    images?.filter((img) => img != null && getSanityImageUrl(img) != null) ??
+    [];
   if (validImages.length === 0) return null;
   return (
     <div className="flex flex-col gap-4 md:hidden">
       {validImages.map((image, index) => {
-        const src = urlFor(image)?.url() ?? "";
+        const src = getSanityImageUrl(image) ?? "";
         if (!src) return null;
         return (
           <div key={index} className="relative h-[300px] w-full">
@@ -51,7 +69,9 @@ const MobileImages = ({ images }: { images?: SanityImageObject[] }) => {
 };
 
 const DesktopCarousel = ({ images }: { images?: SanityImageObject[] }) => {
-  const validImages = images?.filter((img) => urlFor(img)?.url()) ?? [];
+  const validImages =
+    images?.filter((img) => img != null && getSanityImageUrl(img) != null) ??
+    [];
   if (validImages.length === 0) return null;
   return (
     <div className="hidden md:block w-full">
@@ -64,7 +84,7 @@ const DesktopCarousel = ({ images }: { images?: SanityImageObject[] }) => {
       >
         <CarouselContent className="-ml-2">
           {validImages.map((image, index) => {
-            const src = urlFor(image)?.url() ?? "";
+            const src = getSanityImageUrl(image) ?? "";
             if (!src) return null;
             return (
               <CarouselItem
@@ -175,36 +195,46 @@ export default function MiddleSection({
           </div>
 
           <div className="grid grid-cols-2 md:gap-8 gap-4 mb-8 md:mb-16">
-            {highlghtImages?.map((image, index) => (
+            {(highlghtImages ?? [])
+              .map((image, index) => ({ image, index }))
+              .filter(({ image }) => getSanityImageUrl(image) != null)
+              .map(({ image, index }, renderedIndex) => {
+                const src = getSanityImageUrl(image) ?? "";
+                return (
               <motion.div
                 key={index}
                 className={`col-span-1 flex ${
-                  index === 0 ? "justify-end" : "justify-start"
+                  renderedIndex === 0 ? "justify-end" : "justify-start"
                 }`}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
+                transition={{ duration: 0.8, delay: renderedIndex * 0.2 }}
                 viewport={{ once: true, margin: "-100px" }}
               >
-                <div className={`w-full md:w-4/5 ${index === 0 ? "mt-0 md:mt-0" : "mt-12 md:mt-32"}`}>
+                <div
+                  className={`w-full md:w-4/5 ${
+                    renderedIndex === 0 ? "mt-0 md:mt-0" : "mt-12 md:mt-32"
+                  }`}
+                >
                   <div
                     className={
-                      index === 0
+                      renderedIndex === 0
                         ? "aspect-[4/5] relative"
                         : "relative aspect-[3/4]"
                     }
                   >
                     <Image
-                      src={urlFor(image)?.url() ?? ""}
-                      alt={`Project highlight ${index + 1}`}
+                      src={src}
+                      alt={`Project highlight ${renderedIndex + 1}`}
                       fill
                       className="object-cover"
-                      priority={index === 0}
+                      priority={renderedIndex === 0}
                     />
                   </div>
                 </div>
               </motion.div>
-            ))}
+                );
+              })}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">

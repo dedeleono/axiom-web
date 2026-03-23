@@ -2,7 +2,7 @@ import { render } from "@react-email/render";
 import ContactEmail from "@/components/emails/contact";
 import { NextResponse } from "next/server";
 import { createTransport } from "nodemailer";
-import { contactFormSchema } from "@/lib/validations/contact";
+import { contactSubmissionSchema } from "@/lib/validations/contact";
 
 const transportConfig = {
   host: "smtp.gmail.com",
@@ -19,32 +19,55 @@ const transporter = createTransport(transportConfig);
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const validatedData = contactFormSchema.parse(body);
+    const validatedData = contactSubmissionSchema.parse(body);
 
     const adminHtml = await render(
       ContactEmail({
+        intent: validatedData.intent,
         name: validatedData.name,
         email: validatedData.email,
         phone: validatedData.phone,
         message: validatedData.message,
+        consultation:
+          validatedData.intent === "consultation"
+            ? {
+                projectTypes: validatedData.projectTypes,
+                hasArchitecturalPlans: validatedData.hasArchitecturalPlans,
+                startTimeline: validatedData.startTimeline,
+              }
+            : undefined,
         recipient: "admin",
       })
     );
 
     const userHtml = await render(
       ContactEmail({
+        intent: validatedData.intent,
         name: validatedData.name,
         email: validatedData.email,
         phone: validatedData.phone,
         message: validatedData.message,
+        consultation:
+          validatedData.intent === "consultation"
+            ? {
+                projectTypes: validatedData.projectTypes,
+                hasArchitecturalPlans: validatedData.hasArchitecturalPlans,
+                startTimeline: validatedData.startTimeline,
+              }
+            : undefined,
         recipient: "user",
       })
     );
 
+    const intentLabel =
+      validatedData.intent === "consultation"
+        ? "Consultation request"
+        : "General inquiry";
+
     const adminMailOptions = {
       from: process.env.EMAIL_USER,
       to: process.env.CONTACT_EMAIL ?? "info@axiomrenovation.com",
-      subject: `Contact Form Submission - ${validatedData.name}`,
+      subject: `${intentLabel} — ${validatedData.name}`,
       html: adminHtml,
       replyTo: validatedData.email,
     };

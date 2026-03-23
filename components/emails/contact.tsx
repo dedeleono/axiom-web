@@ -1,4 +1,5 @@
 import React from "react";
+import { projectTypeIdsToLabels } from "@/lib/consultation-project-options";
 import {
   Body,
   Container,
@@ -14,11 +15,32 @@ import {
 } from "@react-email/components";
 
 interface ContactEmailProps {
+  intent?: "consultation" | "general";
   name?: string;
   email?: string;
   phone?: string;
   message?: string;
+  consultation?: {
+    projectTypes: string[];
+    hasArchitecturalPlans: "yes" | "no";
+    startTimeline: string;
+  };
   recipient?: "admin" | "user";
+}
+
+function intentLabel(intent: ContactEmailProps["intent"]): string {
+  if (intent === "consultation") return "Consultation request";
+  return "General inquiry";
+}
+
+function timelineLabel(t: string): string {
+  const map: Record<string, string> = {
+    asap: "As soon as possible",
+    within_year: "Within the next year",
+    over_year: "Over a year from now",
+    undecided: "Needs help deciding",
+  };
+  return map[t] ?? t;
 }
 
 export default function ContactEmail(props: ContactEmailProps) {
@@ -50,6 +72,31 @@ export default function ContactEmail(props: ContactEmailProps) {
             <Heading className="text-black text-[24px] font-normal text-center p-0 my-[30px] mx-0">
               {props.recipient === "admin" && `New message from ${props.name}`}
             </Heading>
+            {props.recipient === "admin" && props.intent && (
+              <Text className="text-black text-[14px] leading-[24px] font-semibold">
+                Type: {intentLabel(props.intent)}
+              </Text>
+            )}
+            {props.recipient === "admin" &&
+              props.intent === "consultation" &&
+              props.consultation && (
+                <>
+                  <Text className="text-black text-[14px] leading-[22px]">
+                    <span className="font-semibold">Project interests:</span>{" "}
+                    {projectTypeIdsToLabels(props.consultation.projectTypes)}
+                  </Text>
+                  <Text className="text-black text-[14px] leading-[22px]">
+                    <span className="font-semibold">Architectural plans:</span>{" "}
+                    {props.consultation.hasArchitecturalPlans === "yes"
+                      ? "Yes"
+                      : "No"}
+                  </Text>
+                  <Text className="text-black text-[14px] leading-[22px]">
+                    <span className="font-semibold">Start timeline:</span>{" "}
+                    {timelineLabel(props.consultation.startTimeline)}
+                  </Text>
+                </>
+              )}
             <Text className="text-black text-[14px] leading-[24px]">
               {props.recipient === "user" && <>Dear {props.name},</>}
               {props.recipient === "admin" &&

@@ -40,35 +40,50 @@ export default function Contact() {
         </motion.div>
         <div className="absolute inset-0 bg-black/40" />
 
-        <div className="absolute inset-0 flex flex-col md:flex-row justify-center md:justify-between items-center px-4 md:px-16 py-8 md:py-0 mt-20 md:m-0">
+        <div className="absolute inset-0 flex flex-col md:flex-row justify-center md:justify-between items-stretch md:items-center gap-10 lg:gap-16 px-5 sm:px-8 md:px-16 py-10 md:py-12 mt-16 md:mt-0">
           <motion.div
-            className="text-white w-full md:w-1/2 max-w-none md:mt-0 font-geist-mono custom-range-style"
-            initial={{ opacity: 0, x: -50 }}
+            className="text-white w-full md:w-[42%] lg:w-1/2 max-w-xl shrink-0 font-geist-mono custom-range-style flex flex-col justify-center"
+            initial={{ opacity: 0, x: -32 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{
-              duration: 0.7,
-              delay: 0.2,
-              ease: [0.4, 0, 0.2, 1],
+              duration: 0.75,
+              delay: 0.15,
+              ease: [0.16, 1, 0.3, 1],
             }}
           >
-            <h1 className="text-[1.6rem] md:text-[2.2rem] lg:text-[2.8rem] font-semibold uppercase">
-              <span className="block ml-1">Crafting</span>
-              <span className="block text-right mr-5">Tomorrow&apos;s</span>
-              <span className="block ml-4 md:ml-0 lg:ml-4 text-nowrap">Spaces Together</span>
+            <h1 className="text-[1.65rem] sm:text-[2rem] md:text-[2.2rem] lg:text-[2.75rem] font-semibold uppercase leading-[1.12] tracking-tight">
+              <span className="block ml-0.5">Crafting</span>
+              <span className="block text-right mr-4 sm:mr-6">Tomorrow&apos;s</span>
+              <span className="block ml-3 sm:ml-4 md:ml-0 lg:ml-3 text-nowrap">Spaces Together</span>
             </h1>
+            <p className="mt-7 md:mt-10 max-w-md text-white/75 text-sm sm:text-[15px] md:text-base font-light leading-[1.65] font-geist">
+              Request a consultation or send a general message—one form, and our team will get back to you shortly.
+            </p>
           </motion.div>
 
           <motion.div
-            className="w-[300px] md:w-1/2 bg-black backdrop-blur-md p-4 md:p-8 mt-8 md:mt-0 rounded-xl"
-            initial={{ opacity: 0, x: 50 }}
+            className="w-full md:flex-1 md:max-w-xl lg:max-w-[28rem] min-h-0 flex flex-col"
+            initial={{ opacity: 0, x: 36 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{
-              duration: 0.7,
-              delay: 0.3,
-              ease: [0.4, 0, 0.2, 1],
+              duration: 0.75,
+              delay: 0.22,
+              ease: [0.16, 1, 0.3, 1],
             }}
           >
-            <ContactForm />
+            <div
+              className="
+                rounded-2xl border border-white/[0.12]
+                bg-black/50 backdrop-blur-2xl
+                shadow-[0_24px_80px_-20px_rgba(0,0,0,0.65)]
+                p-6 sm:p-8 md:p-9
+                max-h-[min(78vh,720px)] overflow-y-auto overflow-x-hidden
+                [scrollbar-width:thin]
+                [scrollbar-color:rgba(255,255,255,0.2)_transparent]
+              "
+            >
+              <ContactForm />
+            </div>
           </motion.div>
         </div>
       </motion.div>

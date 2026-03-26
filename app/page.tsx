@@ -37,7 +37,7 @@ export default async function Home() {
       <main className="w-full mx-auto">
         <Hero />
 
-        <section className="mask-overlap bg-white relative z-30 pt-10">
+        <section className="mask-overlap bg-white relative z-30 pt-6 md:pt-8">
           <ServicesIntro />
         </section>
 

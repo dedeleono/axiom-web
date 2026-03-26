@@ -26,6 +26,47 @@ interface MiddleSectionProps {
 const metaValue = (value: string) =>
   value.trim().length > 0 ? value : "—";
 
+function ProjectMetaStat({
+  label,
+  value,
+  showDivider,
+  tabularFigures,
+}: {
+  label: string;
+  value: string;
+  showDivider: boolean;
+  tabularFigures?: boolean;
+}) {
+  const useCompactValue =
+    value.length > 26 || (value.match(/,/g)?.length ?? 0) >= 2;
+
+  return (
+    <div
+      className={cn(
+        "flex flex-col items-center justify-center gap-2 md:gap-2.5 px-5 sm:px-8 py-7 sm:py-8 md:py-10 text-center min-w-0",
+        "border-b border-black/6 last:border-b-0 md:border-b-0",
+        showDivider &&
+          "md:relative md:after:pointer-events-none md:after:absolute md:after:right-0 md:after:top-[12%] md:after:bottom-[12%] md:after:w-px md:after:content-[''] md:after:bg-linear-to-b md:after:from-transparent md:after:via-neutral-200/90 md:after:to-transparent"
+      )}
+    >
+      <p
+        className={cn(
+          "text-brand-black wrap-break-word text-balance antialiased max-w-[min(100%,20rem)]",
+          tabularFigures && "tabular-nums",
+          useCompactValue
+            ? "text-lg sm:text-xl md:text-2xl lg:text-[1.625rem] font-medium tracking-tight leading-snug"
+            : "text-[1.65rem] sm:text-3xl md:text-4xl lg:text-[2.5rem] font-medium tracking-[-0.02em] leading-[1.08]"
+        )}
+      >
+        {value}
+      </p>
+      <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-neutral-500 max-w-[16rem] leading-normal mt-0.5">
+        {label}
+      </p>
+    </div>
+  );
+}
+
 /**
  * Sanity `urlFor` throws if `asset` is null/undefined (reads `_ref` internally).
  * Arrays from GROQ may also contain null entries.
@@ -128,38 +169,35 @@ export default function MiddleSection({
   return (
     <React.Fragment>
       <div className="max-w-7xl min-h-[calc(100vh-100px)] relative mx-10">
-        <motion.div 
-          className="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-10 lg:gap-12 w-full py-8 md:py-12 border-b border-[#EBEBEB]"
-          initial={{ opacity: 0, y: 20 }}
+        <motion.section
+          className="w-screen max-w-[100vw] relative left-1/2 -translate-x-1/2 bg-white border-b border-black/6"
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.55 }}
           viewport={{ once: true }}
+          aria-label="Project details"
         >
-          <div className="flex flex-col items-start gap-1.5 min-w-0 sm:max-w-none">
-            <span className="text-xs font-semibold uppercase tracking-widest text-brand-dark-gray">
-              Services
-            </span>
-            <span className="text-base md:text-lg text-brand-black font-light leading-snug">
-              {metaValue(services)}
-            </span>
+          <div className="mx-auto max-w-7xl px-6 sm:px-10">
+            <div className="grid grid-cols-1 md:grid-cols-3">
+              <ProjectMetaStat
+                label="Services"
+                value={metaValue(services)}
+                showDivider
+              />
+              <ProjectMetaStat
+                label="Length of project"
+                value={metaValue(lengthOfProject)}
+                showDivider
+              />
+              <ProjectMetaStat
+                label="Budget"
+                value={metaValue(budget)}
+                showDivider={false}
+                tabularFigures
+              />
+            </div>
           </div>
-          <div className="flex flex-col items-start gap-1.5">
-            <span className="text-xs font-semibold uppercase tracking-widest text-brand-dark-gray">
-              Length of project
-            </span>
-            <span className="text-base md:text-lg text-brand-black font-light">
-              {metaValue(lengthOfProject)}
-            </span>
-          </div>
-          <div className="flex flex-col items-start gap-1.5">
-            <span className="text-xs font-semibold uppercase tracking-widest text-brand-dark-gray">
-              Budget
-            </span>
-            <span className="text-base md:text-lg text-brand-black font-light">
-              {metaValue(budget)}
-            </span>
-          </div>
-        </motion.div>
+        </motion.section>
 
         <motion.div 
           className="my-16 md:my-24"

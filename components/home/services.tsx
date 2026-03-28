@@ -39,14 +39,14 @@ function ServiceCard({ service, index }: { service: ServiceData; index: number }
   return (
     <Link
       href={href}
-      className="block w-full min-h-[650px] md:min-h-[750px] border-r border-b border-[#3A3A3A] last:border-r-0 md:border-b-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 focus-visible:ring-offset-brand-black"
+      className="block w-full min-h-[min(78vh,480px)] sm:min-h-[650px] md:min-h-[750px] border-r border-b border-[#3A3A3A] last:border-r-0 md:border-b-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 focus-visible:ring-offset-brand-black"
       onPointerEnter={() => setHovered(true)}
       onPointerLeave={() => setHovered(false)}
       onFocus={() => setHovered(true)}
       onBlur={() => setHovered(false)}
     >
       <motion.div
-        className="relative block h-full min-h-[650px] w-full cursor-pointer overflow-hidden rounded-none md:min-h-[750px]"
+        className="relative block h-full min-h-[min(78vh,480px)] w-full cursor-pointer overflow-hidden rounded-none sm:min-h-[650px] md:min-h-[750px]"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: index * 0.2, ease: [0.16, 1, 0.3, 1] }}
@@ -91,9 +91,9 @@ function ServiceCard({ service, index }: { service: ServiceData; index: number }
           />
         </div>
 
-        <div className="absolute inset-0 z-10 flex w-full flex-col justify-end p-8 text-white md:p-12">
+        <div className="absolute inset-0 z-10 flex w-full flex-col justify-end p-6 text-white sm:p-8 md:p-12">
           <motion.h3
-            className="mb-3 text-3xl font-light md:mb-4 md:text-4xl"
+            className="mb-3 text-2xl font-light sm:text-3xl md:mb-4 md:text-4xl"
             initial={false}
             animate={{ color: hovered ? "#F25623" : "#ffffff" }}
             transition={tween}
@@ -167,8 +167,8 @@ export default function Services() {
 
   if (isLoading) {
     return (
-      <div className="w-full bg-[#1A1A1A] py-32 flex items-center justify-center min-h-[600px]">
-        <div className="w-12 h-12 border-4 border-white/20 border-t-white rounded-full animate-spin" />
+      <div className="flex min-h-[280px] w-full items-center justify-center bg-[#1A1A1A] py-20 md:min-h-[600px] md:py-32">
+        <div className="h-10 w-10 animate-spin rounded-full border-4 border-white/20 border-t-white md:h-12 md:w-12" />
       </div>
     );
   }
@@ -177,12 +177,12 @@ export default function Services() {
   if (services.length === 0) return null;
 
   return (
-    <div className="w-full bg-brand-black pt-24 md:pt-32 font-geist">
-      <div className="max-w-[100%] mx-auto px-0">
-        <div className="mb-16 md:mb-24 flex flex-col md:flex-row justify-between items-end px-8 md:px-16 lg:px-24">
-          <div>
-            <motion.h2 
-              className="text-5xl md:text-7xl font-light tracking-tight text-white mb-4"
+    <div className="w-full bg-brand-black pt-12 font-geist sm:pt-24 md:pt-32">
+      <div className="mx-auto max-w-full px-0">
+        <div className="mb-8 flex flex-col items-center px-6 text-center sm:mb-16 sm:px-8 md:mb-24 md:flex-row md:justify-between md:items-end md:px-16 md:text-left lg:px-24">
+          <div className="inline-block max-w-full md:block md:w-full md:max-w-none">
+            <motion.h2
+              className="mb-3 text-4xl font-light tracking-tight text-white sm:mb-4 sm:text-5xl md:text-7xl"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
@@ -190,8 +190,15 @@ export default function Services() {
             >
               Our Services
             </motion.h2>
-            <motion.div 
-              className="w-24 h-[1px] bg-brand-orange"
+            <motion.div
+              className="h-px max-w-full bg-brand-orange md:hidden"
+              initial={{ width: 0, opacity: 0.9 }}
+              whileInView={{ width: "100%", opacity: 1 }}
+              transition={{ duration: 0.65, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
+              viewport={{ once: true }}
+            />
+            <motion.div
+              className="hidden h-[1px] bg-brand-orange md:block"
               initial={{ width: 0 }}
               whileInView={{ width: 96 }}
               transition={{ duration: 0.8, delay: 0.2 }}

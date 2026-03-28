@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -205,14 +204,6 @@ export default function Services() {
           {services.map((service, index) => (
             <ServiceCard key={`${service.title}-${index}`} service={service} index={index} />
           ))}
-        </div>
-
-        <div className="mt-16 text-center md:hidden">
-          <Link href="/contact" className="inline-block">
-            <Button className="rounded-none px-10 py-6 text-xs tracking-[0.2em] font-semibold uppercase border border-white bg-transparent text-white hover:bg-white hover:text-black transition-all">
-              Start Your Project
-            </Button>
-          </Link>
         </div>
       </div>
     </div>

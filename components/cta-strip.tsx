@@ -1,29 +1,33 @@
-import { Button } from "@/components/ui/button"
-import { ArrowRight } from "lucide-react"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 
 export function CTAStrip() {
-    return (
-        <section className="py-16 md:py-20 bg-primary">
-            <div className="container mx-auto px-4">
-                <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8">
-                    <div className="text-center md:text-left">
-                        <h2 className="text-2xl md:text-3xl font-bold text-primary-foreground mb-2 text-balance">
-                            Need a free renovation estimate?
-                        </h2>
-                        <p className="text-primary-foreground/80 text-lg">
-                            Let&apos;s talk about transforming your home.
-                        </p>
-                    </div>
-                    <Button
-                        size="lg"
-                        variant="secondary"
-                        className="bg-card text-primary hover:bg-card/90 group whitespace-nowrap"
-                    >
-                        Get Free Estimate
-                        <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                    </Button>
-                </div>
-            </div>
-        </section>
-    )
+  return (
+    <div className="mx-auto max-w-[95%] px-8 py-16 font-geist md:px-16 md:py-20 lg:px-24 xl:max-w-screen-2xl">
+      <div className="flex flex-col items-start justify-between gap-10 md:flex-row md:items-end md:gap-12">
+        <div className="max-w-xl">
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-white/80">
+            Get started
+          </p>
+          <h2 className="text-3xl font-light leading-[1.1] tracking-tight text-white md:text-4xl lg:text-5xl">
+            Book a free consultation
+          </h2>
+          <p className="mt-5 text-base font-light leading-relaxed text-white/90 md:text-lg">
+            Let&apos;s talk about your project.
+          </p>
+        </div>
+
+        <Button
+          asChild
+          className="group h-auto shrink-0 rounded-none border border-white bg-white px-10 py-6 text-xs font-semibold uppercase tracking-[0.2em] text-brand-orange shadow-none transition-colors hover:bg-transparent hover:text-white"
+        >
+          <Link href="/contact">
+            Book a free consultation
+            <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          </Link>
+        </Button>
+      </div>
+    </div>
+  );
 }

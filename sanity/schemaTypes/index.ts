@@ -8,8 +8,9 @@ import innovation from './innovation'
 import service from './service'
 import whyChooseUs from './whyChooseUs'
 import faqPage from './faqPage'
+import philosophySection from './philosophySection'
 import { post, author, blogSettings } from './blog'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [project, philosophy, whoWeAre, awards, home, innovation, service, whyChooseUs, faqPage, post, author, blogSettings],
+  types: [project, philosophy, whoWeAre, awards, home, innovation, service, whyChooseUs, faqPage, philosophySection, post, author, blogSettings],
 }

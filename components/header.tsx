@@ -29,7 +29,7 @@ export default function Header() {
       >
         <Link href="/" className="cursor-pointer flex items-center gap-3">
           <Image 
-            src="/logo.webp" 
+            src="/logo.png" 
             alt="Axiom Renovation" 
             width={40} 
             height={40}

@@ -16,6 +16,7 @@ import { schema } from './sanity/schemaTypes'
 import { pageStructure, singletonPlugin } from './sanity/plugins/settings'
 import { blogSettings } from './sanity/schemaTypes/blog'
 import faqPage from './sanity/schemaTypes/faqPage'
+import philosophySection from './sanity/schemaTypes/philosophySection'
 import { resolveHref } from './sanity/lib/utils'
 
 const blogLocation = {
@@ -62,8 +63,8 @@ export default defineConfig({
       },
       previewUrl: { previewMode: { enable: "/api/draft-mode/enable" } },
     }),
-    structureTool({ structure: pageStructure([blogSettings, faqPage]) }),
-    singletonPlugin([blogSettings.name, faqPage.name]),
+    structureTool({ structure: pageStructure([blogSettings, faqPage, philosophySection]) }),
+    singletonPlugin([blogSettings.name, faqPage.name, philosophySection.name]),
     unsplashImageAsset(),
     process.env.NODE_ENV === 'development' &&
       visionTool({ defaultApiVersion: apiVersion }),

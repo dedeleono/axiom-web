@@ -57,7 +57,7 @@ export default async function Home() {
           <WhyChooseUsGrid />
         </section> */}
 
-        <section className="mask-overlap bg-primary relative z-20 pt-0">
+        <section className="mask-overlap relative z-20 bg-brand-orange pt-0">
           <CTAStrip />
         </section>
 
@@ -65,7 +65,7 @@ export default async function Home() {
           <Testimonials />
         </section>
 
-        <section className="mask-overlap bg-brand-orange relative z-10 pt-10">
+        <section className="mask-overlap relative z-10 bg-white pt-10">
           <Philosophy />
         </section>
       </main>

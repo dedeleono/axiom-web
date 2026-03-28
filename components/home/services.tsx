@@ -8,14 +8,135 @@ import Image from "next/image";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import type { Image as SanityImage } from "sanity";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { resolveServiceCardHref } from "@/lib/service-path";
+import { cn } from "@/lib/utils";
+
+/** One easing curve for all card hover motion so nothing fights. */
+const CARD_EASE = [0.22, 1, 0.36, 1] as const;
+const CARD_DURATION = 0.55;
 
 interface ServiceData {
   title: string;
   description: string;
   defaultImage: SanityImage;
-  hoverImage: SanityImage;
+  hoverImage?: SanityImage;
   link: string;
+}
+
+function ServiceCard({ service, index }: { service: ServiceData; index: number }) {
+  const [hovered, setHovered] = useState(false);
+  const reduceMotion = useReducedMotion();
+  const href = resolveServiceCardHref(service.title, service.link);
+
+  const defaultSrc = service.defaultImage ? urlFor(service.defaultImage)?.url() : undefined;
+  const hoverSrc = service.hoverImage ? urlFor(service.hoverImage)?.url() : undefined;
+  const hasHoverImage = Boolean(hoverSrc);
+
+  const tween = reduceMotion
+    ? { duration: 0.01 }
+    : { duration: CARD_DURATION, ease: CARD_EASE };
+
+  return (
+    <Link
+      href={href}
+      className="block w-full min-h-[650px] md:min-h-[750px] border-r border-b border-[#3A3A3A] last:border-r-0 md:border-b-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 focus-visible:ring-offset-brand-black"
+      onPointerEnter={() => setHovered(true)}
+      onPointerLeave={() => setHovered(false)}
+      onFocus={() => setHovered(true)}
+      onBlur={() => setHovered(false)}
+    >
+      <motion.div
+        className="relative block h-full min-h-[650px] w-full cursor-pointer overflow-hidden rounded-none md:min-h-[750px]"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: index * 0.2, ease: [0.16, 1, 0.3, 1] }}
+        viewport={{ once: true, margin: "-50px" }}
+      >
+        <div className="absolute inset-0 w-full h-full">
+          {defaultSrc ? (
+            <Image
+              src={defaultSrc}
+              alt=""
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
+              className={cn(
+                "object-cover absolute inset-0",
+                !reduceMotion && "transition-opacity duration-[550ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+                hasHoverImage && hovered ? "opacity-0" : "opacity-100"
+              )}
+              aria-hidden
+            />
+          ) : null}
+          {hasHoverImage && hoverSrc ? (
+            <Image
+              src={hoverSrc}
+              alt=""
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
+              className={cn(
+                "object-cover absolute inset-0",
+                !reduceMotion && "transition-opacity duration-[550ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+                hovered ? "opacity-100" : "opacity-0"
+              )}
+              aria-hidden
+            />
+          ) : null}
+          {/* Base wash — static so we are not interpolating gradient stops (that reads choppy). */}
+          <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-brand-black via-brand-black/45 to-brand-black/65 opacity-80" />
+          <motion.div
+            className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-brand-black via-brand-black/75 to-brand-black/80"
+            initial={false}
+            animate={{ opacity: hovered ? 1 : 0 }}
+            transition={tween}
+          />
+        </div>
+
+        <div className="absolute inset-0 z-10 flex w-full flex-col justify-end p-8 text-white md:p-12">
+          <motion.h3
+            className="mb-3 text-3xl font-light md:mb-4 md:text-4xl"
+            initial={false}
+            animate={{ color: hovered ? "#F25623" : "#ffffff" }}
+            transition={tween}
+          >
+            {service.title}
+          </motion.h3>
+
+          {/* Smooth height: grid 0fr → 1fr (avoids max-height animation, which always feels wrong). */}
+          <div
+            className={cn(
+              "grid min-h-0",
+              !reduceMotion &&
+                "transition-[grid-template-rows] duration-[550ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+              hovered ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+            )}
+          >
+            <div className="min-h-0 overflow-hidden">
+              <motion.div
+                initial={false}
+                animate={{
+                  y: reduceMotion ? 0 : hovered ? 0 : 10,
+                  opacity: hovered ? 1 : 0,
+                }}
+                transition={{
+                  ...tween,
+                  delay: reduceMotion ? 0 : hovered ? 0.04 : 0,
+                }}
+                className="pt-1"
+              >
+                <p className="mb-6 text-base font-normal leading-relaxed text-white/90 md:mb-8">
+                  {service.description}
+                </p>
+                <span className="flex items-center text-xs font-semibold uppercase tracking-[0.2em] text-white">
+                  Learn more <ArrowRight className="ml-3 h-4 w-4" />
+                </span>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </Link>
+  );
 }
 
 export default function Services() {
@@ -29,8 +150,8 @@ export default function Services() {
           `*[_type == "service"] | order(order asc) {
             title,
             description,
-            defaultImage{asset, hotspot},
-            hoverImage{asset, hotspot},
+            defaultImage{asset->, hotspot},
+            hoverImage{asset->, hotspot},
             link
           }`
         );
@@ -57,7 +178,7 @@ export default function Services() {
   if (services.length === 0) return null;
 
   return (
-    <div className="w-full bg-brand-black py-24 md:py-32 font-geist">
+    <div className="w-full bg-brand-black pt-24 md:pt-32 font-geist">
       <div className="max-w-[100%] mx-auto px-0">
         <div className="mb-16 md:mb-24 flex flex-col md:flex-row justify-between items-end px-8 md:px-16 lg:px-24">
           <div>
@@ -82,47 +203,7 @@ export default function Services() {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-[#3A3A3A]">
           {services.map((service, index) => (
-          <Link href={service.link || "/contact"} key={index}>
-            <motion.div 
-              className="group relative block w-full overflow-hidden rounded-none min-h-[500px] md:min-h-[600px] cursor-pointer border-r last:border-r-0 border-b md:border-b-0 border-[#3A3A3A]"
-              initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: index * 0.2, ease: [0.16, 1, 0.3, 1] }}
-                viewport={{ once: true, margin: "-50px" }}
-              >
-                {/* Background Images Container */}
-                <div className="absolute inset-0 w-full h-full">
-                  {service.defaultImage && (
-                    <Image
-                      src={urlFor(service.defaultImage)?.url() ?? ""}
-                      alt={service.title}
-                      fill
-                      className="object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105"
-                    />
-                  )}
-                {/* Deep dark gradient starting higher up for that moody editorial look */}
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/40 to-brand-black/60 opacity-80 group-hover:from-brand-black group-hover:via-brand-black/80 group-hover:to-brand-black/70 transition-all duration-500" /> 
-              </div>
-
-              {/* Content Container */}
-              <div className="absolute inset-0 w-full h-full p-8 md:p-12 flex flex-col justify-end text-white z-10 transition-all duration-700 ease-in-out">
-                {/* Title - Always visible */}
-                <h3 className="text-3xl md:text-4xl font-light mb-4 text-white group-hover:text-brand-orange transition-colors duration-500">
-                  {service.title}
-                </h3>
-
-                {/* Hover Content - Hidden by default, slides up and fades in */}
-                <div className="overflow-hidden max-h-[0px] opacity-0 group-hover:max-h-[300px] group-hover:opacity-100 transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)]">
-                  <p className="text-white/90 text-base leading-relaxed mb-8 font-normal">
-                    {service.description}
-                  </p>
-                  <span className="flex items-center text-xs font-semibold uppercase tracking-[0.2em] text-white hover:text-brand-orange transition-colors">
-                    Learn more <ArrowRight className="ml-3 w-4 h-4" />
-                  </span>
-                </div>
-              </div>
-              </motion.div>
-            </Link>
+            <ServiceCard key={`${service.title}-${index}`} service={service} index={index} />
           ))}
         </div>
 

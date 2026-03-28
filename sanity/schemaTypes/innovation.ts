@@ -1,7 +1,9 @@
 export default {
   name: 'innovation',
-  title: 'Service',
+  title: 'Service pages',
   type: 'document',
+  description:
+    'Full content for each /services/… route (hero tabs, gallery, features, process). Not the homepage tiles.',
   fields: [
     {
       name: 'slug',

@@ -41,13 +41,15 @@ export default async function Home() {
           <ServicesIntro />
         </section>
 
-        <section className="mask-overlap bg-[#EBEBEB] relative z-20 pt-0">
-          <WhoWeAre />
-        </section>
-
         <section className="mask-overlap bg-brand-black relative z-20 pt-0">
           <Services />
         </section>
+
+        {/* <section className="mask-overlap bg-[#EBEBEB] relative z-20 pt-0"> */}
+          <WhoWeAre />
+        {/* </section> */}
+
+        
 
         <section className="mask-overlap bg-[#262626] relative z-20 pt-0">
           <WhyChooseUsGrid />

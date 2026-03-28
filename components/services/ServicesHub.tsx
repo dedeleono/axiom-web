@@ -3,20 +3,21 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import { serviceDetailHref } from "@/lib/service-path";
 
 const SERVICE_ENTRIES = [
   {
-    href: "/bathroom-remodeling",
+    slug: "bathroom-remodeling" as const,
     title: "Bathroom Remodel",
     line: "Spa-like retreats, fixtures, and wet-area expertise.",
   },
   {
-    href: "/kitchen-remodeling",
+    slug: "kitchen-remodeling" as const,
     title: "Kitchen Remodel",
     line: "Layout, cabinetry, and finishes built for how you cook and gather.",
   },
   {
-    href: "/home-addition",
+    slug: "home-addition" as const,
     title: "Home Addition & ADU",
     line: "Thoughtful square footage that feels native to your home.",
   },
@@ -48,14 +49,14 @@ export default function ServicesHub() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {SERVICE_ENTRIES.map((item, index) => (
             <motion.div
-              key={item.href}
+              key={item.slug}
               initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.55, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
             >
               <Link
-                href={item.href}
+                href={serviceDetailHref(item.slug)}
                 className="group flex flex-col h-full min-h-[280px] p-8 md:p-10 rounded-2xl border border-brand-light-gray bg-white hover:border-brand-black/20 hover:shadow-[0_24px_80px_-24px_rgba(0,0,0,0.12)] transition-all duration-500"
               >
                 <div className="flex justify-between items-start gap-4 mb-6">

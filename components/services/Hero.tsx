@@ -7,8 +7,7 @@ import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 
 import { motion } from "framer-motion";
-
-const SERVICE_SLUGS = ["bathroom-remodeling", "kitchen-remodeling", "home-addition"] as const;
+import { isServiceDetailSlug, pathnameToServiceSlug } from "@/lib/service-path";
 
 interface HomeHeroData {
   _id: string;
@@ -33,14 +32,15 @@ export default function ServiceHero() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const pathSlug = pathname === "/" ? "" : pathname.slice(1).toLowerCase();
+        const rawPath = pathname === "/" ? "" : pathname.slice(1).toLowerCase();
+        const serviceSlug = pathnameToServiceSlug(pathname).toLowerCase();
 
         const pageName =
-          SERVICE_SLUGS.includes(pathSlug as (typeof SERVICE_SLUGS)[number])
+          isServiceDetailSlug(serviceSlug)
             ? "innovation"
             : pathname === "/"
               ? "home"
-              : pathSlug;
+              : rawPath;
 
         const heroQuery = `*[_type == "home" && pageName == $pageName][0]{
             _id,

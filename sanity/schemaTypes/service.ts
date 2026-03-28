@@ -1,7 +1,9 @@
 export default {
   name: 'service',
-  title: 'Service',
+  title: 'Home — service cards',
   type: 'document',
+  description:
+    'The three large cards on the homepage (default/hover images, short blurb, link). Separate from Service pages.',
   fields: [
     {
       name: 'title',
@@ -37,6 +39,7 @@ export default {
       name: 'link',
       title: 'Link URL',
       type: 'string',
+      description: 'e.g. /services/kitchen-remodeling (legacy /kitchen-remodeling is normalized automatically)',
       initialValue: '/contact',
     },
     {

@@ -8,17 +8,12 @@ import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import type { Image as SanityImage } from "sanity";
 import { motion } from "framer-motion";
-
-const SLUG_ORDER = ["bathroom-remodeling", "kitchen-remodeling", "home-addition"] as const;
-const TITLE_TO_SLUG: Record<string, string> = {
-  "Bathroom Remodeling": "bathroom-remodeling",
-  "Bathroom Remodel": "bathroom-remodeling",
-  "Kitchen Remodeling": "kitchen-remodeling",
-  "Kitchen Remodel": "kitchen-remodeling",
-  "Home Addition": "home-addition",
-  "Home Additions": "home-addition",
-  "ADU & Home Additions": "home-addition",
-};
+import {
+  SERVICE_PAGE_SLUGS,
+  TITLE_TO_SERVICE_SLUG,
+  pathnameToServiceSlug,
+  serviceDetailHref,
+} from "@/lib/service-path";
 
 interface TabService {
   slug: string;
@@ -43,11 +38,11 @@ export default function ServiceTabs() {
         );
         const withSlug = result.map((r) => ({
           ...r,
-          slug: r.slug ?? TITLE_TO_SLUG[r.title] ?? r.title.toLowerCase().replace(/\s+/g, "-"),
+          slug: r.slug ?? TITLE_TO_SERVICE_SLUG[r.title] ?? r.title.toLowerCase().replace(/\s+/g, "-"),
         }));
         const sorted = withSlug.sort((a, b) => {
-          const idxA = SLUG_ORDER.indexOf(a.slug as (typeof SLUG_ORDER)[number]);
-          const idxB = SLUG_ORDER.indexOf(b.slug as (typeof SLUG_ORDER)[number]);
+          const idxA = SERVICE_PAGE_SLUGS.indexOf(a.slug as (typeof SERVICE_PAGE_SLUGS)[number]);
+          const idxB = SERVICE_PAGE_SLUGS.indexOf(b.slug as (typeof SERVICE_PAGE_SLUGS)[number]);
           return (idxA === -1 ? 999 : idxA) - (idxB === -1 ? 999 : idxB);
         });
         setServices(sorted);
@@ -60,7 +55,7 @@ export default function ServiceTabs() {
     fetchData();
   }, []);
 
-  const currentSlug = pathname?.slice(1) ?? "";
+  const currentSlug = pathname ? pathnameToServiceSlug(pathname) : "";
 
   if (isLoading) {
     return (
@@ -84,7 +79,7 @@ export default function ServiceTabs() {
           return (
             <Link
               key={service.slug}
-              href={`/${service.slug}`}
+              href={serviceDetailHref(service.slug)}
               className="flex flex-col items-center flex-1 min-w-[100px] max-w-[150px] cursor-pointer group no-underline"
             >
               <motion.div

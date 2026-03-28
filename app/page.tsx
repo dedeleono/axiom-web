@@ -11,6 +11,8 @@ import Footer from "@/components/footer";
 import Hero from "@/components/home/Hero";
 import Header from "@/components/header";
 import { client } from "@/sanity/lib/client";
+import Awards from "@/components/home/awards";
+import { CTAStrip } from "@/components/cta-strip";
 
 // async function getProjects() {
 //   const query = `*[_type == "project"] | order(order asc) {
@@ -51,8 +53,12 @@ export default async function Home() {
 
         
 
-        <section className="mask-overlap bg-[#262626] relative z-20 pt-0">
+        {/* <section className="mask-overlap bg-[#262626] relative z-20 pt-0">
           <WhyChooseUsGrid />
+        </section> */}
+
+        <section className="mask-overlap bg-primary relative z-20 pt-0">
+          <CTAStrip />
         </section>
 
         <section className="mask-overlap bg-white relative z-10 pt-10">

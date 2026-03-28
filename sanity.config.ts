@@ -15,6 +15,7 @@ import { apiVersion, dataset, projectId, studioUrl } from './sanity/env'
 import { schema } from './sanity/schemaTypes'
 import { pageStructure, singletonPlugin } from './sanity/plugins/settings'
 import { blogSettings } from './sanity/schemaTypes/blog'
+import faqPage from './sanity/schemaTypes/faqPage'
 import { resolveHref } from './sanity/lib/utils'
 
 const blogLocation = {
@@ -61,8 +62,8 @@ export default defineConfig({
       },
       previewUrl: { previewMode: { enable: "/api/draft-mode/enable" } },
     }),
-    structureTool({ structure: pageStructure([blogSettings]) }),
-    singletonPlugin([blogSettings.name]),
+    structureTool({ structure: pageStructure([blogSettings, faqPage]) }),
+    singletonPlugin([blogSettings.name, faqPage.name]),
     unsplashImageAsset(),
     process.env.NODE_ENV === 'development' &&
       visionTool({ defaultApiVersion: apiVersion }),

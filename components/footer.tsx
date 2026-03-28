@@ -1,14 +1,25 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import Link from "next/link";
 import PhoneDialog, { PhoneDialogHandle } from "./phone-dialog";
 import { useRef } from "react";
-import { Facebook, Instagram, Youtube, Twitter } from "lucide-react"; // Using Twitter icon for Tiktok fallback or generic
+import { Facebook, Instagram, Youtube } from "lucide-react";
 
 export default function Footer() {
   const dialogRef = useRef<PhoneDialogHandle>(null);
+
+  const sitemapLinks = [
+    { href: "/", label: "Home" },
+    { href: "/services/bathroom-remodeling", label: "Bathroom remodeling" },
+    { href: "/services/kitchen-remodeling", label: "Kitchen remodeling" },
+    { href: "/services/home-addition", label: "Home addition & ADU" },
+    { href: "/projects", label: "Portfolio" },
+    { href: "/faqs", label: "FAQs" },
+    { href: "/blog", label: "Blog" },
+    { href: "/contact", label: "Contact" },
+    { href: "/privacy-policy", label: "Privacy policy" },
+  ] as const;
 
   const areas = [
     "Santa Clara County, CA", "Alameda County, CA", "Contra Costa County, CA",
@@ -24,20 +35,42 @@ export default function Footer() {
 
   return (
     <footer className="bg-white text-brand-black pt-20 pb-10 border-t border-brand-light-gray font-geist">
-      <div className="max-w-7xl mx-auto px-8 grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-8 md:grid-cols-2 xl:grid-cols-5 mb-16">
         {/* Brand / Links */}
-        <div className="space-y-6">
+        <div className="space-y-6 xl:col-span-1">
           <Link href="/" className="block">
             <h3 className="text-2xl font-bold font-geist-mono">Axiom Renovation</h3>
           </Link>
           <div className="flex flex-col space-y-2 text-sm text-brand-dark-gray">
-             <Link href="/blogs" className="hover:text-brand-black transition-colors">Newsroom & Article</Link>
-             <Link href="/privacy-policy" className="hover:text-brand-black transition-colors">Privacy Policy</Link>
+            <Link href="/blog" className="transition-colors hover:text-brand-black">
+              Newsroom &amp; Article
+            </Link>
+            <Link href="/privacy-policy" className="transition-colors hover:text-brand-black">
+              Privacy Policy
+            </Link>
           </div>
         </div>
 
+        {/* Sitemap */}
+        <div className="xl:col-span-1">
+          <h4 className="mb-6 text-sm font-bold uppercase tracking-widest text-brand-black">Sitemap</h4>
+          <nav className="flex flex-col space-y-2 text-sm text-brand-dark-gray" aria-label="Sitemap">
+            {sitemapLinks.map(({ href, label }) => (
+              <Link key={href} href={href} className="transition-colors hover:text-brand-black">
+                {label}
+              </Link>
+            ))}
+            <Link
+              href="/sitemap.xml"
+              className="pt-2 text-xs text-brand-dark-gray/90 transition-colors hover:text-brand-black"
+            >
+              XML sitemap
+            </Link>
+          </nav>
+        </div>
+
         {/* Areas We Serve */}
-        <div className="col-span-1 md:col-span-2">
+        <div className="md:col-span-2 xl:col-span-2">
           <h4 className="font-bold mb-6 text-sm uppercase tracking-widest text-brand-black">Areas We Serve</h4>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-2 text-sm text-brand-dark-gray">
             {areas.map((area, index) => (
@@ -47,7 +80,7 @@ export default function Footer() {
         </div>
 
         {/* Contact Info */}
-        <div className="space-y-8">
+        <div className="space-y-8 md:col-span-2 xl:col-span-1">
            <h4 className="font-bold mb-6 text-sm uppercase tracking-widest text-brand-black">Find us here!</h4>
            
            <div className="space-y-4 text-sm text-brand-dark-gray">

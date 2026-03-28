@@ -85,7 +85,7 @@ const Hero: React.FC = () => {
           <h2 className="text-sm md:text-base font-light tracking-widest mb-4 uppercase">
             Welcome to Axiom Renovation | License: 1105006
           </h2>
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight tracking-tight">
+          <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight tracking-tight">
             {projectsData?.heroText || "We turn ideas into timeless living spaces"}
           </h1>
           <p className="text-xl md:text-2xl font-light mb-8 uppercase tracking-wide">

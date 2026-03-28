@@ -68,7 +68,7 @@ export default function Services() {
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              Services
+              Our Services
             </motion.h2>
             <motion.div 
               className="w-24 h-[1px] bg-brand-orange"

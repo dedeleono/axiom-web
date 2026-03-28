@@ -43,7 +43,7 @@ function ProjectMetaStat({
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center gap-2 md:gap-2.5 px-5 sm:px-8 py-7 sm:py-8 md:py-10 text-center min-w-0",
+        "flex w-full min-w-0 flex-col items-center justify-center gap-2 md:gap-2.5 px-5 sm:px-8 py-7 sm:py-8 md:py-10 text-center",
         "border-b border-black/6 last:border-b-0 md:border-b-0",
         showDivider &&
           "md:relative md:after:pointer-events-none md:after:absolute md:after:right-0 md:after:top-[12%] md:after:bottom-[12%] md:after:w-px md:after:content-[''] md:after:bg-linear-to-b md:after:from-transparent md:after:via-neutral-200/90 md:after:to-transparent"
@@ -168,37 +168,37 @@ export default function MiddleSection({
 }: MiddleSectionProps) {
   return (
     <React.Fragment>
-      <div className="max-w-7xl min-h-[calc(100vh-100px)] relative mx-10">
-        <motion.section
-          className="w-screen max-w-[100vw] relative left-1/2 -translate-x-1/2 bg-white border-b border-black/6"
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55 }}
-          viewport={{ once: true }}
-          aria-label="Project details"
-        >
-          <div className="mx-auto max-w-7xl px-6 sm:px-10">
-            <div className="grid grid-cols-1 md:grid-cols-3">
-              <ProjectMetaStat
-                label="Services"
-                value={metaValue(services)}
-                showDivider
-              />
-              <ProjectMetaStat
-                label="Length of project"
-                value={metaValue(lengthOfProject)}
-                showDivider
-              />
-              <ProjectMetaStat
-                label="Budget"
-                value={metaValue(budget)}
-                showDivider={false}
-                tabularFigures
-              />
-            </div>
+      <motion.section
+        className="w-full border-b border-black/6 bg-white"
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55 }}
+        viewport={{ once: true }}
+        aria-label="Project details"
+      >
+        <div className="w-full px-5 sm:px-8 md:px-10 lg:px-14">
+          <div className="grid w-full min-w-0 grid-cols-1 md:grid-cols-3">
+            <ProjectMetaStat
+              label="Services"
+              value={metaValue(services)}
+              showDivider
+            />
+            <ProjectMetaStat
+              label="Length of project"
+              value={metaValue(lengthOfProject)}
+              showDivider
+            />
+            <ProjectMetaStat
+              label="Budget"
+              value={metaValue(budget)}
+              showDivider={false}
+              tabularFigures
+            />
           </div>
-        </motion.section>
+        </div>
+      </motion.section>
 
+      <div className="max-w-7xl min-h-[calc(100vh-100px)] relative mx-10">
         <motion.div 
           className="my-16 md:my-24"
           initial={{ opacity: 0, y: 20 }}

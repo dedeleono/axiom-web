@@ -124,7 +124,7 @@ export default function Philosophy() {
               <div>
                 <Button
                   variant="ghost"
-                  className="mb-5 h-auto p-0 text-xs font-semibold uppercase tracking-[0.25em] text-brand-dark-gray hover:bg-transparent hover:text-brand-black"
+                  className="mb-5 h-auto p-0 text-xs font-semibold uppercase tracking-[0.25em] text-brand-orange hover:bg-transparent hover:text-brand-black"
                 >
                   {eyebrow}
                 </Button>

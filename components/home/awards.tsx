@@ -140,7 +140,7 @@ export default function Awards() {
                       {award.refProject?.projectSlug?.current && (
                         <Button
                           variant="outline"
-                          className="text-white border-white rounded-full bg-transparent"
+                          className="border-white bg-transparent text-white rounded-none"
                           onClick={() => {
                             router.push(
                               `/projects/${award.refProject.projectSlug.current}`

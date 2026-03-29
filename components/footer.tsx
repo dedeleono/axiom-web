@@ -95,7 +95,7 @@ export default function Footer() {
                  <Link href="https://www.facebook.com/axiomrenovationinc" target="_blank" className="hover:text-brand-orange text-brand-black"><Facebook className="w-5 h-5" /></Link>
                  <Link href="https://www.youtube.com/channel/UC8W6hYToT7_TEv6P6xKMM4Q" target="_blank" className="hover:text-brand-orange text-brand-black"><Youtube className="w-5 h-5" /></Link>
                  {/* Tiktok icon placeholder */}
-                 <Link href="https://www.tiktok.com/@axiomrenovation" target="_blank" className="hover:text-brand-orange text-brand-black"><span className="font-bold text-xs border border-current rounded px-1">Tk</span></Link>
+                 <Link href="https://www.tiktok.com/@axiomrenovation" target="_blank" className="text-brand-black hover:text-brand-orange"><span className="border border-current px-1 text-xs font-bold rounded-none">Tk</span></Link>
               </div>
            </div>
 
@@ -115,7 +115,7 @@ export default function Footer() {
             <Button
                 variant="outline"
                 size="sm"
-                className="rounded-full border-brand-light-gray text-brand-black hover:bg-brand-black hover:text-white transition-colors"
+                className="border-brand-light-gray text-brand-black transition-colors hover:bg-brand-black hover:text-white rounded-none"
                 onClick={() => dialogRef.current?.open()}
             >
                 Contact Us

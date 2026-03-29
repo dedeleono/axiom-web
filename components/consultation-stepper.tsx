@@ -28,7 +28,7 @@ const inputClass =
 
 const choiceClass = (active: boolean) =>
   cn(
-    "text-left text-[13px] sm:text-sm leading-snug px-4 py-3.5 sm:py-4 rounded-xl border transition-all duration-300 ease-out",
+    "text-left text-[13px] sm:text-sm leading-snug px-4 py-3.5 sm:py-4 rounded-none border transition-all duration-300 ease-out",
     "hover:border-white/35 hover:bg-white/[0.06]",
     active
       ? "border-white/50 bg-white/[0.12] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
@@ -179,7 +179,7 @@ export default function ConsultationStepper({
         </p>
         <Button
           asChild
-          className="rounded-full bg-brand-orange hover:bg-brand-orange/92 text-white px-10 h-11 text-xs font-semibold uppercase tracking-[0.16em]"
+          className="h-11 rounded-none bg-brand-orange px-10 text-xs font-semibold uppercase tracking-[0.16em] text-white hover:bg-brand-orange/92"
         >
           <Link href="/">Back to home</Link>
         </Button>
@@ -206,9 +206,9 @@ export default function ConsultationStepper({
           {Math.round(progress)}%
         </span>
       </div>
-      <div className="h-1 w-full bg-white/[0.08] rounded-full overflow-hidden mb-8">
+      <div className="mb-8 h-1 w-full overflow-hidden rounded-none bg-white/[0.08]">
         <motion.div
-          className="h-full rounded-full bg-gradient-to-r from-brand-orange to-orange-400/90"
+          className="h-full rounded-none bg-gradient-to-r from-brand-orange to-orange-400/90"
           initial={false}
           animate={{ width: `${progress}%` }}
           transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
@@ -376,7 +376,7 @@ export default function ConsultationStepper({
           variant="ghost"
           onClick={goBack}
           disabled={step === 0 || isSubmitting}
-          className="text-white/55 hover:text-white hover:bg-white/[0.07] px-3 h-10 -ml-2 rounded-full transition-colors"
+          className="-ml-2 h-10 px-3 text-white/55 transition-colors hover:bg-white/[0.07] hover:text-white rounded-none"
         >
           <ChevronLeft className="w-4 h-4 mr-0.5 opacity-80" />
           <span className="text-xs uppercase tracking-[0.14em]">Back</span>
@@ -385,7 +385,7 @@ export default function ConsultationStepper({
           <Button
             type="button"
             onClick={goNext}
-            className="rounded-full bg-brand-orange hover:bg-brand-orange/92 text-white px-8 h-10 text-xs font-semibold uppercase tracking-[0.14em] shadow-[0_8px_24px_-8px_rgba(242,86,35,0.55)]"
+            className="h-10 rounded-none bg-brand-orange px-8 text-xs font-semibold uppercase tracking-[0.14em] text-white shadow-[0_8px_24px_-8px_rgba(242,86,35,0.55)] hover:bg-brand-orange/92"
           >
             Next
             <ChevronRight className="w-4 h-4 ml-1 opacity-90" />
@@ -395,7 +395,7 @@ export default function ConsultationStepper({
             type="button"
             onClick={submit}
             disabled={isSubmitting}
-            className="rounded-full bg-brand-orange hover:bg-brand-orange/92 text-white px-8 h-10 text-xs font-semibold uppercase tracking-[0.14em] shadow-[0_8px_24px_-8px_rgba(242,86,35,0.55)]"
+            className="h-10 rounded-none bg-brand-orange px-8 text-xs font-semibold uppercase tracking-[0.14em] text-white shadow-[0_8px_24px_-8px_rgba(242,86,35,0.55)] hover:bg-brand-orange/92"
           >
             {isSubmitting ? (
               <Loader2 className="h-4 w-4 animate-spin" />

@@ -57,13 +57,13 @@ export default function ServicesHub() {
             >
               <Link
                 href={serviceDetailHref(item.slug)}
-                className="group flex flex-col h-full min-h-[280px] p-8 md:p-10 rounded-2xl border border-brand-light-gray bg-white hover:border-brand-black/20 hover:shadow-[0_24px_80px_-24px_rgba(0,0,0,0.12)] transition-all duration-500"
+                className="group flex h-full min-h-[280px] flex-col border border-brand-light-gray bg-white p-8 transition-all duration-500 hover:border-brand-black/20 hover:shadow-[0_24px_80px_-24px_rgba(0,0,0,0.12)] md:p-10 rounded-none"
               >
                 <div className="flex justify-between items-start gap-4 mb-6">
                   <h2 className="text-2xl md:text-3xl font-light text-brand-black tracking-tight group-hover:text-brand-orange transition-colors duration-300">
                     {item.title}
                   </h2>
-                  <span className="shrink-0 w-11 h-11 rounded-full border border-brand-light-gray flex items-center justify-center text-brand-black group-hover:bg-brand-orange group-hover:border-brand-orange group-hover:text-white transition-all duration-300">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center border border-brand-light-gray text-brand-black transition-all duration-300 group-hover:border-brand-orange group-hover:bg-brand-orange group-hover:text-white rounded-none">
                     <ArrowUpRight className="w-5 h-5" aria-hidden />
                   </span>
                 </div>

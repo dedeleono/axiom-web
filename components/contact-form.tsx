@@ -201,7 +201,7 @@ export default function ContactForm() {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full rounded-full bg-white text-neutral-950 hover:bg-white/92 h-12 text-xs font-semibold uppercase tracking-[0.18em] transition-colors"
+                    className="h-12 w-full rounded-none bg-white text-xs font-semibold uppercase tracking-[0.18em] text-neutral-950 transition-colors hover:bg-white/92"
                   >
                     {isSubmitting ? (
                       <Loader2 className="h-4 w-4 animate-spin" />

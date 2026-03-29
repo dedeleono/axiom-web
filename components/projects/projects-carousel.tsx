@@ -55,7 +55,7 @@ export default function ProjectsGrid() {
       <div className="max-w-[1920px] mx-auto px-4 md:px-12 py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="h-[600px] bg-gray-200 rounded-lg animate-pulse" />
+            <div key={i} className="h-[600px] animate-pulse rounded-none bg-gray-200" />
           ))}
         </div>
       </div>
@@ -71,7 +71,7 @@ export default function ProjectsGrid() {
         </p>
         <Link
           href="/contact"
-          className="inline-block px-8 py-3 bg-black text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-colors"
+          className="inline-block bg-black px-8 py-3 text-sm font-medium text-white transition-colors hover:bg-gray-800 rounded-none"
         >
           Contact Us
         </Link>
@@ -150,7 +150,7 @@ export default function ProjectsGrid() {
               </span>
               <Link
                 href={`/projects/${project.projectSlug.current}`}
-                className="w-12 h-12 rounded-full border border-[#EBEBEB] flex items-center justify-center group-hover:bg-brand-orange group-hover:border-brand-orange group-hover:text-white transition-all duration-500 text-brand-black"
+                className="flex h-12 w-12 items-center justify-center border border-[#EBEBEB] text-brand-black transition-all duration-500 group-hover:border-brand-orange group-hover:bg-brand-orange group-hover:text-white rounded-none"
               >
                 <ArrowUpRight className="w-5 h-5" />
               </Link>

@@ -13,7 +13,7 @@ export default function InspirationCTA() {
           Our innovative approach combines modern design with timeless craftsmanship to create spaces that are as unique as you are. From concept to completion, we bring your vision to life with attention to detail and a commitment to quality that exceeds expectations.
         </p>
         <Link href="/contact">
-          <Button className="rounded-full px-8 py-6 text-lg bg-black text-white hover:bg-gray-800 transition-all transform hover:scale-105">
+          <Button className="rounded-none bg-black px-8 py-6 text-lg text-white transition-all hover:scale-105 hover:bg-gray-800">
             Book A Free Consultation
           </Button>
         </Link>

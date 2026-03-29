@@ -91,7 +91,7 @@ export default function ServiceTabs() {
                 whileTap={{ scale: 0.98 }}
               >
                 <div
-                  className={`relative w-20 h-20 md:w-24 md:h-24 p-4 transition-all duration-300 rounded-[1rem] ${
+                  className={`relative h-20 w-20 p-4 transition-all duration-300 md:h-24 md:w-24 rounded-none ${
                     isActive ? "bg-brand-orange shadow-lg" : "bg-[#F5F5F5] group-hover:bg-[#EBEBEB]"
                   }`}
                 >

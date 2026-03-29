@@ -98,7 +98,7 @@ export default function WhoWeAre() {
 
       {/* Right Column - Images */}
       <motion.div 
-        className="md:w-1/2 relative min-h-[500px] md:min-h-full w-full md:-mt-8 md:rounded-tr-[2rem] overflow-hidden"
+        className="relative min-h-[500px] w-full overflow-hidden md:-mt-8 md:min-h-full md:w-1/2 rounded-none"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}

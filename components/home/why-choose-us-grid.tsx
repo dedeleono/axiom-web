@@ -87,7 +87,7 @@ export default function WhyChooseUsGrid() {
   return (
     <div className="w-full bg-[#262626] text-white">
       <div className="mx-auto flex w-full max-w-full flex-col gap-0 lg:flex-row">
-        <div className="relative z-10 -mt-8 grid w-full grid-cols-1 overflow-hidden rounded-t-4xl md:grid-cols-2 lg:w-[55%] lg:rounded-tl-4xl lg:rounded-tr-none">
+        <div className="relative z-10 -mt-8 grid w-full grid-cols-1 overflow-hidden rounded-none md:grid-cols-2 lg:w-[55%]">
           <div className="flex min-h-[300px] flex-col items-start justify-between border-b border-r border-[#3A3A3A] bg-[#222] p-8 pt-16 text-left transition-colors hover:bg-[#2A2A2A] md:min-h-[350px] md:p-12 md:pt-20 lg:p-16 lg:pt-24">
             <h3 className="mb-8 max-w-full text-4xl font-light text-brand-orange wrap-break-word text-pretty md:text-5xl">
               {content.stat1?.value}

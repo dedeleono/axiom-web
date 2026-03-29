@@ -117,7 +117,7 @@ function FaqAccordionList({ categories }: { categories: FaqCategory[] }) {
                 <AccordionItem
                   key={`${categoryIndex}-${faqIndex}`}
                   value={`${categoryIndex}-${faqIndex}`}
-                  className="rounded-2xl border border-brand-light-gray bg-white px-5 data-[state=open]:shadow-[0_24px_80px_-24px_rgba(0,0,0,0.08)] md:px-8"
+                  className="rounded-none border border-brand-light-gray bg-white px-5 data-[state=open]:shadow-[0_24px_80px_-24px_rgba(0,0,0,0.08)] md:px-8"
                 >
                   <AccordionTrigger
                     chevron

@@ -12,7 +12,7 @@ function Card({ className, bgColor = "bg-card", noBackground = false, ...props }
     <div
       data-slot="card"
       className={cn(
-        "text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm",
+        "text-card-foreground flex flex-col gap-6 rounded-none border py-6 shadow-sm",
         noBackground ? "bg-none" : bgColor,
         className
       )}

@@ -46,9 +46,6 @@ interface ServiceContentProps {
 const containerClass =
   "max-w-[95%] xl:max-w-screen-2xl mx-auto px-8 md:px-16 lg:px-24";
 
-const cardClass =
-  "group flex flex-col h-full p-8 md:p-10 rounded-2xl border border-brand-light-gray bg-white hover:border-brand-black/20 hover:shadow-[0_24px_80px_-24px_rgba(0,0,0,0.12)] transition-all duration-500";
-
 export default function ServiceContent({ slug }: ServiceContentProps) {
   const [service, setService] = useState<ServiceData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -129,10 +126,10 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
     setGalleryIndex(0);
   }, [slug]);
 
-  const getFallbackIcon = (index: number) => {
+  const getFallbackIcon = (index: number, className = "h-10 w-10 text-brand-orange/80") => {
     const icons = [Hammer, Ruler, PenTool, Home];
     const Icon = icons[index % icons.length];
-    return <Icon className="w-10 h-10 text-brand-orange/80" strokeWidth={1} />;
+    return <Icon className={className} strokeWidth={1} />;
   };
 
   if (isLoading) {
@@ -174,15 +171,16 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
         variants={contentVariants}
         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       >
-        {/* Intro — split: image full-bleed to the left on lg; copy stays in normal gutters */}
+        {/* Intro — split inside same frame as rest of site (no edge-bleed image) */}
         <div
           className={`w-full pt-4 md:pt-10 ${
             service.aboutText || service.historyText ? "" : "pb-16 md:pb-24"
           }`}
         >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-0 lg:items-stretch">
+          <div className={containerClass}>
+            <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-stretch lg:gap-12 xl:gap-16">
             <motion.div
-              className="relative w-full min-h-[420px] lg:min-h-[560px] lg:h-full overflow-hidden rounded-2xl border border-brand-light-gray bg-brand-light-gray/30 shadow-[0_24px_80px_-24px_rgba(0,0,0,0.08)] mx-4 sm:mx-6 md:mx-8 lg:mx-0 lg:rounded-l-none lg:rounded-r-2xl lg:border-l-0 lg:shadow-[0_20px_60px_-28px_rgba(0,0,0,0.1)]"
+              className="relative h-full min-h-[420px] w-full overflow-hidden rounded-none border border-brand-light-gray bg-brand-light-gray/30 shadow-[0_24px_80px_-24px_rgba(0,0,0,0.08)] lg:min-h-[560px]"
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
@@ -218,7 +216,7 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
                           e.stopPropagation();
                           prevGalleryImage();
                         }}
-                        className="bg-white/90 hover:bg-white text-brand-black rounded-full border border-brand-light-gray shadow-sm"
+                        className="rounded-none border border-brand-light-gray bg-white/90 text-brand-black shadow-sm hover:bg-white"
                         aria-label="Previous image"
                       >
                         <ChevronLeft className="w-5 h-5" />
@@ -227,7 +225,7 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
                         {service.gallery.map((_, idx) => (
                           <div
                             key={idx}
-                            className={`h-1.5 rounded-full transition-all ${idx === galleryIndex ? "bg-brand-orange w-6" : "bg-white/80 w-1.5"}`}
+                            className={`h-1.5 transition-all rounded-none ${idx === galleryIndex ? "w-6 bg-brand-orange" : "w-1.5 bg-white/80"}`}
                           />
                         ))}
                       </div>
@@ -239,7 +237,7 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
                           e.stopPropagation();
                           nextGalleryImage();
                         }}
-                        className="bg-white/90 hover:bg-white text-brand-black rounded-full border border-brand-light-gray shadow-sm"
+                        className="rounded-none border border-brand-light-gray bg-white/90 text-brand-black shadow-sm hover:bg-white"
                         aria-label="Next image"
                       >
                         <ChevronRight className="w-5 h-5" />
@@ -268,7 +266,7 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
                   <Link href={service.videoUrl} target="_blank" rel="noopener noreferrer">
                     <Button
                       type="button"
-                      className="bg-brand-orange hover:bg-[#e04f1e] text-white rounded-full px-6 py-5 flex items-center gap-2 text-xs tracking-widest uppercase font-semibold shadow-lg"
+                      className="flex items-center gap-2 bg-brand-orange px-6 py-5 text-xs font-semibold uppercase tracking-widest text-white shadow-lg transition-colors hover:bg-[#e04f1e] rounded-none"
                     >
                       <PlayCircle className="w-5 h-5" />
                       Watch Video
@@ -279,7 +277,7 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
             </motion.div>
 
             <motion.div
-              className="flex flex-col px-8 md:px-16 lg:pl-10 xl:pl-14 lg:pr-16 xl:pr-24 lg:py-2 lg:justify-center"
+              className="flex flex-col lg:justify-center lg:py-2"
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
@@ -296,13 +294,67 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
                   <p key={i}>{paragraph}</p>
                 ))}
               </div>
-              <Link
-                href="/contact"
-                className="inline-flex mt-10 items-center justify-center rounded-full border border-brand-black bg-brand-black px-10 py-5 text-xs font-semibold uppercase tracking-[0.2em] text-white transition-colors hover:bg-brand-orange hover:border-brand-orange"
-              >
-                Book a free consultation
-              </Link>
+
+              {service.features && service.features.length > 0 ? (
+                <>
+                  <div
+                    className="mt-10 max-w-xl border-t border-brand-light-gray pt-10"
+                    role="list"
+                    aria-label={service.featuresTitle || "Service offerings"}
+                  >
+                    <p className="mb-6 text-xs font-semibold uppercase tracking-[0.25em] text-brand-dark-gray">
+                      {service.featuresTitle || "What we offer"}
+                    </p>
+                    <ul className="flex flex-col gap-0 sm:grid sm:grid-cols-2 sm:gap-x-10 sm:gap-y-0">
+                      {service.features.map((feature, idx) => {
+                        const thumbUrl = feature.image ? urlFor(feature.image)?.url() : undefined;
+                        return (
+                          <li
+                            key={`${feature.title}-${idx}`}
+                            role="listitem"
+                            className="flex items-center gap-4 border-b border-brand-light-gray py-4 first:pt-0 sm:border-0 sm:py-3"
+                          >
+                            {thumbUrl ? (
+                              <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-none border border-brand-light-gray bg-brand-light-gray/20">
+                                <Image
+                                  src={thumbUrl}
+                                  alt=""
+                                  fill
+                                  className="object-cover"
+                                  sizes="40px"
+                                />
+                              </div>
+                            ) : (
+                              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-none border border-brand-orange/35 bg-brand-orange/6">
+                                {getFallbackIcon(idx, "h-5 w-5 text-brand-orange")}
+                              </span>
+                            )}
+                            <span className="text-sm font-light leading-snug tracking-tight text-brand-black md:text-base">
+                              {feature.title}
+                            </span>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                  <Link
+                    href="/contact"
+                    className="mt-8 inline-flex text-xs font-semibold uppercase tracking-[0.2em] text-brand-orange transition-colors hover:text-brand-black"
+                  >
+                    Book a free consultation
+                    <ArrowUpRight className="ml-1.5 h-3.5 w-3.5" aria-hidden />
+                  </Link>
+                </>
+              ) : (
+                <Link
+                  href="/contact"
+                  className="mt-10 inline-flex items-center justify-center rounded-none border border-brand-black bg-brand-black px-10 py-5 text-xs font-semibold uppercase tracking-[0.2em] text-white transition-colors hover:border-brand-orange hover:bg-brand-orange"
+                >
+                  Book a free consultation
+                </Link>
+              )}
             </motion.div>
+            </div>
           </div>
         </div>
 
@@ -343,62 +395,6 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
                   </div>
                 </motion.div>
               )}
-            </div>
-          </div>
-        )}
-
-        {service.features && service.features.length > 0 && (
-          <div className="border-t border-brand-light-gray bg-white py-16 md:py-24">
-            <div className={containerClass}>
-              <motion.div
-                className="max-w-3xl mb-12 md:mb-16"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <p className="text-xs font-semibold uppercase tracking-[0.25em] text-brand-dark-gray mb-6">
-                  Capabilities
-                </p>
-                <h3 className="text-3xl md:text-5xl font-light tracking-tight text-brand-black leading-[1.1]">
-                  {service.featuresTitle || "What we offer"}
-                </h3>
-              </motion.div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                {service.features.map((feature, idx) => (
-                  <motion.div
-                    key={idx}
-                    initial={{ opacity: 0, y: 28 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-40px" }}
-                    transition={{ duration: 0.5, delay: (idx % 3) * 0.06, ease: [0.16, 1, 0.3, 1] }}
-                    className={cardClass}
-                  >
-                    {feature.image ? (
-                      <div className="relative -mx-8 -mt-8 mb-6 aspect-[16/10] overflow-hidden rounded-t-2xl border-b border-brand-light-gray md:-mx-10 md:-mt-10">
-                        <Image
-                          src={urlFor(feature.image)?.url() ?? ""}
-                          alt={feature.title}
-                          fill
-                          className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-                        />
-                      </div>
-                    ) : (
-                      <div className="flex justify-center py-6 mb-2">{getFallbackIcon(idx)}</div>
-                    )}
-                    <div className="flex justify-between items-start gap-3 mb-4">
-                      <h4 className="text-xl md:text-2xl font-light text-brand-black tracking-tight group-hover:text-brand-orange transition-colors duration-300">
-                        {feature.title}
-                      </h4>
-                      <span className="shrink-0 w-10 h-10 rounded-full border border-brand-light-gray flex items-center justify-center text-brand-black opacity-0 group-hover:opacity-100 group-hover:bg-brand-orange group-hover:border-brand-orange group-hover:text-white transition-all duration-300">
-                        <ArrowUpRight className="w-4 h-4" aria-hidden />
-                      </span>
-                    </div>
-                    <p className="text-brand-dark-gray font-light leading-relaxed text-base">{feature.description}</p>
-                  </motion.div>
-                ))}
-              </div>
             </div>
           </div>
         )}
@@ -463,7 +459,7 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
               >
                 <Link
                   href="/contact"
-                  className="inline-flex items-center justify-center rounded-full bg-brand-orange px-10 py-5 text-xs font-semibold uppercase tracking-[0.2em] text-white transition-colors hover:bg-[#e04f1e]"
+                  className="inline-flex items-center justify-center rounded-none bg-brand-orange px-10 py-5 text-xs font-semibold uppercase tracking-[0.2em] text-white transition-colors hover:bg-[#e04f1e]"
                 >
                   Start your project
                 </Link>

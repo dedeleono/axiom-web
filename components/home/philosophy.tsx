@@ -57,14 +57,14 @@ function PhilosophyFigure({
   if (!src) {
     return (
       <div
-        className={cn("min-h-[280px] w-full rounded-2xl bg-brand-light-gray md:min-h-[360px]", className)}
+        className={cn("min-h-[280px] w-full rounded-none bg-brand-light-gray md:min-h-[360px]", className)}
         aria-hidden
       />
     );
   }
 
   return (
-    <div className={cn("relative w-full overflow-hidden rounded-2xl shadow-[0_20px_60px_-24px_rgba(0,0,0,0.15)]", className)}>
+    <div className={cn("relative w-full overflow-hidden rounded-none shadow-[0_20px_60px_-24px_rgba(0,0,0,0.15)]", className)}>
       <div className="relative aspect-[3/4] w-full md:aspect-[4/5]">
         <Image src={src} alt={alt} fill className="object-cover" sizes={sizes} />
       </div>

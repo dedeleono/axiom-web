@@ -40,7 +40,7 @@ export function Services() {
                     {services.map((service) => (
                         <Card key={service.title} className="group hover:shadow-lg transition-shadow duration-300 border-border bg-card">
                             <CardHeader>
-                                <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                                <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-none bg-primary/10 transition-colors group-hover:bg-primary/20">
                                     <service.icon className="w-7 h-7 text-primary" />
                                 </div>
                                 <CardTitle className="text-xl text-card-foreground">{service.title}</CardTitle>

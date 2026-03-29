@@ -101,7 +101,7 @@ export default function Projects({ initialSlides = [] }: ProjectsProps) {
           </p>
           <a
             href="/studio"
-            className="inline-block px-6 py-3 border border-white rounded-full text-sm hover:bg-white hover:text-black"
+            className="inline-block border border-white px-6 py-3 text-sm transition-colors hover:bg-white hover:text-black rounded-none"
           >
             Open Sanity Studio
           </a>

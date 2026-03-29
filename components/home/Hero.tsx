@@ -92,7 +92,7 @@ const Hero: React.FC = () => {
             {projectsData?.heroDescription || "HOME RENOVATION COMPANY Serving the Bay Area"}
           </p>
           <Link href={projectsData?.heroCtaUrl ?? "/contact"}>
-            <Button className="bg-white text-brand-black hover:bg-brand-light-gray rounded-full px-8 py-6 text-lg font-medium transition-all">
+            <Button className="bg-white px-8 py-6 text-lg font-medium text-brand-black transition-all hover:bg-brand-light-gray rounded-none">
               {projectsData?.heroCtaLabel ?? "Book a Free Consultation"}
             </Button>
           </Link>

@@ -73,7 +73,7 @@ export default function Contact() {
           >
             <div
               className="
-                rounded-2xl border border-white/[0.12]
+                rounded-none border border-white/[0.12]
                 bg-black/50 backdrop-blur-2xl
                 shadow-[0_24px_80px_-20px_rgba(0,0,0,0.65)]
                 p-6 sm:p-8 md:p-9

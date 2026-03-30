@@ -62,7 +62,7 @@ export default function Contact() {
           </motion.div>
 
           <motion.div
-            className="w-full md:flex-1 md:max-w-xl lg:max-w-[28rem] min-h-0 flex flex-col"
+            className="w-full md:flex-1 md:max-w-xl lg:max-w-md min-h-0 flex flex-col"
             initial={{ opacity: 0, x: 36 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{
@@ -73,13 +73,14 @@ export default function Contact() {
           >
             <div
               className="
-                rounded-none border border-white/[0.12]
-                bg-black/50 backdrop-blur-2xl
-                shadow-[0_24px_80px_-20px_rgba(0,0,0,0.65)]
-                p-6 sm:p-8 md:p-9
+                rounded-none border border-white/9
+                bg-black/45 backdrop-blur-2xl
+                shadow-[0_32px_90px_-28px_rgba(0,0,0,0.75)]
+                ring-1 ring-inset ring-white/4
+                p-6 sm:p-8 md:p-10
                 max-h-[min(78vh,720px)] overflow-y-auto overflow-x-hidden
                 [scrollbar-width:thin]
-                [scrollbar-color:rgba(255,255,255,0.2)_transparent]
+                [scrollbar-color:rgba(255,255,255,0.18)_transparent]
               "
             >
               <ContactForm />

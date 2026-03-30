@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { CONSULTATION_PLAN_MAX_FILES } from "@/lib/consultation-upload-config";
+
 export const contactIntentValues = ["consultation", "general"] as const;
 export type ContactIntent = (typeof contactIntentValues)[number];
 
@@ -34,6 +36,17 @@ export const consultationRequestSchema = z.object({
     .array(z.string())
     .min(1, "Select at least one project type"),
   hasArchitecturalPlans: z.enum(["yes", "no"]),
+  /** Sanity CDN URLs from /api/uploadConsultationFile */
+  planAttachments: z
+    .array(
+      z.object({
+        url: z.string().url(),
+        filename: z.string().min(1).max(500),
+        assetId: z.string().min(1).max(256).optional(),
+      })
+    )
+    .max(CONSULTATION_PLAN_MAX_FILES)
+    .default([]),
   startTimeline: z.enum(["asap", "within_year", "over_year", "undecided"]),
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),

@@ -34,6 +34,7 @@ export async function POST(request: Request) {
                 projectTypes: validatedData.projectTypes,
                 hasArchitecturalPlans: validatedData.hasArchitecturalPlans,
                 startTimeline: validatedData.startTimeline,
+                planAttachments: validatedData.planAttachments,
               }
             : undefined,
         recipient: "admin",

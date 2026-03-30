@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,6 +12,8 @@ import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import Link from "next/link";
 import { CONSULTATION_PROJECT_OPTIONS } from "@/lib/consultation-project-options";
+import type { PlanAttachmentRef } from "@/lib/consultation-upload-config";
+import { ConsultationPlanDropzone } from "@/components/consultation-plan-dropzone";
 
 const TIMELINE_OPTIONS: {
   value: ConsultationRequestValues["startTimeline"];
@@ -24,22 +26,25 @@ const TIMELINE_OPTIONS: {
 ];
 
 const inputClass =
-  "border-t-0 border-x-0 rounded-none bg-transparent border-b border-white/35 focus:border-white/90 focus-visible:ring-0 focus-visible:ring-offset-0 text-white placeholder:text-white/45 transition-[border-color] duration-300";
+  "border-t-0 border-x-0 rounded-none bg-transparent border-b border-white/20 focus:border-white/70 focus-visible:ring-0 focus-visible:ring-offset-0 text-white placeholder:text-white/40 transition-[border-color] duration-300";
 
 const choiceClass = (active: boolean) =>
   cn(
-    "text-left text-[13px] sm:text-sm leading-snug px-4 py-3.5 sm:py-4 rounded-none border transition-all duration-300 ease-out",
-    "hover:border-white/35 hover:bg-white/[0.06]",
+    "text-left text-sm leading-snug px-4 py-3.5 sm:py-3.5 rounded-none border transition-[color,border-color,background-color] duration-300 ease-out font-light",
+    "hover:border-white/25 hover:bg-white/[0.03]",
     active
-      ? "border-white/50 bg-white/[0.12] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
-      : "border-white/[0.14] bg-white/[0.04] text-white/90"
+      ? "border-white/35 bg-white/[0.06] text-white"
+      : "border-white/[0.10] bg-transparent text-white/80"
   );
 
 const STEP_COUNT = 4;
 
+const STEP_LABELS = ["Project", "Plans", "Timeline", "Details"] as const;
+
 type StepData = {
   projectTypes: string[];
   hasArchitecturalPlans: "yes" | "no" | null;
+  planAttachments: PlanAttachmentRef[];
   startTimeline: ConsultationRequestValues["startTimeline"] | null;
   name: string;
   email: string;
@@ -50,6 +55,7 @@ type StepData = {
 const initialStepData: StepData = {
   projectTypes: [],
   hasArchitecturalPlans: null,
+  planAttachments: [],
   startTimeline: null,
   name: "",
   email: "",
@@ -69,11 +75,6 @@ export default function ConsultationStepper({
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-
-  const progress = useMemo(
-    () => ((step + 1) / STEP_COUNT) * 100,
-    [step]
-  );
 
   const validateStep = useCallback((): boolean => {
     setFieldErrors({});
@@ -117,6 +118,8 @@ export default function ConsultationStepper({
       intent: "consultation",
       projectTypes: data.projectTypes,
       hasArchitecturalPlans: data.hasArchitecturalPlans!,
+      planAttachments:
+        data.hasArchitecturalPlans === "yes" ? data.planAttachments : [],
       startTimeline: data.startTimeline!,
       name: data.name.trim(),
       email: data.email.trim(),
@@ -170,16 +173,16 @@ export default function ConsultationStepper({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
       >
-        <h2 className="text-white text-[1.35rem] font-light tracking-tight">
+        <h2 className="text-white text-xl sm:text-2xl font-light tracking-tight">
           Thank you
         </h2>
-        <p className="text-white/65 text-sm leading-relaxed max-w-xs mx-auto">
+        <p className="text-white/55 text-sm leading-relaxed max-w-sm mx-auto font-light">
           You&apos;ll receive a confirmation email shortly. Our team will follow
           up to schedule your consultation.
         </p>
         <Button
           asChild
-          className="h-11 rounded-none bg-brand-orange px-10 text-xs font-semibold uppercase tracking-[0.16em] text-white hover:bg-brand-orange/92"
+          className="mt-2 h-11 rounded-none border border-white/15 bg-transparent px-10 text-[11px] font-medium uppercase tracking-[0.2em] text-white hover:bg-white/6"
         >
           <Link href="/">Back to home</Link>
         </Button>
@@ -193,26 +196,36 @@ export default function ConsultationStepper({
         <button
           type="button"
           onClick={onBackToIntent}
-          className="text-white/45 hover:text-white/85 text-[10px] uppercase tracking-[0.22em] mb-7 transition-colors"
+          className="mb-8 text-left text-[11px] font-medium uppercase tracking-[0.18em] text-white/38 transition-colors hover:text-white/70"
         >
-          ← Change option
+          ← Back
         </button>
       )}
-      <div className="flex items-center justify-between gap-3 mb-3">
-        <span className="text-[10px] uppercase tracking-[0.28em] text-white/40">
-          Step {step + 1} of {STEP_COUNT}
-        </span>
-        <span className="text-[10px] tabular-nums text-white/35">
-          {Math.round(progress)}%
-        </span>
-      </div>
-      <div className="mb-8 h-1 w-full overflow-hidden rounded-none bg-white/[0.08]">
-        <motion.div
-          className="h-full rounded-none bg-gradient-to-r from-brand-orange to-orange-400/90"
-          initial={false}
-          animate={{ width: `${progress}%` }}
-          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-        />
+      <div
+        className="mb-10"
+        role="group"
+        aria-label={`Consultation, step ${step + 1} of ${STEP_COUNT}: ${STEP_LABELS[step]}`}
+      >
+        <div className="flex gap-2" aria-hidden>
+          {STEP_LABELS.map((_, i) => (
+            <div
+              key={i}
+              className={cn(
+                "h-0.5 flex-1 transition-[background-color] duration-500 ease-out",
+                i < step && "bg-white/28",
+                i === step && "bg-brand-orange",
+                i > step && "bg-white/8"
+              )}
+            />
+          ))}
+        </div>
+        <p className="mt-4 text-[11px] font-medium uppercase tracking-[0.2em] text-white/38">
+          {STEP_LABELS[step]}
+          <span className="text-white/25 font-normal normal-case tracking-normal">
+            {" "}
+            · {step + 1}/{STEP_COUNT}
+          </span>
+        </p>
       </div>
 
       <AnimatePresence mode="wait">
@@ -226,15 +239,15 @@ export default function ConsultationStepper({
           {step === 0 && (
             <div className="space-y-5">
               <div>
-                <p className="text-white text-[1.05rem] sm:text-lg font-light leading-snug tracking-tight">
-                  What projects are you considering?{" "}
-                  <span className="text-brand-orange">*</span>
+                <p className="text-white text-lg sm:text-xl font-light leading-snug tracking-tight text-pretty">
+                  What projects are you considering?
+                  <span className="text-white/35 text-base font-normal"> *</span>
                 </p>
-                <p className="text-white/40 text-[10px] uppercase tracking-[0.2em] mt-2">
+                <p className="text-white/38 text-[11px] font-medium uppercase tracking-[0.18em] mt-3">
                   Choose as many as you like
                 </p>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {CONSULTATION_PROJECT_OPTIONS.map((opt) => {
                   const sel = data.projectTypes.includes(opt.id);
                   return (
@@ -257,24 +270,45 @@ export default function ConsultationStepper({
 
           {step === 1 && (
             <div className="space-y-5">
-              <p className="text-white text-[1.05rem] sm:text-lg font-light leading-snug tracking-tight">
-                Do you already have architectural plans or drawings?{" "}
-                <span className="text-brand-orange">*</span>
+              <p className="text-white text-lg sm:text-xl font-light leading-snug tracking-tight text-pretty">
+                Do you already have architectural plans or drawings?
+                <span className="text-white/35 text-base font-normal"> *</span>
               </p>
-              <div className="flex flex-col gap-2.5">
+              <div className="flex flex-col sm:flex-row gap-2">
                 {(["yes", "no"] as const).map((v) => (
                   <button
                     key={v}
                     type="button"
                     onClick={() =>
-                      setData((d) => ({ ...d, hasArchitecturalPlans: v }))
+                      setData((d) => ({
+                        ...d,
+                        hasArchitecturalPlans: v,
+                        planAttachments: v === "no" ? [] : d.planAttachments,
+                      }))
                     }
-                    className={choiceClass(data.hasArchitecturalPlans === v)}
+                    className={cn(
+                      choiceClass(data.hasArchitecturalPlans === v),
+                      "flex w-full items-center justify-center sm:flex-1"
+                    )}
                   >
                     {v === "yes" ? "Yes" : "No"}
                   </button>
                 ))}
               </div>
+              {data.hasArchitecturalPlans === "yes" && (
+                <div className="pt-2 space-y-3">
+                  <p className="text-white/38 text-[11px] font-medium uppercase tracking-[0.18em]">
+                    Upload plans (optional)
+                  </p>
+                  <ConsultationPlanDropzone
+                    files={data.planAttachments}
+                    onFilesChange={(planAttachments) =>
+                      setData((d) => ({ ...d, planAttachments }))
+                    }
+                    disabled={isSubmitting}
+                  />
+                </div>
+              )}
               {fieldErrors.plans && (
                 <p className="text-red-300/90 text-xs">{fieldErrors.plans}</p>
               )}
@@ -283,11 +317,11 @@ export default function ConsultationStepper({
 
           {step === 2 && (
             <div className="space-y-5">
-              <p className="text-white text-[1.05rem] sm:text-lg font-light leading-snug tracking-tight">
-                When do you hope to start renovating?{" "}
-                <span className="text-brand-orange">*</span>
+              <p className="text-white text-lg sm:text-xl font-light leading-snug tracking-tight text-pretty">
+                When do you hope to start renovating?
+                <span className="text-white/35 text-base font-normal"> *</span>
               </p>
-              <div className="flex flex-col gap-2.5">
+              <div className="flex flex-col gap-2">
                 {TIMELINE_OPTIONS.map((opt) => (
                   <button
                     key={opt.value}
@@ -309,8 +343,9 @@ export default function ConsultationStepper({
 
           {step === 3 && (
             <div className="space-y-5">
-              <p className="text-white text-[1.05rem] sm:text-lg font-light leading-snug tracking-tight mb-1">
-                How can we reach you? <span className="text-brand-orange">*</span>
+              <p className="text-white text-lg sm:text-xl font-light leading-snug tracking-tight text-pretty mb-2">
+                How can we reach you?
+                <span className="text-white/35 text-base font-normal"> *</span>
               </p>
               <div>
                 <Input
@@ -370,32 +405,34 @@ export default function ConsultationStepper({
         </motion.div>
       </AnimatePresence>
 
-      <div className="flex items-center justify-between gap-4 mt-10 pt-2 border-t border-white/[0.06]">
+      <div className="flex items-center justify-between gap-4 mt-10 pt-6 border-t border-white/8">
         <Button
           type="button"
           variant="ghost"
           onClick={goBack}
           disabled={step === 0 || isSubmitting}
-          className="-ml-2 h-10 px-3 text-white/55 transition-colors hover:bg-white/[0.07] hover:text-white rounded-none"
+          className="h-10 px-2 text-white/45 transition-colors hover:bg-transparent hover:text-white/85 rounded-none"
         >
-          <ChevronLeft className="w-4 h-4 mr-0.5 opacity-80" />
-          <span className="text-xs uppercase tracking-[0.14em]">Back</span>
+          <ChevronLeft className="w-4 h-4 mr-0.5 opacity-70" strokeWidth={1.25} />
+          <span className="text-[11px] font-medium uppercase tracking-[0.18em]">
+            Back
+          </span>
         </Button>
         {step < STEP_COUNT - 1 ? (
           <Button
             type="button"
             onClick={goNext}
-            className="h-10 rounded-none bg-brand-orange px-8 text-xs font-semibold uppercase tracking-[0.14em] text-white shadow-[0_8px_24px_-8px_rgba(242,86,35,0.55)] hover:bg-brand-orange/92"
+            className="h-10 rounded-none bg-brand-orange px-8 text-[11px] font-semibold uppercase tracking-[0.18em] text-white shadow-none hover:bg-brand-orange/88"
           >
-            Next
-            <ChevronRight className="w-4 h-4 ml-1 opacity-90" />
+            Continue
+            <ChevronRight className="w-4 h-4 ml-0.5 opacity-90" strokeWidth={1.25} />
           </Button>
         ) : (
           <Button
             type="button"
             onClick={submit}
             disabled={isSubmitting}
-            className="h-10 rounded-none bg-brand-orange px-8 text-xs font-semibold uppercase tracking-[0.14em] text-white shadow-[0_8px_24px_-8px_rgba(242,86,35,0.55)] hover:bg-brand-orange/92"
+            className="h-10 rounded-none bg-brand-orange px-8 text-[11px] font-semibold uppercase tracking-[0.18em] text-white shadow-none hover:bg-brand-orange/88 disabled:opacity-50"
           >
             {isSubmitting ? (
               <Loader2 className="h-4 w-4 animate-spin" />

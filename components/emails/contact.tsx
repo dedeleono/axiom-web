@@ -24,6 +24,7 @@ interface ContactEmailProps {
     projectTypes: string[];
     hasArchitecturalPlans: "yes" | "no";
     startTimeline: string;
+    planAttachments?: { url: string; filename: string }[];
   };
   recipient?: "admin" | "user";
 }
@@ -91,6 +92,25 @@ export default function ContactEmail(props: ContactEmailProps) {
                       ? "Yes"
                       : "No"}
                   </Text>
+                  {props.consultation.hasArchitecturalPlans === "yes" &&
+                    props.consultation.planAttachments &&
+                    props.consultation.planAttachments.length > 0 && (
+                      <Text className="text-black text-[14px] leading-[22px]">
+                        <span className="font-semibold block mb-1">
+                          Uploaded drawings:
+                        </span>
+                        {props.consultation.planAttachments.map((a) => (
+                          <span key={a.url} className="block">
+                            <a
+                              href={a.url}
+                              className="text-sky-600 underline underline-offset-2"
+                            >
+                              {a.filename}
+                            </a>
+                          </span>
+                        ))}
+                      </Text>
+                    )}
                   <Text className="text-black text-[14px] leading-[22px]">
                     <span className="font-semibold">Start timeline:</span>{" "}
                     {timelineLabel(props.consultation.startTimeline)}

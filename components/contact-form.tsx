@@ -19,13 +19,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { ChevronRight, Loader2 } from "lucide-react";
 import ConsultationStepper from "@/components/consultation-stepper";
 import type { ContactIntent } from "@/lib/validations/contact";
-import { ChevronDown } from "lucide-react";
 
 const fieldClass =
-  "border-t-0 border-x-0 rounded-none bg-transparent border-b border-white/35 focus:border-white/90 focus-visible:ring-0 focus-visible:ring-offset-0 text-white placeholder:text-white/45 transition-[border-color] duration-300";
+  "border-t-0 border-x-0 rounded-none bg-transparent border-b border-white/20 focus:border-white/70 focus-visible:ring-0 focus-visible:ring-offset-0 text-white placeholder:text-white/40 transition-[border-color] duration-300";
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -68,15 +67,16 @@ export default function ContactForm() {
     }
   }
 
-  const intentSelectClass =
-    "w-full bg-transparent border-0 rounded-none text-white py-2.5 pr-10 pl-0 text-[15px] outline-none cursor-pointer appearance-none";
+  const shellEyebrow = (
+    <p className="text-white/38 text-[11px] font-medium uppercase tracking-[0.2em] mb-8">
+      Get in touch
+    </p>
+  );
 
   if (intent === "consultation") {
     return (
       <div className="w-full">
-        <p className="text-white/55 text-[10px] font-semibold uppercase tracking-[0.28em] mb-6">
-          Consultations &amp; inquiries
-        </p>
+        {shellEyebrow}
         <ConsultationStepper onBackToIntent={() => setIntent("")} />
       </div>
     );
@@ -84,42 +84,42 @@ export default function ContactForm() {
 
   return (
     <div className="w-full">
-      <p className="text-white/55 text-[10px] font-semibold uppercase tracking-[0.28em] mb-6">
-        Consultations &amp; inquiries
-      </p>
-      <div className="space-y-7">
-        <div>
-          <label className="text-[10px] uppercase tracking-[0.22em] text-white/45 block mb-3">
-            How can we help?
-          </label>
-          <div className="relative group">
-            <select
-              value={intent}
-              onChange={(e) => {
-                const v = e.target.value as ContactIntent | "";
-                setIntent(v);
-              }}
-              className={intentSelectClass}
-            >
-              <option value="" className="bg-neutral-950 text-white/50">
-                Select an option
-              </option>
-              <option value="consultation" className="bg-neutral-950">
-                Request a consultation
-              </option>
-              <option value="general" className="bg-neutral-950">
-                General inquiry
-              </option>
-            </select>
-            <ChevronDown
-              className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 h-4 w-4 text-white/35 group-hover:text-white/55 transition-colors"
+      {shellEyebrow}
+
+      {intent === "" && (
+        <div className="space-y-0 border border-white/10 divide-y divide-white/8">
+          <button
+            type="button"
+            onClick={() => setIntent("consultation")}
+            className="group flex w-full items-center justify-between gap-4 px-1 py-4 text-left transition-colors hover:bg-white/3 sm:px-2 sm:py-5"
+          >
+            <span className="text-sm font-light leading-snug text-white/90">
+              Request a consultation
+            </span>
+            <ChevronRight
+              className="h-4 w-4 shrink-0 text-white/25 transition-colors group-hover:text-white/50"
+              strokeWidth={1.25}
               aria-hidden
             />
-            <div className="absolute bottom-0 left-0 right-8 h-px bg-gradient-to-r from-white/50 via-white/25 to-transparent" />
-          </div>
+          </button>
+          <button
+            type="button"
+            onClick={() => setIntent("general")}
+            className="group flex w-full items-center justify-between gap-4 px-1 py-4 text-left transition-colors hover:bg-white/3 sm:px-2 sm:py-5"
+          >
+            <span className="text-sm font-light leading-snug text-white/90">
+              General inquiry
+            </span>
+            <ChevronRight
+              className="h-4 w-4 shrink-0 text-white/25 transition-colors group-hover:text-white/50"
+              strokeWidth={1.25}
+              aria-hidden
+            />
+          </button>
         </div>
+      )}
 
-        <AnimatePresence mode="wait">
+      <AnimatePresence mode="wait">
           {intent === "general" && (
             <motion.div
               key="general-form"
@@ -127,7 +127,18 @@ export default function ContactForm() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-2"
             >
+              <button
+                type="button"
+                onClick={() => setIntent("")}
+                className="mb-8 text-left text-[11px] font-medium uppercase tracking-[0.18em] text-white/38 transition-colors hover:text-white/70"
+              >
+                ← Back
+              </button>
+              <p className="text-white text-lg font-light tracking-tight mb-8">
+                Send us a message
+              </p>
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
@@ -201,7 +212,7 @@ export default function ContactForm() {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="h-12 w-full rounded-none bg-white text-xs font-semibold uppercase tracking-[0.18em] text-neutral-950 transition-colors hover:bg-white/92"
+                    className="h-11 w-full rounded-none bg-white text-[11px] font-semibold uppercase tracking-[0.2em] text-neutral-950 transition-colors hover:bg-white/90"
                   >
                     {isSubmitting ? (
                       <Loader2 className="h-4 w-4 animate-spin" />
@@ -213,8 +224,7 @@ export default function ContactForm() {
               </Form>
             </motion.div>
           )}
-        </AnimatePresence>
-      </div>
+      </AnimatePresence>
     </div>
   );
 }

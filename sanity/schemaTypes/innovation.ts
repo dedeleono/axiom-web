@@ -127,13 +127,22 @@ export default {
       title: 'Hero Image',
       type: 'image',
       options: { hotspot: true },
-      description: 'Optional. Falls back to Cover Image if empty.',
+      fields: [
+        {
+          name: 'imgAlt',
+          title: 'Alt text',
+          type: 'string',
+          description: 'Describe the image for accessibility and SEO.',
+        },
+      ],
+      description:
+        'Optional. Used as the top banner image when set. If empty, the cover image is used, then the first gallery image.',
     },
     {
       name: 'heroText',
       title: 'Hero Text',
       type: 'text',
-      description: 'Optional. Falls back to title if empty.',
+      description: 'Legacy / unused on service detail pages (headline is the service title).',
     },
     {
       name: 'heroSubText1',

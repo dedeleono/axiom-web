@@ -3,7 +3,7 @@ import { defineField, defineType } from "sanity";
 
 export default defineType({
   name: "philosophySection",
-  title: "Home — Philosophy section",
+  title: "Philosophy (homepage)",
   type: "document",
   icon: DocumentTextIcon,
   description: "Copy and imagery for the philosophy block on the homepage (light layout).",

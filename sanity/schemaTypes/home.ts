@@ -1,6 +1,6 @@
 export default {
   name: 'home',
-  title: 'Home',
+  title: 'Page heroes & overlays',
   type: 'document',
   fields: [
     {

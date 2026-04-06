@@ -1,6 +1,6 @@
 export default {
   name: 'service',
-  title: 'Home — service cards',
+  title: 'Service cards (homepage)',
   type: 'document',
   description:
     'The three large cards on the homepage (default/hover images, short blurb, link). Separate from Service pages.',

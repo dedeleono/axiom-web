@@ -110,7 +110,7 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <div className="mx-auto max-w-7xl px-8 py-24 font-geist md:py-32">
+    <div className="mx-auto max-w-7xl px-8 py-24 pb-28 font-geist md:py-32 md:pb-36">
       <Button
         variant="ghost"
         className="mb-16 p-0 text-xs font-semibold uppercase tracking-widest text-brand-black hover:bg-transparent hover:text-brand-black"

@@ -110,7 +110,7 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <div className="mx-auto max-w-7xl px-8 py-24 pb-28 font-geist md:py-32 md:pb-36">
+    <div className="mx-auto max-w-7xl overflow-x-hidden px-5 py-20 pb-24 font-geist sm:px-8 md:py-32 md:pb-28">
       <Button
         variant="ghost"
         className="mb-16 p-0 text-xs font-semibold uppercase tracking-widest text-brand-black hover:bg-transparent hover:text-brand-black"
@@ -118,8 +118,8 @@ export default function Testimonials() {
         What they say about us.
       </Button>
 
-      <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-10">
-        <aside className="lg:col-span-4">
+      <div className="grid min-w-0 grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-10">
+        <aside className="min-w-0 lg:col-span-4">
           <p className="text-sm font-bold uppercase tracking-[0.2em] text-brand-black">Excellent</p>
           <div className="my-3 flex space-x-1">
             {[0, 1, 2, 3, 4].map((i) => (
@@ -142,19 +142,23 @@ export default function Testimonials() {
           </a>
         </aside>
 
-        <div className="relative lg:col-span-8">
+        <div className="relative min-w-0 w-full lg:col-span-8">
           <Carousel
             opts={{
               align: "start",
               loop: true,
             }}
-            className="w-full"
+            className="w-full min-w-0"
           >
-            <CarouselContent className="-ml-4">
+            {/* Standard Embla offset: -ml-4 on track + pl-4 on slides (don’t replace with flex-[0_0_%]; tw-merge keeps basis-full and breaks desktop widths). */}
+            <CarouselContent>
               {testimonials.map((testimonial, index) => (
-                <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
-                  <div className="flex h-full min-h-[300px] flex-col justify-between rounded-none bg-brand-light-gray p-8">
-                    <div>
+                <CarouselItem
+                  key={index}
+                  className="md:basis-1/2 lg:basis-1/3"
+                >
+                  <div className="box-border flex h-full min-h-[280px] w-full max-w-full min-w-0 flex-col justify-between rounded-none bg-brand-light-gray p-6 sm:p-8">
+                    <div className="min-w-0">
                       <div className="mb-6 flex space-x-1">
                         {[...Array(testimonial.rating)].map((_, i) => (
                           <Star
@@ -163,7 +167,7 @@ export default function Testimonials() {
                           />
                         ))}
                       </div>
-                      <p className="mb-8 text-lg font-light leading-relaxed">
+                      <p className="mb-8 text-pretty break-words text-base font-light leading-relaxed sm:text-lg">
                         &quot;{testimonial.quote}&quot;
                       </p>
                     </div>

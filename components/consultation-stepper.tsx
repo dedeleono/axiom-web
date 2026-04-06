@@ -30,7 +30,7 @@ const inputClass =
 
 const choiceClass = (active: boolean) =>
   cn(
-    "text-left text-sm leading-snug px-4 py-3.5 sm:py-3.5 rounded-none border transition-[color,border-color,background-color] duration-300 ease-out font-light",
+    "flex min-h-[48px] items-center text-left text-sm leading-snug rounded-none border px-4 py-3.5 transition-[color,border-color,background-color] duration-300 ease-out font-light max-md:py-4",
     "hover:border-white/25 hover:bg-white/[0.03]",
     active
       ? "border-white/35 bg-white/[0.06] text-white"
@@ -196,13 +196,13 @@ export default function ConsultationStepper({
         <button
           type="button"
           onClick={onBackToIntent}
-          className="mb-8 text-left text-[11px] font-medium uppercase tracking-[0.18em] text-white/38 transition-colors hover:text-white/70"
+          className="mb-5 text-left text-[11px] font-medium uppercase tracking-[0.18em] text-white/38 transition-colors hover:text-white/70 md:mb-8"
         >
           ← Back
         </button>
       )}
       <div
-        className="mb-10"
+        className="mb-6 md:mb-10"
         role="group"
         aria-label={`Consultation, step ${step + 1} of ${STEP_COUNT}: ${STEP_LABELS[step]}`}
       >
@@ -247,7 +247,7 @@ export default function ConsultationStepper({
                   Choose as many as you like
                 </p>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-2">
                 {CONSULTATION_PROJECT_OPTIONS.map((opt) => {
                   const sel = data.projectTypes.includes(opt.id);
                   return (
@@ -405,13 +405,13 @@ export default function ConsultationStepper({
         </motion.div>
       </AnimatePresence>
 
-      <div className="flex items-center justify-between gap-4 mt-10 pt-6 border-t border-white/8">
+      <div className="mt-8 flex flex-col-reverse gap-3 border-t border-white/8 pt-5 sm:flex-row sm:items-center sm:justify-between sm:gap-4 md:mt-10 md:pt-6">
         <Button
           type="button"
           variant="ghost"
           onClick={goBack}
           disabled={step === 0 || isSubmitting}
-          className="h-10 px-2 text-white/45 transition-colors hover:bg-transparent hover:text-white/85 rounded-none"
+          className="h-11 min-h-[48px] w-full justify-center px-2 text-white/45 transition-colors hover:bg-transparent hover:text-white/85 rounded-none sm:h-10 sm:min-h-0 sm:w-auto sm:justify-start"
         >
           <ChevronLeft className="w-4 h-4 mr-0.5 opacity-70" strokeWidth={1.25} />
           <span className="text-[11px] font-medium uppercase tracking-[0.18em]">
@@ -422,7 +422,7 @@ export default function ConsultationStepper({
           <Button
             type="button"
             onClick={goNext}
-            className="h-10 rounded-none bg-brand-orange px-8 text-[11px] font-semibold uppercase tracking-[0.18em] text-white shadow-none hover:bg-brand-orange/88"
+            className="h-11 min-h-[48px] w-full rounded-none bg-brand-orange px-8 text-[11px] font-semibold uppercase tracking-[0.18em] text-white shadow-none hover:bg-brand-orange/88 sm:h-10 sm:min-h-0 sm:w-auto"
           >
             Continue
             <ChevronRight className="w-4 h-4 ml-0.5 opacity-90" strokeWidth={1.25} />
@@ -432,7 +432,7 @@ export default function ConsultationStepper({
             type="button"
             onClick={submit}
             disabled={isSubmitting}
-            className="h-10 rounded-none bg-brand-orange px-8 text-[11px] font-semibold uppercase tracking-[0.18em] text-white shadow-none hover:bg-brand-orange/88 disabled:opacity-50"
+            className="h-11 min-h-[48px] w-full rounded-none bg-brand-orange px-8 text-[11px] font-semibold uppercase tracking-[0.18em] text-white shadow-none hover:bg-brand-orange/88 disabled:opacity-50 sm:h-10 sm:min-h-0 sm:w-auto"
           >
             {isSubmitting ? (
               <Loader2 className="h-4 w-4 animate-spin" />

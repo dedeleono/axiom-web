@@ -34,8 +34,8 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-white text-brand-black pt-20 pb-10 border-t border-brand-light-gray font-geist">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-8 md:grid-cols-2 xl:grid-cols-5 mb-16">
+    <footer className="border-t border-brand-light-gray bg-white pb-8 pt-12 font-geist text-brand-black md:pb-10 md:pt-20">
+      <div className="mx-auto mb-10 grid max-w-7xl grid-cols-1 gap-8 px-5 md:mb-16 md:grid-cols-2 md:gap-12 md:px-8 xl:grid-cols-5">
         {/* Brand / Links */}
         <div className="space-y-6 xl:col-span-1">
           <Link href="/" className="block">
@@ -53,8 +53,13 @@ export default function Footer() {
 
         {/* Sitemap */}
         <div className="xl:col-span-1">
-          <h4 className="mb-6 text-sm font-bold uppercase tracking-widest text-brand-black">Sitemap</h4>
-          <nav className="flex flex-col space-y-2 text-sm text-brand-dark-gray" aria-label="Sitemap">
+          <h4 className="mb-4 text-sm font-bold uppercase tracking-widest text-brand-black md:mb-6">
+            Sitemap
+          </h4>
+          <nav
+            className="flex flex-col space-y-1 text-sm text-brand-dark-gray md:space-y-2"
+            aria-label="Sitemap"
+          >
             {sitemapLinks.map(({ href, label }) => (
               <Link key={href} href={href} className="transition-colors hover:text-brand-black">
                 {label}
@@ -71,8 +76,10 @@ export default function Footer() {
 
         {/* Areas We Serve */}
         <div className="md:col-span-2 xl:col-span-2">
-          <h4 className="font-bold mb-6 text-sm uppercase tracking-widest text-brand-black">Areas We Serve</h4>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-2 text-sm text-brand-dark-gray">
+          <h4 className="mb-4 text-sm font-bold uppercase tracking-widest text-brand-black md:mb-6">
+            Areas We Serve
+          </h4>
+          <div className="grid grid-cols-3 gap-x-2 gap-y-1 text-[11px] leading-snug text-brand-dark-gray sm:text-xs md:grid-cols-3 md:gap-x-4 md:gap-y-2 md:text-sm">
             {areas.map((area, index) => (
               <span key={index} className="hover:text-brand-black cursor-default">{area}</span>
             ))}

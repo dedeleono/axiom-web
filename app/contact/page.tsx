@@ -17,7 +17,7 @@ export default function ContactPage() {
         <Contact />
       </main>
 
-      <section className="mask-overlap bg-white mt-auto pt-10 relative z-20">
+      <section className="mask-overlap relative z-20 mt-auto bg-white pt-10 max-md:pt-8 max-md:shadow-[0_-16px_48px_-20px_rgba(0,0,0,0.14)]">
         <Footer />
       </section>
     </div>

@@ -53,7 +53,8 @@ export default async function BlogLayout({
     <>
       {isDraftMode && <AlertBanner />}
       <Header />
-      <main className="bg-white text-black min-h-screen">
+      {/* Fixed header (~88px); pad main so titles never sit under the nav */}
+      <main className="bg-white text-brand-black min-h-screen pt-24 md:pt-28">
         {children}
       </main>
       <Footer />

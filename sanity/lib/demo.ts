@@ -1,4 +1,4 @@
-export const title = "Axiom Blog";
+export const title = "Axiom Renovation";
 
 export const description = [
   {

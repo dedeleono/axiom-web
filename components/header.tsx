@@ -4,9 +4,16 @@ import NavigationMenu from "./navigation-menu";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+
+  /** Light pages need dark link/logo at the top; bar stays transparent until the user scrolls. */
+  const lightTop =
+    pathname === "/blog" || (pathname != null && pathname.startsWith("/blog/"));
+  const darkForeground = scrolled || lightTop;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,10 +40,10 @@ export default function Header() {
             alt="Axiom Renovation" 
             width={40} 
             height={40}
-            className={`transition-all duration-300 ${!scrolled ? "brightness-0 invert" : ""}`}
+            className={`transition-all duration-300 ${!darkForeground ? "brightness-0 invert" : ""}`}
           />
         </Link>
-        <NavigationMenu scrolled={scrolled} />
+        <NavigationMenu scrolled={darkForeground} />
       </nav>
     </header>
   );

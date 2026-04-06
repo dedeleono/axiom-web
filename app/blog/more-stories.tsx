@@ -27,33 +27,35 @@ export default async function MoreStories(params: {
   const data = await sanityFetch({ query: moreStoriesQuery, params }) as Post[] | null;
 
   return (
-    <>
-      <div className="mb-32 grid grid-cols-1 gap-y-20 md:grid-cols-2 md:gap-x-16 md:gap-y-32 lg:gap-x-32">
-        {data?.map((post: Post) => {
-          const { _id, title, slug, coverImage, excerpt, author } = post;
-          return (
-            <article key={_id}>
-              <Link href={`/blog/posts/${slug}`} className="group mb-5 block">
-                <CoverImage image={coverImage} priority={false} />
+    <div className="mb-24 md:mb-28 grid grid-cols-1 gap-14 md:grid-cols-2 md:gap-x-12 md:gap-y-16 lg:gap-x-16">
+      {data?.map((post: Post) => {
+        const { _id, title, slug, coverImage, excerpt, author } = post;
+        return (
+          <article key={_id}>
+            <Link href={`/blog/posts/${slug}`} className="group mb-5 block">
+              <CoverImage image={coverImage} priority={false} />
+            </Link>
+            <h3 className="text-balance text-2xl font-light leading-snug tracking-tight text-brand-black md:text-3xl mb-3 font-geist">
+              <Link
+                href={`/blog/posts/${slug}`}
+                className="transition-colors hover:text-brand-orange"
+              >
+                {title}
               </Link>
-              <h3 className="text-balance mb-3 text-3xl leading-snug">
-                <Link href={`/blog/posts/${slug}`} className="hover:underline">
-                  {title}
-                </Link>
-              </h3>
-              <div className="mb-4 text-lg">
-                <DateComponent dateString={post.date} />
-              </div>
-              {excerpt && (
-                <p className="text-pretty mb-4 text-lg leading-relaxed">
-                  {excerpt}
-                </p>
-              )}
-              {author && <Avatar name={author.name} picture={author.picture} />}
-            </article>
-          );
-        })}
-      </div>
-    </>
+            </h3>
+            <DateComponent
+              dateString={post.date}
+              className="mb-4 block text-xs font-semibold uppercase tracking-[0.2em] text-brand-dark-gray"
+            />
+            {excerpt && (
+              <p className="text-pretty mb-4 text-brand-dark-gray font-light text-base leading-relaxed md:text-lg">
+                {excerpt}
+              </p>
+            )}
+            {author && <Avatar name={author.name} picture={author.picture} />}
+          </article>
+        );
+      })}
+    </div>
   );
 }

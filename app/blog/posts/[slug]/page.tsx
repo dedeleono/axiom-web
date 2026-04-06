@@ -12,9 +12,16 @@ import PortableText from "../../portable-text";
 
 import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { postQuery, blogSettingsQuery, postSlugsQuery } from "@/sanity/lib/queries";
+import {
+  postQuery,
+  blogSettingsQuery,
+  postSlugsQuery,
+} from "@/sanity/lib/queries";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
 import { client } from "@/sanity/lib/client";
+
+const pageContainer =
+  "max-w-[95%] xl:max-w-screen-2xl mx-auto px-8 md:px-16 lg:px-24 font-geist text-brand-black";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -57,48 +64,52 @@ export default async function PostPage({ params }: Props) {
     return notFound();
   }
 
+  const blogTitle = settings?.title || demo.title;
+
   return (
-    <div className="container mx-auto px-5">
-      <h2 className="mb-16 mt-10 text-2xl font-bold leading-tight tracking-tight md:text-4xl md:tracking-tighter">
-        <Link href="/blog" className="hover:underline">
-          {settings?.title || demo.title}
+    <div className={pageContainer}>
+      <nav className="mb-8 md:mb-10" aria-label="Blog">
+        <Link
+          href="/blog"
+          className="inline-flex text-xs font-semibold uppercase tracking-[0.2em] text-brand-orange transition-colors hover:text-brand-black"
+        >
+          ← {blogTitle}
         </Link>
-      </h2>
+      </nav>
+
       <article>
-        <h1 className="text-balance mb-12 text-6xl font-bold leading-tight tracking-tighter md:text-7xl md:leading-none lg:text-8xl">
+        <h1 className="text-balance text-4xl font-light leading-[1.05] tracking-tight text-brand-black md:text-5xl lg:text-6xl max-w-4xl mb-8">
           {post.title}
         </h1>
-        <div className="hidden md:mb-12 md:block">
+
+        <div className="mb-10 flex flex-col gap-4 border-b border-brand-light-gray pb-10 md:mb-12 md:flex-row md:flex-wrap md:items-center md:gap-8">
           {post.author && (
             <Avatar name={post.author.name} picture={post.author.picture} />
           )}
+          <DateComponent
+            dateString={post.date}
+            className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-dark-gray"
+          />
         </div>
-        <div className="mb-8 sm:mx-0 md:mb-16">
+
+        <div className="mb-12 md:mb-16">
           <CoverImage image={post.coverImage} priority />
         </div>
-        <div className="mx-auto max-w-2xl">
-          <div className="mb-6 block md:hidden">
-            {post.author && (
-              <Avatar name={post.author.name} picture={post.author.picture} />
-            )}
-          </div>
-          <div className="mb-6 text-lg">
-            <div className="mb-4 text-lg">
-              <DateComponent dateString={post.date} />
-            </div>
-          </div>
-        </div>
-        {post.content?.length && (
+
+        {post.content?.length ? (
           <PortableText
-            className="mx-auto max-w-2xl"
+            className="blog-post-body mx-auto max-w-2xl"
             value={post.content as PortableTextBlock[]}
           />
-        )}
+        ) : null}
       </article>
-      <aside>
-        <hr className="border-accent-2 mb-24 mt-28" />
-        <h2 className="mb-8 text-6xl font-bold leading-tight tracking-tighter md:text-7xl">
-          Recent Stories
+
+      <aside className="mt-16 border-t border-brand-light-gray pt-14 md:mt-20 md:pt-16">
+        <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-brand-dark-gray">
+          Archive
+        </p>
+        <h2 className="mb-10 text-3xl font-light tracking-tight text-brand-black md:mb-12 md:text-4xl">
+          Recent stories
         </h2>
         <Suspense>
           <MoreStories skip={post._id} limit={2} />

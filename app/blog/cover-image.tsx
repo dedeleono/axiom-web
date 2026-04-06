@@ -10,7 +10,7 @@ export default function CoverImage(props: CoverImageProps) {
   const { image: source, priority } = props;
   const image = source?.asset?._ref ? (
     <Image
-      className="h-auto w-full rounded-xl"
+      className="h-auto w-full rounded-none border border-brand-light-gray bg-brand-light-gray/20 transition-colors duration-300 group-hover:border-brand-orange/35"
       width={2000}
       height={1000}
       alt={source?.alt || "Blog post cover image"}
@@ -19,12 +19,11 @@ export default function CoverImage(props: CoverImageProps) {
       priority={priority}
     />
   ) : (
-    <div className="bg-slate-50" style={{ paddingTop: "50%" }} />
+    <div
+      className="rounded-none border border-brand-light-gray bg-brand-light-gray/30"
+      style={{ paddingTop: "50%" }}
+    />
   );
 
-  return (
-    <div className="shadow-md transition-shadow duration-200 group-hover:shadow-lg sm:mx-0">
-      {image}
-    </div>
-  );
+  return <div className="sm:mx-0 overflow-hidden">{image}</div>;
 }

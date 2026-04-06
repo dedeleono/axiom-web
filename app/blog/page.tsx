@@ -12,6 +12,9 @@ import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { heroQuery, blogSettingsQuery } from "@/sanity/lib/queries";
 
+const pageContainer =
+  "max-w-[95%] xl:max-w-screen-2xl mx-auto px-8 md:px-16 lg:px-24";
+
 interface HeroPost {
   _id: string;
   title: string;
@@ -32,17 +35,20 @@ function Intro(props: { title: string | null | undefined; description: any }) {
     ? props.description
     : demo.description;
   return (
-    <section className="mt-16 mb-16 flex flex-col items-center lg:mb-12 lg:flex-row lg:justify-between">
-      <h1 className="text-balance text-6xl font-bold leading-tight tracking-tighter lg:pr-8 lg:text-8xl">
+    <header className="pb-10 md:pb-14 border-b border-brand-light-gray">
+      <p className="text-xs font-semibold uppercase tracking-[0.25em] text-brand-dark-gray mb-5">
+        Blog
+      </p>
+      <h1 className="text-balance text-4xl font-light leading-[1.05] tracking-tight text-brand-black md:text-5xl lg:text-6xl max-w-4xl mb-6 font-geist">
         {title || demo.title}
       </h1>
-      <h2 className="text-pretty mt-5 text-center text-lg lg:pl-8 lg:text-left">
+      <div className="max-w-2xl text-brand-dark-gray font-light text-base md:text-lg leading-relaxed">
         <PortableText
-          className="prose-lg"
+          className="prose prose-sm md:prose-base max-w-none prose-p:my-2 prose-p:font-light prose-p:text-brand-dark-gray prose-p:leading-relaxed first:prose-p:mt-0 last:prose-p:mb-0"
           value={description?.length ? description : demo.description}
         />
-      </h2>
-    </section>
+      </div>
+    </header>
   );
 }
 
@@ -55,24 +61,28 @@ function HeroPost({
   author,
 }: Pick<HeroPost, "title" | "coverImage" | "date" | "excerpt" | "author" | "slug">) {
   return (
-    <article>
-      <Link className="group mb-8 block md:mb-16" href={`/blog/posts/${slug}`}>
+    <article className="pt-10 md:pt-14">
+      <Link className="group mb-8 block md:mb-10" href={`/blog/posts/${slug}`}>
         <CoverImage image={coverImage} priority />
       </Link>
-      <div className="mb-20 md:mb-28 md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8">
+      <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-x-14 lg:gap-x-20 md:items-start pb-16 md:pb-20 border-b border-brand-light-gray">
         <div>
-          <h3 className="text-pretty mb-4 text-4xl leading-tight lg:text-6xl">
-            <Link href={`/blog/posts/${slug}`} className="hover:underline">
+          <h2 className="text-pretty text-3xl font-light leading-tight tracking-tight text-brand-black md:text-4xl lg:text-[2.5rem] mb-4 font-geist">
+            <Link
+              href={`/blog/posts/${slug}`}
+              className="transition-colors hover:text-brand-orange"
+            >
               {title}
             </Link>
-          </h3>
-          <div className="mb-4 text-lg md:mb-0">
-            <DateComponent dateString={date} />
-          </div>
+          </h2>
+          <DateComponent
+            dateString={date}
+            className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-dark-gray"
+          />
         </div>
         <div>
           {excerpt && (
-            <p className="text-pretty mb-4 text-lg leading-relaxed">
+            <p className="text-pretty mb-6 text-brand-dark-gray font-light text-lg leading-relaxed">
               {excerpt}
             </p>
           )}
@@ -92,7 +102,7 @@ export default async function BlogPage() {
   ]);
 
   return (
-    <div className="container mx-auto px-5">
+    <div className={`${pageContainer} font-geist bg-white text-brand-black`}>
       <Intro title={settings?.title} description={settings?.description} />
       {heroPost ? (
         <HeroPost
@@ -107,9 +117,12 @@ export default async function BlogPage() {
         <Onboarding />
       )}
       {heroPost?._id && (
-        <aside>
-          <h2 className="mb-8 text-6xl font-bold leading-tight tracking-tighter md:text-7xl">
-            More Stories
+        <aside className="pt-4 md:pt-6">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-brand-dark-gray mb-4">
+            Archive
+          </p>
+          <h2 className="text-3xl font-light tracking-tight text-brand-black md:text-4xl mb-10 md:mb-12 font-geist">
+            More stories
           </h2>
           <Suspense>
             <MoreStories skip={heroPost._id} limit={100} />

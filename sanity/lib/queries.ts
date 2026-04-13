@@ -41,6 +41,7 @@ export const locationBySlugQuery = defineQuery(`
   *[_type == "location" && slug.current == $slug][0] {
     title,
     "slug": slug.current,
+    "heroImage": heroImage { asset->, hotspot, imgAlt },
     county,
     intro,
     neighborhoods,

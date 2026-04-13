@@ -38,6 +38,7 @@ export type LocationFaqQuery = {
 export type LocationBySlugQueryResult = {
   title: string | null;
   slug: string | null;
+  heroImage: SanityLocationImage | null;
   county: string | null;
   intro: string | null;
   neighborhoods: string[] | null;
@@ -66,6 +67,8 @@ export type LocationPageHighlight = {
 
 export type LocationPageProps = {
   cityTitle: string;
+  heroUrl: string | null;
+  heroAlt: string;
   county: string | null;
   intro: string;
   neighborhoods: string[];
@@ -108,12 +111,21 @@ export function trimForMetaDescription(text: string, maxLen = 160): string {
   return `${base}…`;
 }
 
+const HERO_W = 1920;
+const HERO_H = 1080;
+
 export function mapLocationQueryToPageProps(
   doc: LocationBySlugQueryResult,
 ): LocationPageProps | null {
   if (!doc?.title?.trim() || !doc.slug?.trim() || !doc.intro?.trim()) {
     return null;
   }
+
+  const heroUrl = resolveImageUrl(doc.heroImage ?? null, HERO_W, HERO_H) ?? null;
+  const heroAlt =
+    (doc.heroImage && "imgAlt" in doc.heroImage && typeof doc.heroImage.imgAlt === "string"
+      ? doc.heroImage.imgAlt
+      : null) ?? `Home remodeling in ${doc.title}, CA`;
 
   const neighborhoods = (doc.neighborhoods ?? []).filter(
     (n): n is string => typeof n === "string" && n.trim().length > 0,
@@ -183,6 +195,8 @@ export function mapLocationQueryToPageProps(
 
   return {
     cityTitle: doc.title.trim(),
+    heroUrl,
+    heroAlt,
     county: doc.county?.trim() ? doc.county.trim() : null,
     intro: doc.intro.trim(),
     neighborhoods,

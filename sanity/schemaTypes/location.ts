@@ -30,6 +30,14 @@ export default defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "heroImage",
+      title: "Hero image",
+      type: "image",
+      options: { hotspot: true },
+      fields: imageWithAltFields,
+      description: "Full-bleed hero background (recommended 1920×1080+).",
+    }),
+    defineField({
       name: "county",
       title: "County",
       type: "string",

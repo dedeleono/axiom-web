@@ -119,27 +119,34 @@ export default function ContactEmail(props: ContactEmailProps) {
               )}
             <Text className="text-black text-[14px] leading-[24px]">
               {props.recipient === "user" && <>Dear {props.name},</>}
-              {props.recipient === "admin" &&
-                `Contact details: ${props.email} | ${props.phone}`}
-            </Text>
-            {props.recipient === "user" && (
-              <Text className="text-black text-[14px] leading-[24px]">
-                We have received your message and our team will get back to you
-                as soon as we can.
-              </Text>
-            )}
-            <Text className="text-black text-[14px] leading-[24px]">
-              {props.recipient === "admin" && props.message}
-              {props.recipient === "user" && (
+              {props.recipient === "admin" && (
                 <>
-                  <span className="font-normal">Your message:</span>
-                  <br />
-                  <span className="italic font-black">
-                    &quot;{props.message}&quot;
-                  </span>
+                  Contact details: {props.email}
+                  {props.phone && ` | ${props.phone}`}
                 </>
               )}
             </Text>
+            {props.recipient === "user" && (
+              <Text className="text-black text-[14px] leading-[24px]">
+                {props.intent === "consultation"
+                  ? "Your consultation has been scheduled. We look forward to meeting with you."
+                  : "We have received your message and our team will get back to you as soon as we can."}
+              </Text>
+            )}
+            {props.message && (
+              <Text className="text-black text-[14px] leading-[24px]">
+                {props.recipient === "admin" && props.message}
+                {props.recipient === "user" && (
+                  <>
+                    <span className="font-normal">Your message:</span>
+                    <br />
+                    <span className="italic font-black">
+                      &quot;{props.message}&quot;
+                    </span>
+                  </>
+                )}
+              </Text>
+            )}
 
             {props.recipient === "admin" && (
               <>

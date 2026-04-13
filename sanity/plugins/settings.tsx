@@ -5,6 +5,7 @@ import {
   ComposeIcon,
   HelpCircleIcon,
   HomeIcon,
+  PinIcon,
 } from "@sanity/icons";
 
 export const singletonPlugin = definePlugin((types: string[]) => {
@@ -99,6 +100,15 @@ export const pageStructure = (
                   "Service detail pages (/services/…)",
                 ),
               ]),
+          ),
+
+        S.listItem()
+          .title("Areas")
+          .icon(PinIcon)
+          .child(
+            S.documentTypeList("location")
+              .title("Location pages (/areas/…)")
+              .filter('_type == "location"'),
           ),
 
         S.listItem()

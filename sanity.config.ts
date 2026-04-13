@@ -37,6 +37,10 @@ export default defineConfig({
             route: "/blog/posts/:slug",
             filter: `_type == "post" && slug.current == $slug`,
           },
+          {
+            route: "/areas/:slug",
+            filter: `_type == "location" && slug.current == $slug`,
+          },
         ]),
         locations: {
           blogSettings: defineLocations({
@@ -58,6 +62,20 @@ export default defineConfig({
                 blogLocation,
               ],
             }),
+          }),
+          location: defineLocations({
+            select: {
+              title: "title",
+              slug: "slug.current",
+            },
+            resolve: (doc) => {
+              const href = resolveHref("location", doc?.slug);
+              return {
+                locations: href
+                  ? [{ title: doc?.title || "Area", href }]
+                  : [],
+              };
+            },
           }),
         },
       },

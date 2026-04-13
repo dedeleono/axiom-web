@@ -50,10 +50,9 @@ export const consultationRequestSchema = z.object({
   startTimeline: z.enum(["asap", "within_year", "over_year", "undecided"]),
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),
-  phone: z.string().min(10, "Phone number must be at least 10 digits"),
-  message: z
-    .string()
-    .min(10, "Please add a short note (at least 10 characters)"),
+  phone: z.string().optional().default(""),
+  message: z.string().optional().default(""),
+  scheduledEventUri: z.string().optional(),
 });
 
 export type ConsultationRequestValues = z.infer<

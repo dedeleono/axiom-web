@@ -28,6 +28,8 @@ export function resolveHref(
   switch (documentType) {
     case "post":
       return slug ? `/blog/posts/${slug}` : undefined;
+    case "location":
+      return slug ? `/areas/${slug}` : undefined;
     default:
       return undefined;
   }

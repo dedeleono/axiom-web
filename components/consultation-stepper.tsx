@@ -1,19 +1,20 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import type { ConsultationRequestValues } from "@/lib/validations/contact";
-import { consultationRequestSchema } from "@/lib/validations/contact";
+import {
+  consultationRequestSchema,
+  type ConsultationRequestValues,
+} from "@/lib/validations/contact";
 import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import Link from "next/link";
 import { CONSULTATION_PROJECT_OPTIONS } from "@/lib/consultation-project-options";
 import type { PlanAttachmentRef } from "@/lib/consultation-upload-config";
 import { ConsultationPlanDropzone } from "@/components/consultation-plan-dropzone";
+import { InlineWidget, useCalendlyEventListener } from "react-calendly";
 
 const TIMELINE_OPTIONS: {
   value: ConsultationRequestValues["startTimeline"];
@@ -24,9 +25,6 @@ const TIMELINE_OPTIONS: {
   { value: "over_year", label: "Over a year from now" },
   { value: "undecided", label: "I need help deciding" },
 ];
-
-const inputClass =
-  "border-t-0 border-x-0 rounded-none bg-transparent border-b border-white/20 focus:border-white/70 focus-visible:ring-0 focus-visible:ring-offset-0 text-white placeholder:text-white/40 transition-[border-color] duration-300";
 
 const choiceClass = (active: boolean) =>
   cn(
@@ -39,17 +37,16 @@ const choiceClass = (active: boolean) =>
 
 const STEP_COUNT = 4;
 
-const STEP_LABELS = ["Project", "Plans", "Timeline", "Details"] as const;
+const STEP_LABELS = ["Project", "Plans", "Timeline", "Schedule"] as const;
 
 type StepData = {
   projectTypes: string[];
   hasArchitecturalPlans: "yes" | "no" | null;
   planAttachments: PlanAttachmentRef[];
   startTimeline: ConsultationRequestValues["startTimeline"] | null;
-  name: string;
-  email: string;
-  phone: string;
-  message: string;
+  scheduledEventUri: string | null;
+  inviteeName: string;
+  inviteeEmail: string;
 };
 
 const initialStepData: StepData = {
@@ -57,10 +54,9 @@ const initialStepData: StepData = {
   hasArchitecturalPlans: null,
   planAttachments: [],
   startTimeline: null,
-  name: "",
-  email: "",
-  phone: "",
-  message: "",
+  scheduledEventUri: null,
+  inviteeName: "",
+  inviteeEmail: "",
 };
 
 type ConsultationStepperProps = {
@@ -75,6 +71,50 @@ export default function ConsultationStepper({
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [calendlyUrl, setCalendlyUrl] = useState<string | null>(null);
+  const [calendlyLoading, setCalendlyLoading] = useState(false);
+
+  useEffect(() => {
+    if (step === 3 && !calendlyUrl) {
+      setCalendlyLoading(true);
+      fetch("/api/calendly")
+        .then((res) => res.json())
+        .then((json) => {
+          if (json.schedulingUrl) {
+            setCalendlyUrl(json.schedulingUrl);
+          }
+        })
+        .catch(() => {
+          toast.error("Failed to load scheduling widget");
+        })
+        .finally(() => setCalendlyLoading(false));
+    }
+  }, [step, calendlyUrl]);
+
+  useCalendlyEventListener({
+    onEventScheduled: async (e) => {
+      const payload = e.data.payload;
+      const eventUri = payload.event.uri;
+      const inviteeUri = payload.invitee.uri;
+
+      try {
+        const res = await fetch(
+          `/api/calendly/invitee?uri=${encodeURIComponent(inviteeUri)}`
+        );
+        if (!res.ok) throw new Error("Failed to fetch invitee");
+        const invitee = await res.json();
+
+        setData((d) => ({
+          ...d,
+          scheduledEventUri: eventUri,
+          inviteeName: invitee.name,
+          inviteeEmail: invitee.email,
+        }));
+      } catch {
+        toast.error("Failed to confirm scheduling. Please try again.");
+      }
+    },
+  });
 
   const validateStep = useCallback((): boolean => {
     setFieldErrors({});
@@ -112,30 +152,29 @@ export default function ConsultationStepper({
     setStep((s) => Math.max(s - 1, 0));
   };
 
-  const submit = async () => {
+  const submit = useCallback(async () => {
+    if (!data.scheduledEventUri || !data.inviteeName || !data.inviteeEmail) {
+      return;
+    }
+
     setFieldErrors({});
-    const payload: ConsultationRequestValues = {
-      intent: "consultation",
+    const payload = {
+      intent: "consultation" as const,
       projectTypes: data.projectTypes,
       hasArchitecturalPlans: data.hasArchitecturalPlans!,
       planAttachments:
         data.hasArchitecturalPlans === "yes" ? data.planAttachments : [],
       startTimeline: data.startTimeline!,
-      name: data.name.trim(),
-      email: data.email.trim(),
-      phone: data.phone.trim(),
-      message: data.message.trim(),
+      name: data.inviteeName,
+      email: data.inviteeEmail,
+      phone: "",
+      message: "",
+      scheduledEventUri: data.scheduledEventUri,
     };
 
     const parsed = consultationRequestSchema.safeParse(payload);
     if (!parsed.success) {
-      const flat = parsed.error.flatten().fieldErrors;
-      const next: Record<string, string> = {};
-      if (flat.name?.[0]) next.name = flat.name[0];
-      if (flat.email?.[0]) next.email = flat.email[0];
-      if (flat.phone?.[0]) next.phone = flat.phone[0];
-      if (flat.message?.[0]) next.message = flat.message[0];
-      setFieldErrors(next);
+      toast.error("Invalid submission data");
       return;
     }
 
@@ -148,13 +187,19 @@ export default function ConsultationStepper({
       });
       if (!response.ok) throw new Error("Failed");
       setSubmitted(true);
-      toast.success("Request sent");
+      toast.success("Consultation scheduled");
     } catch {
       toast.error("Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }, [data]);
+
+  useEffect(() => {
+    if (data.scheduledEventUri && data.inviteeName && data.inviteeEmail) {
+      submit();
+    }
+  }, [data.scheduledEventUri, data.inviteeName, data.inviteeEmail, submit]);
 
   const toggleProject = (id: string) => {
     setData((d) => ({
@@ -174,11 +219,11 @@ export default function ConsultationStepper({
         transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
       >
         <h2 className="text-white text-xl sm:text-2xl font-light tracking-tight">
-          Thank you
+          You&apos;re all set
         </h2>
         <p className="text-white/55 text-sm leading-relaxed max-w-sm mx-auto font-light">
-          You&apos;ll receive a confirmation email shortly. Our team will follow
-          up to schedule your consultation.
+          Your consultation has been scheduled. You&apos;ll receive a
+          confirmation email shortly with all the details.
         </p>
         <Button
           asChild
@@ -342,64 +387,33 @@ export default function ConsultationStepper({
           )}
 
           {step === 3 && (
-            <div className="space-y-5">
-              <p className="text-white text-lg sm:text-xl font-light leading-snug tracking-tight text-pretty mb-2">
-                How can we reach you?
-                <span className="text-white/35 text-base font-normal"> *</span>
-              </p>
-              <div>
-                <Input
-                  placeholder="Name"
-                  value={data.name}
-                  onChange={(e) =>
-                    setData((d) => ({ ...d, name: e.target.value }))
-                  }
-                  className={inputClass}
-                />
-                {fieldErrors.name && (
-                  <p className="text-red-300/90 text-xs mt-1.5">{fieldErrors.name}</p>
-                )}
-              </div>
-              <div>
-                <Input
-                  placeholder="Email"
-                  type="email"
-                  value={data.email}
-                  onChange={(e) =>
-                    setData((d) => ({ ...d, email: e.target.value }))
-                  }
-                  className={inputClass}
-                />
-                {fieldErrors.email && (
-                  <p className="text-red-300/90 text-xs mt-1.5">{fieldErrors.email}</p>
-                )}
-              </div>
-              <div>
-                <Input
-                  placeholder="Phone"
-                  value={data.phone}
-                  onChange={(e) =>
-                    setData((d) => ({ ...d, phone: e.target.value }))
-                  }
-                  className={inputClass}
-                />
-                {fieldErrors.phone && (
-                  <p className="text-red-300/90 text-xs mt-1.5">{fieldErrors.phone}</p>
-                )}
-              </div>
-              <div>
-                <Textarea
-                  placeholder="Tell us anything else we should know"
-                  value={data.message}
-                  onChange={(e) =>
-                    setData((d) => ({ ...d, message: e.target.value }))
-                  }
-                  className={cn(inputClass, "min-h-[104px] resize-y")}
-                />
-                {fieldErrors.message && (
-                  <p className="text-red-300/90 text-xs mt-1.5">{fieldErrors.message}</p>
-                )}
-              </div>
+            <div className="-mt-2">
+              {calendlyLoading && (
+                <div className="flex items-center justify-center py-16">
+                  <Loader2 className="h-5 w-5 animate-spin text-white/50" />
+                </div>
+              )}
+              {!calendlyLoading && calendlyUrl && (
+                <div className="-mx-6 sm:-mx-4 md:-mx-8 -mb-6 md:-mb-8">
+                  <InlineWidget
+                    url={calendlyUrl}
+                    styles={{ height: "660px", minWidth: "280px" }}
+                    pageSettings={{
+                      backgroundColor: "18181b",
+                      textColor: "fafafa",
+                      primaryColor: "e07539",
+                      hideEventTypeDetails: false,
+                      hideLandingPageDetails: true,
+                      hideGdprBanner: true,
+                    }}
+                  />
+                </div>
+              )}
+              {!calendlyLoading && !calendlyUrl && (
+                <p className="text-white/50 text-sm py-8 text-center">
+                  Unable to load scheduling. Please try again later.
+                </p>
+              )}
             </div>
           )}
         </motion.div>
@@ -418,7 +432,7 @@ export default function ConsultationStepper({
             Back
           </span>
         </Button>
-        {step < STEP_COUNT - 1 ? (
+        {step < STEP_COUNT - 1 && (
           <Button
             type="button"
             onClick={goNext}
@@ -427,19 +441,12 @@ export default function ConsultationStepper({
             Continue
             <ChevronRight className="w-4 h-4 ml-0.5 opacity-90" strokeWidth={1.25} />
           </Button>
-        ) : (
-          <Button
-            type="button"
-            onClick={submit}
-            disabled={isSubmitting}
-            className="h-11 min-h-[48px] w-full rounded-none bg-brand-orange px-8 text-[11px] font-semibold uppercase tracking-[0.18em] text-white shadow-none hover:bg-brand-orange/88 disabled:opacity-50 sm:h-10 sm:min-h-0 sm:w-auto"
-          >
-            {isSubmitting ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              "Submit"
-            )}
-          </Button>
+        )}
+        {step === STEP_COUNT - 1 && isSubmitting && (
+          <div className="flex items-center gap-2 text-white/50 text-sm">
+            <Loader2 className="h-4 w-4 animate-spin" />
+            <span>Confirming...</span>
+          </div>
         )}
       </div>
     </div>

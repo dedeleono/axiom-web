@@ -19,8 +19,7 @@ export default function Header() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
-    
-    // Initial check
+
     handleScroll();
 
     window.addEventListener("scroll", handleScroll);
@@ -29,19 +28,34 @@ export default function Header() {
 
   return (
     <header className="flex relative z-50">
-      <nav 
+      <nav
         className={`flex justify-between items-center w-full fixed top-0 left-0 right-0 p-6 transition-all duration-500 ease-in-out ${
           scrolled ? "bg-white py-4 shadow-sm" : "bg-transparent py-6"
         }`}
       >
-        <Link href="/" className="cursor-pointer flex items-center gap-3">
-          <Image 
-            src="/logo.png" 
-            alt="Axiom Renovation" 
-            width={40} 
-            height={40}
-            className={`transition-all duration-300 ${!darkForeground ? "brightness-0 invert" : ""}`}
-          />
+        <Link href="/" className="relative cursor-pointer flex items-center gap-3">
+          <div className="relative h-16 w-16">
+            <Image
+              src="/axiomLogo_light.png"
+              alt="Axiom Renovation"
+              width={60}
+              height={60}
+              className={`absolute inset-0 transition-opacity duration-300 ${
+                darkForeground ? "opacity-0" : "opacity-100"
+              }`}
+              priority
+            />
+            <Image
+              src="/axiomLogo_dark.png"
+              alt="Axiom Renovation"
+              width={60}
+              height={60}
+              className={`absolute inset-0 transition-opacity duration-300 ${
+                darkForeground ? "opacity-100" : "opacity-0"
+              }`}
+              priority
+            />
+          </div>
         </Link>
         <NavigationMenu scrolled={darkForeground} />
       </nav>

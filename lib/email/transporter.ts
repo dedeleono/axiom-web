@@ -6,9 +6,10 @@
  * Uses environment variables for SMTP configuration.
  */
 
-import { createTransport, type TransportOptions } from "nodemailer";
+import { createTransport } from "nodemailer";
+import type SMTPTransport from "nodemailer/lib/smtp-transport";
 
-const transportConfig = {
+const transportConfig: SMTPTransport.Options = {
   host: process.env.EMAIL_SERVER_HOST || "smtp.gmail.com",
   port: parseInt(process.env.EMAIL_SERVER_PORT || "465", 10),
   secure: parseInt(process.env.EMAIL_SERVER_PORT || "465", 10) === 465,
@@ -16,7 +17,7 @@ const transportConfig = {
     user: process.env.EMAIL_SERVER_USER,
     pass: process.env.EMAIL_SERVER_PASSWORD,
   },
-} satisfies TransportOptions;
+};
 
 export const transporter = createTransport(transportConfig);
 

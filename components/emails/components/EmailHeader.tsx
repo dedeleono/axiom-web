@@ -21,9 +21,7 @@ export function EmailHeader({
 }: EmailHeaderProps) {
   const headerStyle: CSSProperties = {
     backgroundColor,
-    padding: compact
-      ? `${spacing[5]} ${spacing[6]}`
-      : `${spacing[8]} ${spacing[6]}`,
+    padding: compact ? spacing[4] : spacing[6],
     textAlign: "center",
   };
 
@@ -31,14 +29,12 @@ export function EmailHeader({
     <Section style={headerStyle}>
       <Img
         src={assets.logo}
-        width={compact ? 160 : 220}
+        width={compact ? 120 : 160}
         height="auto"
         alt="Axiom Renovation"
         style={{
           display: "block",
           margin: "0 auto",
-          border: "0",
-          outline: "none",
         }}
       />
     </Section>

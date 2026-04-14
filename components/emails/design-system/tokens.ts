@@ -23,7 +23,7 @@ export const colors = {
   primaryDark: "#D94411",
 
   // Neutrals
-  black: "#171717",
+  black: "#1c1c1c",
   darkGray: "#4D4D4D",
   gray600: "#6B7280",
   gray500: "#9CA3AF",

@@ -55,10 +55,10 @@ export default function PrivacyPolicyPage() {
               If you have questions about this Privacy Policy, please contact us
               at{" "}
               <a
-                href="mailto:info@axiomrenovation.com"
+                href="mailto:info@axiom-renovation.com"
                 className="text-sky-600 hover:underline"
               >
-                info@axiomrenovation.com
+                info@axiom-renovation.com
               </a>
               .
             </p>

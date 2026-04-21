@@ -10,6 +10,9 @@ export const authOptions = {
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID ?? "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
+      // Dev convenience: if a User row exists but the Google Account row isn't linked yet,
+      // Auth.js will link by email. Keep this off in production.
+      allowDangerousEmailAccountLinking: process.env.NODE_ENV !== "production",
     }),
   ],
   callbacks: {

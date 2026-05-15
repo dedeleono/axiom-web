@@ -89,6 +89,8 @@ export default function ServiceContent({ slug }: ServiceContentProps) {
             "bathroom-remodeling": ["Bathroom Remodeling", "Bathroom Remodel"],
             "kitchen-remodeling": ["Kitchen Remodeling", "Kitchen Remodel"],
             "home-addition": ["Home Addition", "Home Additions", "ADU & Home Additions"],
+            "new-construction": ["New Construction", "Custom Home Construction"],
+            "outdoor-remodeling": ["Outdoor Remodeling", "Outdoor Remodel", "Outdoor Living"],
           };
           const titles = titlesToTry[slug];
           if (titles) {

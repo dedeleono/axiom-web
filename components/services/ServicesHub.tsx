@@ -21,6 +21,16 @@ const SERVICE_ENTRIES = [
     title: "Home Addition & ADU",
     line: "Thoughtful square footage that feels native to your home.",
   },
+  {
+    slug: "new-construction" as const,
+    title: "New Construction",
+    line: "Ground-up custom homes engineered for how you'll live in them.",
+  },
+  {
+    slug: "outdoor-remodeling" as const,
+    title: "Outdoor Remodeling",
+    line: "Patios, decks, outdoor kitchens, and yards built to extend the home.",
+  },
 ] as const;
 
 export default function ServicesHub() {

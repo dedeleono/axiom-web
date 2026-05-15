@@ -4,6 +4,8 @@ export const SERVICE_PAGE_SLUGS = [
   "bathroom-remodeling",
   "kitchen-remodeling",
   "home-addition",
+  "new-construction",
+  "outdoor-remodeling",
 ] as const;
 
 export type ServicePageSlug = (typeof SERVICE_PAGE_SLUGS)[number];
@@ -17,6 +19,11 @@ export const TITLE_TO_SERVICE_SLUG: Record<string, ServicePageSlug> = {
   "Home Additions": "home-addition",
   "ADU & Home Additions": "home-addition",
   "Home Addition & ADU": "home-addition",
+  "New Construction": "new-construction",
+  "Custom Home Construction": "new-construction",
+  "Outdoor Remodeling": "outdoor-remodeling",
+  "Outdoor Remodel": "outdoor-remodeling",
+  "Outdoor Living": "outdoor-remodeling",
 };
 
 export function serviceDetailHref(slug: string): string {

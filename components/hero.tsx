@@ -31,7 +31,7 @@ export function Hero() {
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4">
                         <Button size="lg" className="text-base px-8">
-                            Book Free Consultation
+                            Book a Free Consultation
                         </Button>
                         <Button size="lg" variant="outline" className="text-base px-8 bg-transparent text-primary-foreground border-primary-foreground hover:bg-primary-foreground hover:text-foreground">
                             <Phone className="w-5 h-5 mr-2" />

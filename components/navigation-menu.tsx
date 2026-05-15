@@ -18,6 +18,8 @@ const SERVICE_DROPDOWN = [
   { label: "Bathroom Remodel", slug: "bathroom-remodeling" as const },
   { label: "Kitchen Remodel", slug: "kitchen-remodeling" as const },
   { label: "Home Addition", slug: "home-addition" as const },
+  { label: "New Construction", slug: "new-construction" as const },
+  { label: "Outdoor Remodeling", slug: "outdoor-remodeling" as const },
 ] as const;
 
 const NavigationMenu: React.FC<NavigationMenuProps> = ({ scrolled = true }) => {
@@ -63,7 +65,7 @@ const NavigationMenu: React.FC<NavigationMenuProps> = ({ scrolled = true }) => {
   const simpleItems = [
     { label: "HOME", href: "/" },
     { label: "PORTFOLIO", href: "/projects" },
-    { label: "FAQs", href: "/faqs" },
+    // { label: "FAQs", href: "/faqs" },
     { label: "CONTACT", href: "/contact" },
     { label: "BLOG", href: "/blog" },
   ] as const;

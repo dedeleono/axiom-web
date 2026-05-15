@@ -10,6 +10,8 @@ const sitemapLinks = [
   { href: "/services/bathroom-remodeling", label: "Bathroom remodeling" },
   { href: "/services/kitchen-remodeling", label: "Kitchen remodeling" },
   { href: "/services/home-addition", label: "Home addition & ADU" },
+  { href: "/services/new-construction", label: "New construction" },
+  { href: "/services/outdoor-remodeling", label: "Outdoor remodeling" },
   { href: "/projects", label: "Portfolio" },
   { href: "/faqs", label: "FAQs" },
   { href: "/blog", label: "Blog" },

@@ -23,7 +23,19 @@ interface ServiceData {
   link: string;
 }
 
-function ServiceCard({ service, index }: { service: ServiceData; index: number }) {
+function ServiceCard({
+  service,
+  index,
+  featured,
+  cellClassName,
+  minHeightClassName,
+}: {
+  service: ServiceData;
+  index: number;
+  featured: boolean;
+  cellClassName: string;
+  minHeightClassName: string;
+}) {
   const [hovered, setHovered] = useState(false);
   const reduceMotion = useReducedMotion();
   const href = resolveServiceCardHref(service.title, service.link);
@@ -39,17 +51,24 @@ function ServiceCard({ service, index }: { service: ServiceData; index: number }
   return (
     <Link
       href={href}
-      className="block w-full min-h-[min(78vh,480px)] sm:min-h-[650px] md:min-h-[750px] border-r border-b border-[#3A3A3A] last:border-r-0 md:border-b-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 focus-visible:ring-offset-brand-black"
+      className={cn(
+        "block w-full border-b border-[#3A3A3A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 focus-visible:ring-offset-brand-black md:border-b-0 md:border-[#3A3A3A]",
+        minHeightClassName,
+        cellClassName
+      )}
       onPointerEnter={() => setHovered(true)}
       onPointerLeave={() => setHovered(false)}
       onFocus={() => setHovered(true)}
       onBlur={() => setHovered(false)}
     >
       <motion.div
-        className="relative block h-full min-h-[min(78vh,480px)] w-full cursor-pointer overflow-hidden rounded-none sm:min-h-[650px] md:min-h-[750px]"
+        className={cn(
+          "relative block h-full w-full cursor-pointer overflow-hidden rounded-none",
+          minHeightClassName
+        )}
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: index * 0.2, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.7, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
         viewport={{ once: true, margin: "-50px" }}
       >
         <div className="absolute inset-0 w-full h-full">
@@ -91,9 +110,14 @@ function ServiceCard({ service, index }: { service: ServiceData; index: number }
           />
         </div>
 
-        <div className="absolute inset-0 z-10 flex w-full flex-col justify-end p-6 text-white sm:p-8 md:p-12">
+        <div className="absolute inset-0 z-10 flex w-full flex-col justify-end p-6 text-white sm:p-8 md:p-10">
           <motion.h3
-            className="mb-3 text-2xl font-light sm:text-3xl md:mb-4 md:text-4xl"
+            className={cn(
+              "mb-3 font-light md:mb-4",
+              featured
+                ? "text-2xl sm:text-3xl md:text-5xl"
+                : "text-2xl sm:text-2xl md:text-3xl"
+            )}
             initial={false}
             animate={{ color: hovered ? "#F25623" : "#ffffff" }}
             transition={tween}
@@ -207,11 +231,56 @@ export default function Services() {
           </div>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-[#3A3A3A]">
-          {services.map((service, index) => (
-            <ServiceCard key={`${service.title}-${index}`} service={service} index={index} />
-          ))}
-        </div>
+        {(() => {
+          const total = services.length;
+          // Bento layout — only kicks in once we have 4+ tiles. With 5 tiles:
+          // Row 1 (taller): tiles 0 + 1, each col-span-3 on md.
+          // Row 2 (shorter): tiles 2 + 3 + 4, each col-span-2 on md.
+          // For 3 tiles we keep the legacy 1/3 row. Anything between (4) just wraps.
+          const useBento = total >= 4;
+          const getCellClassName = (idx: number) => {
+            if (!useBento) return "md:border-r md:border-[#3A3A3A] md:last:border-r-0";
+            // 5-tile bento on md (6-col grid): first two are 3-span (featured),
+            // remaining three are 2-span. Extra tiles past index 4 fall back to 2-span.
+            if (idx < 2) {
+              return cn(
+                "md:col-span-3 md:border-b md:border-[#3A3A3A]",
+                idx === 0 ? "md:border-r" : ""
+              );
+            }
+            return cn(
+              "md:col-span-2",
+              idx < total - 1 ? "md:border-r md:border-[#3A3A3A]" : ""
+            );
+          };
+          const getMinHeight = (idx: number) => {
+            if (!useBento) {
+              return "min-h-[min(78vh,480px)] sm:min-h-[650px] md:min-h-[750px]";
+            }
+            return idx < 2
+              ? "min-h-[min(78vh,480px)] sm:min-h-[600px] md:min-h-[640px]"
+              : "min-h-[min(60vh,420px)] sm:min-h-[460px] md:min-h-[460px]";
+          };
+          return (
+            <div
+              className={cn(
+                "grid grid-cols-1 gap-0 border-t border-[#3A3A3A]",
+                useBento ? "md:grid-cols-6" : "md:grid-cols-3"
+              )}
+            >
+              {services.map((service, index) => (
+                <ServiceCard
+                  key={`${service.title}-${index}`}
+                  service={service}
+                  index={index}
+                  featured={useBento ? index < 2 : true}
+                  cellClassName={getCellClassName(index)}
+                  minHeightClassName={getMinHeight(index)}
+                />
+              ))}
+            </div>
+          );
+        })()}
       </div>
     </div>
   );

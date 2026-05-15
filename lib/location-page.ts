@@ -93,8 +93,11 @@ function resolveImageUrl(
   if (!image || typeof image !== "object" || !("asset" in image)) {
     return undefined;
   }
-  const ref = image.asset && "_ref" in image.asset ? image.asset._ref : undefined;
-  if (!ref) return undefined;
+  const asset = (image as { asset?: unknown }).asset;
+  if (!asset || typeof asset !== "object") return undefined;
+  const hasRef = "_ref" in asset && typeof (asset as { _ref?: unknown })._ref === "string";
+  const hasId = "_id" in asset && typeof (asset as { _id?: unknown })._id === "string";
+  if (!hasRef && !hasId) return undefined;
   try {
     return urlFor(image).width(width).height(height).fit("crop").url() ?? undefined;
   } catch {

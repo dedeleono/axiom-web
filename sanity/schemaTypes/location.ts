@@ -44,18 +44,54 @@ export default defineType({
       description: 'e.g. "Santa Clara County"',
     }),
     defineField({
-      name: "intro",
-      title: "Intro",
-      type: "text",
-      rows: 4,
-      description: "Short 2–3 sentence localized intro (also used for meta description).",
+      name: "body",
+      title: "Body",
+      type: "array",
+      of: [defineArrayMember({ type: "block" })],
+      description:
+        "Main page copy. Use the rich editor — headings, bold, italics, links, and lists are supported. The first ~160 characters are reused for the page meta description.",
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: "neighborhoods",
-      title: "Neighborhoods",
+      title: "Other cities we serve",
       type: "array",
-      of: [defineArrayMember({ type: "string" })],
+      description:
+        "Listed in the right column of the page. Reference an existing location to make the entry clickable, or leave the reference empty for plain text.",
+      of: [
+        defineArrayMember({
+          type: "object",
+          fields: [
+            defineField({
+              name: "name",
+              title: "Name",
+              type: "string",
+              description: 'City label, e.g. "Cupertino, CA"',
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: "locationRef",
+              title: "Linked location (optional)",
+              type: "reference",
+              to: [{ type: "location" }],
+              description:
+                "Pick an existing location page to make this entry clickable. Leave empty to render plain text.",
+            }),
+          ],
+          preview: {
+            select: { title: "name", subtitle: "locationRef.slug.current" },
+            prepare({ title, subtitle }) {
+              return {
+                title: typeof title === "string" ? title : "Untitled",
+                subtitle:
+                  typeof subtitle === "string" && subtitle.length > 0
+                    ? `/areas/${subtitle}`
+                    : "Plain text",
+              };
+            },
+          },
+        }),
+      ],
     }),
     defineField({
       name: "services",

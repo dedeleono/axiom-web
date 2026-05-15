@@ -6,6 +6,7 @@ import Header from "@/components/header";
 import LocationPage from "@/components/location/LocationPage";
 import {
   mapLocationQueryToPageProps,
+  portableTextToPlain,
   trimForMetaDescription,
   type LocationBySlugQueryResult,
 } from "@/lib/location-page";
@@ -39,14 +40,13 @@ export async function generateMetadata(
   });
 
   const data = doc as LocationBySlugQueryResult;
-  if (!data?.title?.trim() || !data.intro?.trim()) {
+  const bodyPlain = portableTextToPlain(data?.body);
+  if (!data?.title?.trim() || bodyPlain.length === 0) {
     notFound();
   }
 
   const title = `Home Remodeling in ${data.title.trim()}, CA`;
-  const description = data.intro?.trim()
-    ? trimForMetaDescription(data.intro.trim())
-    : undefined;
+  const description = trimForMetaDescription(bodyPlain);
 
   const previousImages = (await parent).openGraph?.images || [];
   const ogSource = data.heroImage ?? data.projectHighlight?.afterImage ?? data.projectHighlight?.beforeImage;

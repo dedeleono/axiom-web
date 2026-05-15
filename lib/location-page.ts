@@ -1,4 +1,5 @@
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import type { PortableTextBlock } from "next-sanity";
 
 import { urlFor } from "@/sanity/lib/image";
 
@@ -34,14 +35,19 @@ export type LocationFaqQuery = {
   answer?: string | null;
 };
 
+export type LocationNeighborhoodQuery = {
+  name?: string | null;
+  linkSlug?: string | null;
+};
+
 /** Raw shape returned by `locationBySlugQuery` (images unresolved). */
 export type LocationBySlugQueryResult = {
   title: string | null;
   slug: string | null;
   heroImage: SanityLocationImage | null;
   county: string | null;
-  intro: string | null;
-  neighborhoods: string[] | null;
+  body: PortableTextBlock[] | null;
+  neighborhoods: LocationNeighborhoodQuery[] | null;
   services: string[] | null;
   projectHighlight: LocationProjectHighlightQuery;
   testimonials: LocationTestimonialQuery[] | null;
@@ -65,13 +71,18 @@ export type LocationPageHighlight = {
   imageHeight: number;
 };
 
+export type LocationNeighborhood = {
+  name: string;
+  linkSlug: string | null;
+};
+
 export type LocationPageProps = {
   cityTitle: string;
   heroUrl: string | null;
   heroAlt: string;
   county: string | null;
-  intro: string;
-  neighborhoods: string[];
+  body: PortableTextBlock[];
+  neighborhoods: LocationNeighborhood[];
   services: string[];
   projectHighlight: LocationPageHighlight | null;
   testimonials: Array<{
@@ -114,13 +125,37 @@ export function trimForMetaDescription(text: string, maxLen = 160): string {
   return `${base}…`;
 }
 
+/** Flatten a PortableText body to a single plain-text string (used for meta description). */
+export function portableTextToPlain(
+  blocks: PortableTextBlock[] | null | undefined,
+): string {
+  if (!Array.isArray(blocks)) return "";
+  return blocks
+    .filter((b): b is PortableTextBlock => !!b && b._type === "block")
+    .map((b) => {
+      const children = (b as { children?: unknown }).children;
+      if (!Array.isArray(children)) return "";
+      return children
+        .map((c) =>
+          c && typeof c === "object" && "text" in c && typeof (c as { text?: unknown }).text === "string"
+            ? (c as { text: string }).text
+            : "",
+        )
+        .join("");
+    })
+    .filter((s) => s.length > 0)
+    .join(" ")
+    .trim();
+}
+
 const HERO_W = 1920;
 const HERO_H = 1080;
 
 export function mapLocationQueryToPageProps(
   doc: LocationBySlugQueryResult,
 ): LocationPageProps | null {
-  if (!doc?.title?.trim() || !doc.slug?.trim() || !doc.intro?.trim()) {
+  const body = Array.isArray(doc?.body) ? doc.body : [];
+  if (!doc?.title?.trim() || !doc.slug?.trim() || body.length === 0) {
     return null;
   }
 
@@ -130,9 +165,15 @@ export function mapLocationQueryToPageProps(
       ? doc.heroImage.imgAlt
       : null) ?? `Home remodeling in ${doc.title}, CA`;
 
-  const neighborhoods = (doc.neighborhoods ?? []).filter(
-    (n): n is string => typeof n === "string" && n.trim().length > 0,
-  );
+  const neighborhoods: LocationNeighborhood[] = (doc.neighborhoods ?? [])
+    .map((n) => {
+      const name = typeof n?.name === "string" ? n.name.trim() : "";
+      const linkSlug = typeof n?.linkSlug === "string" && n.linkSlug.trim().length > 0
+        ? n.linkSlug.trim()
+        : null;
+      return { name, linkSlug };
+    })
+    .filter((n) => n.name.length > 0);
   const servicesRaw = doc.services ?? [];
   const services =
     servicesRaw.filter((s): s is string => typeof s === "string" && s.trim().length > 0)
@@ -201,7 +242,7 @@ export function mapLocationQueryToPageProps(
     heroUrl,
     heroAlt,
     county: doc.county?.trim() ? doc.county.trim() : null,
-    intro: doc.intro.trim(),
+    body,
     neighborhoods,
     services,
     projectHighlight,

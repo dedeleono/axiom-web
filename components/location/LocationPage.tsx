@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowUpRight, MapPin } from "lucide-react";
 
+import CustomPortableText from "@/app/blog/portable-text";
 import type { LocationPageProps } from "@/lib/location-page";
 
 const containerClass =
@@ -16,7 +17,7 @@ export default function LocationPage(props: LocationPageProps) {
     heroUrl,
     heroAlt,
     county,
-    intro,
+    body,
     neighborhoods,
     services,
     projectHighlight,
@@ -64,7 +65,7 @@ export default function LocationPage(props: LocationPageProps) {
         </div>
       </section>
 
-      {/* Intro + Neighborhoods */}
+      {/* Body + Other Cities sidebar */}
       <section className="mask-overlap relative z-20 bg-white pt-10">
         <div className={`${containerClass} py-16 md:py-24`}>
           <motion.div
@@ -74,15 +75,14 @@ export default function LocationPage(props: LocationPageProps) {
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="lg:col-span-7">
+            <div className="lg:col-span-8">
               <p className="mb-6 text-xs font-semibold uppercase tracking-[0.25em] text-brand-dark-gray">
                 About {cityTitle}
               </p>
-              <div className="space-y-5 text-lg font-light leading-relaxed text-brand-dark-gray md:text-xl">
-                {intro.split("\n").map((p, i) => (
-                  <p key={i}>{p}</p>
-                ))}
-              </div>
+              <CustomPortableText
+                value={body}
+                className="prose-p:text-base md:prose-p:text-lg prose-p:leading-relaxed"
+              />
               <Link
                 href="/contact"
                 className="mt-10 inline-flex text-xs font-semibold uppercase tracking-[0.2em] text-brand-orange transition-colors hover:text-brand-black"
@@ -92,23 +92,62 @@ export default function LocationPage(props: LocationPageProps) {
               </Link>
             </div>
 
-            {neighborhoods.length > 0 && (
-              <div className="lg:col-span-5 lg:border-l lg:border-brand-light-gray lg:pl-12">
-                <p className="mb-6 text-xs font-semibold uppercase tracking-[0.25em] text-brand-dark-gray">
-                  Neighborhoods we serve
-                </p>
-                <ul className="columns-2 gap-x-6 space-y-2 md:columns-3 lg:columns-2">
-                  {neighborhoods.map((n) => (
-                    <li
-                      key={n}
-                      className="text-sm font-light leading-snug text-brand-black md:text-base"
-                    >
-                      {n}
-                    </li>
-                  ))}
-                </ul>
+            <aside className="lg:col-span-4">
+              <div className="border border-brand-light-gray bg-white p-7 md:p-8 lg:sticky lg:top-28">
+                {neighborhoods.length > 0 && (
+                  <>
+                    <p className="mb-5 text-xs font-semibold uppercase tracking-[0.25em] text-brand-dark-gray">
+                      Other Cities We Serve:
+                    </p>
+                    <ul className="space-y-2.5">
+                      {neighborhoods.map((n) => (
+                        <li key={`${n.name}-${n.linkSlug ?? "plain"}`}>
+                          {n.linkSlug ? (
+                            <Link
+                              href={`/areas/${n.linkSlug}`}
+                              className="group inline-flex items-center text-sm font-light text-brand-black transition-colors hover:text-brand-orange md:text-base"
+                            >
+                              <span className="border-b border-transparent transition-colors group-hover:border-brand-orange">
+                                {n.name}
+                              </span>
+                              <ArrowUpRight
+                                className="ml-1 h-3.5 w-3.5 -translate-y-0.5 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100"
+                                aria-hidden
+                              />
+                            </Link>
+                          ) : (
+                            <span className="text-sm font-light text-brand-dark-gray md:text-base">
+                              {n.name}
+                            </span>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="my-7 h-px w-full bg-brand-light-gray" />
+                  </>
+                )}
+
+                <Link
+                  href="/contact"
+                  className="group inline-flex items-center text-xs font-semibold uppercase tracking-[0.2em] text-brand-orange transition-colors hover:text-brand-black"
+                >
+                  Free consultation
+                  <ArrowUpRight
+                    className="ml-1.5 h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    aria-hidden
+                  />
+                </Link>
+
+                <div className="mt-7 border-t border-brand-light-gray pt-5">
+                  <p className="text-[10px] font-medium uppercase tracking-[0.22em] text-brand-dark-gray">
+                    License #1105006
+                  </p>
+                  <p className="mt-1 text-[10px] font-light uppercase tracking-[0.22em] text-brand-dark-gray/80">
+                    Licensed &amp; Insured
+                  </p>
+                </div>
               </div>
-            )}
+            </aside>
           </motion.div>
         </div>
       </section>

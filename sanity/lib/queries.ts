@@ -43,8 +43,11 @@ export const locationBySlugQuery = defineQuery(`
     "slug": slug.current,
     "heroImage": heroImage { asset->, hotspot, imgAlt },
     county,
-    intro,
-    neighborhoods,
+    body,
+    neighborhoods[]{
+      name,
+      "linkSlug": locationRef->slug.current
+    },
     services,
     projectHighlight {
       title,

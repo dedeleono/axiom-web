@@ -66,56 +66,63 @@ export default async function Footer() {
           <AreasGrid compact />
         </div>
 
-        <div className="space-y-8 md:col-span-2 xl:col-span-1">
-          <h4 className="mb-6 text-sm font-bold uppercase tracking-widest text-brand-black">
+        <div className="space-y-6 md:col-span-2 xl:col-span-1">
+          <h4 className="text-sm font-bold uppercase tracking-widest text-brand-black">
             Find us here!
           </h4>
 
           <div className="space-y-4 text-sm text-brand-dark-gray">
             <div>
-              <p>4030 Moorpark Ave, San Jose, CA Suite 102</p>
-              <p>408-702-2022</p>
-              <p>office@axiom-renovation.com</p>
+              <p className="font-medium text-brand-black">San Jose</p>
+              <p>4030 Moorpark Ave, Suite 102</p>
+              <p>San Jose, CA</p>
             </div>
 
-            <div className="flex space-x-4">
-              <Link
-                href="https://www.instagram.com/axiomrenovation/"
-                target="_blank"
-                className="text-brand-black hover:text-brand-orange"
-              >
-                <Instagram className="h-5 w-5" />
-              </Link>
-              <Link
-                href="https://www.facebook.com/axiomrenovationinc"
-                target="_blank"
-                className="text-brand-black hover:text-brand-orange"
-              >
-                <Facebook className="h-5 w-5" />
-              </Link>
-              <Link
-                href="https://www.youtube.com/channel/UC8W6hYToT7_TEv6P6xKMM4Q"
-                target="_blank"
-                className="text-brand-black hover:text-brand-orange"
-              >
-                <Youtube className="h-5 w-5" />
-              </Link>
-              <Link
-                href="https://www.tiktok.com/@axiomrenovation"
-                target="_blank"
-                className="text-brand-black hover:text-brand-orange"
-              >
-                <span className="rounded-none border border-current px-1 text-xs font-bold">Tk</span>
-              </Link>
+            <div>
+              <p className="font-medium text-brand-black">Encino</p>
+              <p>17515 Ventura Blvd</p>
+              <p>Encino, CA 91316</p>
             </div>
           </div>
 
-          <div className="space-y-4 border-t border-brand-light-gray pt-4 text-sm text-brand-dark-gray">
-            <div>
-              <p>17515 Ventura Blvd, Encino, CA 91316</p>
-              <p>408-702-2022</p>
-              <p>office@axiom-renovation.com</p>
-            </div>
+          <div className="space-y-1 border-t border-brand-light-gray pt-4 text-sm text-brand-dark-gray">
+            <p>408-702-2022</p>
+            <p>office@axiom-renovation.com</p>
+          </div>
+
+          <div className="flex space-x-4 border-t border-brand-light-gray pt-4">
+            <Link
+              href="https://www.instagram.com/axiomrenovation/"
+              target="_blank"
+              className="text-brand-black hover:text-brand-orange"
+              aria-label="Axiom Renovation on Instagram"
+            >
+              <Instagram className="h-5 w-5" />
+            </Link>
+            <Link
+              href="https://www.facebook.com/axiomrenovationinc"
+              target="_blank"
+              className="text-brand-black hover:text-brand-orange"
+              aria-label="Axiom Renovation on Facebook"
+            >
+              <Facebook className="h-5 w-5" />
+            </Link>
+            <Link
+              href="https://www.youtube.com/channel/UC8W6hYToT7_TEv6P6xKMM4Q"
+              target="_blank"
+              className="text-brand-black hover:text-brand-orange"
+              aria-label="Axiom Renovation on YouTube"
+            >
+              <Youtube className="h-5 w-5" />
+            </Link>
+            <Link
+              href="https://www.tiktok.com/@axiomrenovation"
+              target="_blank"
+              className="text-brand-black hover:text-brand-orange"
+              aria-label="Axiom Renovation on TikTok"
+            >
+              <span className="rounded-none border border-current px-1 text-xs font-bold">Tk</span>
+            </Link>
           </div>
         </div>
       </div>

@@ -46,7 +46,7 @@ export default async function AreasGrid({ className = "", compact = false }: Are
         <Link
           key={item.slug}
           href={`/areas/${item.slug}`}
-          className={`${textSize} text-brand-dark-gray transition-colors hover:text-brand-black`}
+          className={`${textSize} text-brand-dark-gray transition-colors hover:text-brand-orange`}
         >
           <span className="block">
             {item.title}, CA

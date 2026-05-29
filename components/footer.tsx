@@ -60,7 +60,7 @@ export default async function Footer() {
               <Link
                 key={href}
                 href={href}
-                className="transition-colors hover:text-brand-black"
+                className="transition-colors hover:text-brand-orange"
               >
                 {label}
               </Link>

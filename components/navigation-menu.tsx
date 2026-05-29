@@ -229,14 +229,14 @@ const NavigationMenu: React.FC<NavigationMenuProps> = ({ scrolled = true }) => {
                   </ul>
                 </div>
 
-                <SheetClose asChild>
+                {/* <SheetClose asChild>
                   <Link
                     href="/faqs"
                     className="w-full py-1 text-center text-xl font-medium leading-tight text-white font-geist-mono hover:text-gray-300 sm:text-4xl"
                   >
                     FAQs
                   </Link>
-                </SheetClose>
+                </SheetClose> */}
                 <SheetClose asChild>
                   <Link
                     href="/contact"

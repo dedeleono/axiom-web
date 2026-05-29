@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@400..700&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @plugin '@tailwindcss/typography';
@@ -78,6 +79,8 @@
 @theme inline {
   --font-sans: 'Geist', 'Geist Fallback';
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --font-anton: 'Anton', ui-sans-serif, sans-serif;
+  --font-caveat: 'Caveat', cursive;
   --font-geist: var(--font-geist, ui-sans-serif, sans-serif);
   --font-geist-mono: var(--font-geist-mono, ui-monospace, monospace);
   --color-background: var(--background);

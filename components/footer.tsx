@@ -25,13 +25,24 @@ export default async function Footer() {
       <div className="mx-auto mb-10 grid max-w-7xl grid-cols-1 gap-8 px-5 md:mb-16 md:grid-cols-2 md:gap-12 md:px-8 xl:grid-cols-5">
         <div className="space-y-6 xl:col-span-1">
           <Link href="/" className="block">
-            <h3 className="font-geist-mono text-2xl font-bold">Axiom Renovation</h3>
+            <h3 className="font-anton tracking-wider text-2xl font-bold">
+              Axiom Renovation
+            </h3>
+            <span className="font-caveat tracking-wider text-lg font-bold text-brand-orange">
+              Building Relationships
+            </span>
           </Link>
           <div className="flex flex-col space-y-2 text-sm text-brand-dark-gray">
-            <Link href="/blog" className="transition-colors hover:text-brand-black">
+            <Link
+              href="/blog"
+              className="transition-colors hover:text-brand-black"
+            >
               Newsroom &amp; Article
             </Link>
-            <Link href="/privacy-policy" className="transition-colors hover:text-brand-black">
+            <Link
+              href="/privacy-policy"
+              className="transition-colors hover:text-brand-black"
+            >
               Privacy Policy
             </Link>
           </div>
@@ -46,7 +57,11 @@ export default async function Footer() {
             aria-label="Sitemap"
           >
             {sitemapLinks.map(({ href, label }) => (
-              <Link key={href} href={href} className="transition-colors hover:text-brand-black">
+              <Link
+                key={href}
+                href={href}
+                className="transition-colors hover:text-brand-black"
+              >
                 {label}
               </Link>
             ))}
@@ -121,7 +136,9 @@ export default async function Footer() {
               className="text-brand-black hover:text-brand-orange"
               aria-label="Axiom Renovation on TikTok"
             >
-              <span className="rounded-none border border-current px-1 text-xs font-bold">Tk</span>
+              <span className="rounded-none border border-current px-1 text-xs font-bold">
+                Tk
+              </span>
             </Link>
           </div>
         </div>

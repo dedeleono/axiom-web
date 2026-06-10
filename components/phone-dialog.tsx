@@ -17,15 +17,12 @@ export type PhoneDialogHandle = {
 const PhoneDialog = forwardRef<PhoneDialogHandle>((_, ref) => {
   const [open, setOpen] = useState(false);
   const phoneNumber = "408-702-2022";
+  const phoneHref = "tel:+14087022022";
 
   useImperativeHandle(ref, () => ({
     open: () => setOpen(true),
     close: () => setOpen(false),
   }));
-
-  const handleCall = () => {
-    window.location.href = `tel:${phoneNumber.replace(/\s/g, "")}`;
-  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -35,15 +32,15 @@ const PhoneDialog = forwardRef<PhoneDialogHandle>((_, ref) => {
         </DialogHeader>
         <div className="flex flex-col items-center space-y-4 py-4">
           <Phone className="h-12 w-12 text-gray-400" />
-          <button
-            onClick={handleCall}
-            className="text-xl font-semibold font-geist"
-          >
+          <p className="text-xl font-semibold font-geist">
             TEL:{" "}
-            <span className="font-geist-mono text-sky-600 hover:underline cursor-pointer">
+            <a
+              href={phoneHref}
+              className="font-geist-mono text-sky-600 hover:underline cursor-pointer"
+            >
               {phoneNumber}
-            </span>
-          </button>
+            </a>
+          </p>
         </div>
       </DialogContent>
     </Dialog>

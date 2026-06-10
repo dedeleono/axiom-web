@@ -101,7 +101,14 @@ export default async function Footer() {
           </div>
 
           <div className="space-y-1 border-t border-brand-light-gray pt-4 text-sm text-brand-dark-gray">
-            <p>408-702-2022</p>
+            <p>
+              <a
+                href="tel:+14087022022"
+                className="transition-colors hover:text-brand-black"
+              >
+                408-702-2022
+              </a>
+            </p>
             <p>office@axiom-renovation.com</p>
           </div>
 

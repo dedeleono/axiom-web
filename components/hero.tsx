@@ -21,7 +21,7 @@ export function Hero() {
             <div className="relative z-10 container mx-auto px-4 py-20 md:py-32">
                 <div className="max-w-3xl">
                     <p className="text-primary-foreground/80 text-sm md:text-base uppercase tracking-wider mb-4">
-                        Bay Area&apos;s Trusted Renovation Experts
+                        License #1105006
                     </p>
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight mb-6 text-balance">
                         We Turn Homes Into Timeless Living Spaces
@@ -39,7 +39,7 @@ export function Hero() {
                         </Button>
                     </div>
                     <p className="mt-6 text-primary-foreground/70 text-sm">
-                        License #1105006 • Licensed & Insured
+                        Licensed & Insured
                     </p>
                 </div>
             </div>

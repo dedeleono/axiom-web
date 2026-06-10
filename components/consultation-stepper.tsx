@@ -14,6 +14,7 @@ import Link from "next/link";
 import { CONSULTATION_PROJECT_OPTIONS } from "@/lib/consultation-project-options";
 import type { PlanAttachmentRef } from "@/lib/consultation-upload-config";
 import { ConsultationPlanDropzone } from "@/components/consultation-plan-dropzone";
+import { openThankYouPage } from "@/lib/thank-you";
 import { InlineWidget, useCalendlyEventListener } from "react-calendly";
 
 const TIMELINE_OPTIONS: {
@@ -188,6 +189,7 @@ export default function ConsultationStepper({
       if (!response.ok) throw new Error("Failed");
       setSubmitted(true);
       toast.success("Consultation scheduled");
+      openThankYouPage();
     } catch {
       toast.error("Something went wrong. Please try again.");
     } finally {
@@ -237,17 +239,17 @@ export default function ConsultationStepper({
 
   return (
     <div className="w-full">
-      {onBackToIntent && (
+      {onBackToIntent && step === 0 && (
         <button
           type="button"
           onClick={onBackToIntent}
-          className="mb-5 text-left text-[11px] font-medium uppercase tracking-[0.18em] text-white/38 transition-colors hover:text-white/70 md:mb-8"
+          className="mb-5 text-left text-[11px] font-medium uppercase tracking-[0.18em] text-white/38 transition-colors hover:text-white/70 md:mb-6"
         >
           ← Back
         </button>
       )}
       <div
-        className="mb-6 md:mb-10"
+        className="mb-6 md:mb-8"
         role="group"
         aria-label={`Consultation, step ${step + 1} of ${STEP_COUNT}: ${STEP_LABELS[step]}`}
       >
@@ -264,7 +266,7 @@ export default function ConsultationStepper({
             />
           ))}
         </div>
-        <p className="mt-4 text-[11px] font-medium uppercase tracking-[0.2em] text-white/38">
+        <p className="mt-3 text-[11px] font-medium uppercase tracking-[0.2em] text-white/38">
           {STEP_LABELS[step]}
           <span className="text-white/25 font-normal normal-case tracking-normal">
             {" "}
@@ -387,22 +389,25 @@ export default function ConsultationStepper({
           )}
 
           {step === 3 && (
-            <div className="-mt-2">
+            <div className="-mx-2 sm:-mx-1 md:mx-0">
               {calendlyLoading && (
-                <div className="flex items-center justify-center py-16">
+                <div className="flex h-105 items-center justify-center md:h-[max(420px,calc(min(78vh,720px)-300px))]">
                   <Loader2 className="h-5 w-5 animate-spin text-white/50" />
                 </div>
               )}
               {!calendlyLoading && calendlyUrl && (
-                <div className="-mx-6 sm:-mx-4 md:-mx-8 -mb-6 md:-mb-8">
+                /* Sized so the whole step fits inside the contact card
+                   (max-h min(78vh,720px)) without scrolling it; ~300px is
+                   the surrounding chrome (eyebrow, progress, nav, padding). */
+                <div className="h-150 overflow-hidden md:h-[max(420px,calc(min(78vh,720px)-300px))]">
                   <InlineWidget
                     url={calendlyUrl}
-                    styles={{ height: "660px", minWidth: "280px" }}
+                    styles={{ height: "100%", width: "100%", minWidth: "280px" }}
                     pageSettings={{
                       backgroundColor: "18181b",
                       textColor: "fafafa",
                       primaryColor: "e07539",
-                      hideEventTypeDetails: false,
+                      hideEventTypeDetails: true,
                       hideLandingPageDetails: true,
                       hideGdprBanner: true,
                     }}
@@ -419,7 +424,7 @@ export default function ConsultationStepper({
         </motion.div>
       </AnimatePresence>
 
-      <div className="mt-8 flex flex-col-reverse gap-3 border-t border-white/8 pt-5 sm:flex-row sm:items-center sm:justify-between sm:gap-4 md:mt-10 md:pt-6">
+      <div className="mt-7 flex flex-col-reverse gap-3 border-t border-white/8 pt-5 sm:flex-row sm:items-center sm:justify-between sm:gap-4 md:mt-8">
         <Button
           type="button"
           variant="ghost"

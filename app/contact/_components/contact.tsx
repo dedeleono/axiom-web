@@ -7,6 +7,7 @@ import { ArrowUpRight } from "lucide-react";
 import ContactForm, {
   type ContactFormFlow,
 } from "@/components/contact-form";
+import AnimatedHeight from "@/components/animated-height";
 
 export default function Contact() {
   const [flow, setFlow] = useState<ContactFormFlow | null>(null);
@@ -117,6 +118,7 @@ export default function Contact() {
                 [scrollbar-color:rgba(255,255,255,0.2)_transparent]
               "
             >
+              <AnimatedHeight>
               {flow === null ? (
                 <div className="w-full">
                   <p className="mb-6 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/70 md:mb-8">
@@ -188,6 +190,7 @@ export default function Contact() {
               ) : (
                 <ContactForm flow={flow} onBack={() => setFlow(null)} />
               )}
+              </AnimatedHeight>
             </div>
           </motion.div>
         </div>

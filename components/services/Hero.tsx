@@ -56,7 +56,8 @@ async function fetchInnovationByServiceSlug(
       "bathroom-remodeling": ["Bathroom Remodeling", "Bathroom Remodel"],
       "kitchen-remodeling": ["Kitchen Remodeling", "Kitchen Remodel"],
       "home-addition": ["Home Addition", "Home Additions", "ADU & Home Additions"],
-      "new-construction": ["New Construction", "Custom Home Construction"],
+      "adu": ["ADU Construction", "ADU", "ADU & Home Additions"],
+      "new-construction": ["New Construction", "Custom Home Construction", "Garage"],
       "outdoor-remodeling": ["Outdoor Remodeling", "Outdoor Remodel", "Outdoor Living"],
     };
     for (const title of titlesToTry[slug] ?? []) {

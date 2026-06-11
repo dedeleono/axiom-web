@@ -4,6 +4,7 @@ export const SERVICE_PAGE_SLUGS = [
   "bathroom-remodeling",
   "kitchen-remodeling",
   "home-addition",
+  "adu",
   "new-construction",
   "outdoor-remodeling",
 ] as const;
@@ -19,6 +20,8 @@ export const TITLE_TO_SERVICE_SLUG: Record<string, ServicePageSlug> = {
   "Home Additions": "home-addition",
   "ADU & Home Additions": "home-addition",
   "Home Addition & ADU": "home-addition",
+  "ADU Construction": "adu",
+  ADU: "adu",
   "New Construction": "new-construction",
   "Custom Home Construction": "new-construction",
   "Outdoor Remodeling": "outdoor-remodeling",

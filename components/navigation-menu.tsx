@@ -18,6 +18,7 @@ const SERVICE_DROPDOWN = [
   { label: "Bathroom Remodel", slug: "bathroom-remodeling" as const },
   { label: "Kitchen Remodel", slug: "kitchen-remodeling" as const },
   { label: "Home Addition", slug: "home-addition" as const },
+  { label: "ADU Construction", slug: "adu" as const },
   { label: "New Construction", slug: "new-construction" as const },
   { label: "Outdoor Remodeling", slug: "outdoor-remodeling" as const },
 ] as const;

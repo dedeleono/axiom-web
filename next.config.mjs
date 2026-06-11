@@ -17,6 +17,11 @@ const nextConfig = {
         destination: "/services/home-addition",
         permanent: true,
       },
+      {
+        source: "/adu",
+        destination: "/services/adu",
+        permanent: true,
+      },
     ];
   },
   images: {

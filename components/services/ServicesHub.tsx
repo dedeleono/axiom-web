@@ -22,6 +22,11 @@ const SERVICE_ENTRIES = [
     line: "Thoughtful square footage that feels native to your home.",
   },
   {
+    slug: "adu" as const,
+    title: "ADU Construction",
+    line: "Detached ADUs, attached units, and garage conversions built to code.",
+  },
+  {
     slug: "new-construction" as const,
     title: "New Construction",
     line: "Ground-up custom homes engineered for how you'll live in them.",

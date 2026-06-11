@@ -66,10 +66,10 @@ export function ContactAdminEmail({
 
   return (
     <SystemTemplate
-      preview={`New ${intentLabel(intent).toLowerCase()} from ${name}`}
+      preview={`New lead recorded from the website: ${name}`}
       alertType="info"
-      heading={`New ${intentLabel(intent)}`}
-      subtitle={`${name} has submitted a ${intent === "consultation" ? "consultation request" : "general inquiry"}.`}
+      heading="New potential client"
+      subtitle={`A new lead has been recorded through the website. ${name} submitted a ${intent === "consultation" ? "consultation request" : "general inquiry"}.`}
       details={details}
     >
       {message && (

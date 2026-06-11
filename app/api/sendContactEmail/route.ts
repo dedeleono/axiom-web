@@ -5,7 +5,9 @@ import { NextResponse } from "next/server";
 import { sendEmails } from "@/lib/email";
 import { contactSubmissionSchema } from "@/lib/validations/contact";
 
-const ADMIN_EMAIL = process.env.CONTACT_EMAIL ?? "info@axiomrenovation.com";
+const ADMIN_EMAILS = ["amit@axiom-renovation.com", "dgxagent@gmail.com"];
+
+const ADMIN_SUBJECT = "New potential client from website";
 
 export async function POST(request: Request) {
   try {
@@ -49,18 +51,13 @@ export async function POST(request: Request) {
       })
     );
 
-    const intentLabel =
-      validatedData.intent === "consultation"
-        ? "Consultation Request"
-        : "General Inquiry";
-
     await sendEmails([
-      {
-        to: ADMIN_EMAIL,
-        subject: `${intentLabel} — ${validatedData.name}`,
+      ...ADMIN_EMAILS.map((adminEmail) => ({
+        to: adminEmail,
+        subject: ADMIN_SUBJECT,
         html: adminHtml,
         replyTo: validatedData.email,
-      },
+      })),
       {
         to: validatedData.email,
         subject: "Thank you for contacting Axiom Renovation",

@@ -22,7 +22,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import ConsultationStepper from "@/components/consultation-stepper";
-import { openThankYouPage } from "@/lib/thank-you";
+import { redirectToThankYouPage } from "@/lib/thank-you";
 
 const fieldClass =
   "border-t-0 border-x-0 rounded-none bg-transparent border-b border-white/20 px-0 focus:border-white/70 focus-visible:ring-0 focus-visible:ring-offset-0 text-white placeholder:text-white/30 transition-[border-color] duration-300 disabled:opacity-50";
@@ -70,7 +70,7 @@ export default function ContactForm({ flow, onBack }: ContactFormProps) {
 
       form.reset();
       setIsSent(true);
-      openThankYouPage();
+      redirectToThankYouPage();
     } catch (error) {
       toast.error("Failed to send message. Please try again.");
       console.error("Error:", error);

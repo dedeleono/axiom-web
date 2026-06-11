@@ -22,7 +22,7 @@ const transportConfig: SMTPTransport.Options = {
 export const transporter = createTransport(transportConfig);
 
 export const emailFrom =
-  process.env.EMAIL_FROM || process.env.EMAIL_SERVER_USER || "noreply@axiomrenovation.com";
+  process.env.EMAIL_FROM || process.env.EMAIL_SERVER_USER || "noreply@axiom-renovation.com";
 
 export interface SendEmailOptions {
   to: string;

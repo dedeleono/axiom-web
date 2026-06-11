@@ -1,13 +1,11 @@
 export const THANK_YOU_PATH = "/thank-you";
 
 /**
- * Opens the GTM conversion page in a new tab so the user can close it freely.
- * Popup blockers may reject window.open outside a fresh user gesture (e.g.
- * after an awaited fetch); in that case fall back to same-tab navigation so
- * the conversion pageview still fires.
+ * Redirects to the GTM conversion page after a successful form submission so
+ * the conversion pageview always fires (same-tab navigation is never blocked
+ * by popup blockers, unlike window.open after an awaited fetch).
  */
-export function openThankYouPage() {
+export function redirectToThankYouPage() {
   if (typeof window === "undefined") return;
-  const opened = window.open(THANK_YOU_PATH, "_blank");
-  if (!opened) window.location.assign(THANK_YOU_PATH);
+  window.location.assign(THANK_YOU_PATH);
 }

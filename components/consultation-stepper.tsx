@@ -14,7 +14,7 @@ import Link from "next/link";
 import { CONSULTATION_PROJECT_OPTIONS } from "@/lib/consultation-project-options";
 import type { PlanAttachmentRef } from "@/lib/consultation-upload-config";
 import { ConsultationPlanDropzone } from "@/components/consultation-plan-dropzone";
-import { openThankYouPage } from "@/lib/thank-you";
+import { redirectToThankYouPage } from "@/lib/thank-you";
 import { InlineWidget, useCalendlyEventListener } from "react-calendly";
 
 const TIMELINE_OPTIONS: {
@@ -189,7 +189,7 @@ export default function ConsultationStepper({
       if (!response.ok) throw new Error("Failed");
       setSubmitted(true);
       toast.success("Consultation scheduled");
-      openThankYouPage();
+      redirectToThankYouPage();
     } catch {
       toast.error("Something went wrong. Please try again.");
     } finally {

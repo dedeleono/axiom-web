@@ -18,7 +18,7 @@ const SERVICE_ENTRIES = [
   },
   {
     slug: "home-addition" as const,
-    title: "Home Addition & ADU",
+    title: "Home Addition",
     line: "Thoughtful square footage that feels native to your home.",
   },
   {

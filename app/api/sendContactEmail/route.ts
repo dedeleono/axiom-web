@@ -5,7 +5,11 @@ import { NextResponse } from "next/server";
 import { sendEmails } from "@/lib/email";
 import { contactSubmissionSchema } from "@/lib/validations/contact";
 
-const ADMIN_EMAILS = ["amit@axiom-renovation.com", "dgxagent@gmail.com"];
+const ADMIN_EMAILS = [
+  "amit@axiom-renovation.com",
+  "scott@axiom-renovation.com",
+  "dgxagent@gmail.com",
+];
 
 const ADMIN_SUBJECT = "New potential client from website";
 

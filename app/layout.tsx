@@ -48,12 +48,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
+      <GoogleTagManager gtmId="GTM-P8S2X875" />
       <body className="font-geist antialiased">
         <SmoothScrolling>{children}</SmoothScrolling>
       </body>
       <ScrollToTop />
       <Toaster />
-      <GoogleTagManager gtmId="GT-WBLV657K" />
     </html>
   );
 }

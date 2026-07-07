@@ -11,7 +11,7 @@ import {
 import { faqPageJsonLd, serviceJsonLd, type FaqEntry } from "@/lib/structured-data";
 
 export const metadata = {
-  title: "ADU Construction | Axiom Renovation",
+  title: "ADU Construction",
   description:
     "Design and build the perfect accessory dwelling unit with Axiom Renovation. Detached ADUs, attached ADUs, and garage conversions in San Jose and the Bay Area. Free consultations.",
 };
@@ -83,13 +83,15 @@ export default function AduConstructionPage() {
             </p>
             <h2
               id="garage-conversion-heading"
-              className="text-3xl md:text-4xl font-light tracking-tight text-brand-black leading-[1.1] mb-8 max-w-3xl"
+              className="text-balance text-3xl md:text-4xl font-light tracking-tight text-brand-black leading-[1.1] mb-8 max-w-3xl"
             >
               Turn your garage into a fully permitted ADU
             </h2>
             <div className="text-brand-dark-gray font-light text-lg md:text-xl leading-relaxed space-y-6 max-w-3xl">
               {garageConversionParagraphs.map((paragraph, i) => (
-                <p key={i}>{paragraph}</p>
+                <p key={i} className="text-pretty">
+                  {paragraph}
+                </p>
               ))}
             </div>
             <Link
@@ -112,7 +114,7 @@ export default function AduConstructionPage() {
             </p>
             <h2
               id="adu-faq-heading"
-              className="text-3xl md:text-4xl font-light tracking-tight text-brand-black leading-[1.1] mb-8 max-w-3xl"
+              className="text-balance text-3xl md:text-4xl font-light tracking-tight text-brand-black leading-[1.1] mb-8 max-w-3xl"
             >
               ADU questions, answered
             </h2>
@@ -134,7 +136,7 @@ export default function AduConstructionPage() {
                     >
                       {faq.question}
                     </AccordionTrigger>
-                    <AccordionContent className="pb-5 text-sm leading-relaxed text-brand-dark-gray md:text-base">
+                    <AccordionContent className="text-pretty pb-5 text-sm leading-relaxed text-brand-dark-gray md:text-base">
                       {faq.answer}
                     </AccordionContent>
                   </AccordionItem>

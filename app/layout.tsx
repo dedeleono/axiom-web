@@ -54,9 +54,9 @@ export default function RootLayout({
       <body className="font-geist antialiased">
         <JsonLd data={localBusinessJsonLd} />
         <SmoothScrolling>{children}</SmoothScrolling>
+        <ScrollToTop />
+        <Toaster />
       </body>
-      <ScrollToTop />
-      <Toaster />
     </html>
   );
 }

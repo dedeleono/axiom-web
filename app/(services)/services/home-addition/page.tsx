@@ -3,7 +3,7 @@ import JsonLd from "@/components/json-ld";
 import { serviceJsonLd } from "@/lib/structured-data";
 
 export const metadata = {
-  title: "Home Addition | Axiom Renovation",
+  title: "Home Addition",
   description:
     "Expand your home with Axiom Renovation. Bay Area home additions, ADUs, and room additions. Expert design and construction. Free consultations.",
 };

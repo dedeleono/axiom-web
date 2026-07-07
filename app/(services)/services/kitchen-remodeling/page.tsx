@@ -3,7 +3,7 @@ import JsonLd from "@/components/json-ld";
 import { serviceJsonLd } from "@/lib/structured-data";
 
 export const metadata = {
-  title: "Kitchen Remodeling | Axiom Renovation",
+  title: "Kitchen Remodeling",
   description:
     "Expert kitchen remodeling in the Bay Area. Axiom Renovation delivers custom kitchens, modern design, and quality craftsmanship. Free consultations.",
 };

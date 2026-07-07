@@ -8,7 +8,7 @@ import { sanityFetch } from "@/sanity/lib/fetch";
 import { allLocationsForGridQuery } from "@/sanity/lib/queries";
 
 export const metadata: Metadata = {
-  title: "Areas We Serve | Axiom Renovation",
+  title: "Areas We Serve",
   description:
     "Explore the Bay Area cities and counties where Axiom Renovation provides kitchen, bathroom, and home remodeling services.",
   openGraph: {

@@ -3,7 +3,7 @@ import JsonLd from "@/components/json-ld";
 import { serviceJsonLd } from "@/lib/structured-data";
 
 export const metadata = {
-  title: "Outdoor Remodeling | Axiom Renovation",
+  title: "Outdoor Remodeling",
   description:
     "Transform your backyard with Axiom Renovation. Bay Area outdoor remodeling, patios, decks, outdoor kitchens, pergolas, and hardscaping. Free consultations.",
 };

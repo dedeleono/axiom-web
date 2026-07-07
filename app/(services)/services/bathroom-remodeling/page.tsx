@@ -3,7 +3,7 @@ import JsonLd from "@/components/json-ld";
 import { serviceJsonLd } from "@/lib/structured-data";
 
 export const metadata = {
-  title: "Bathroom Remodeling | Axiom Renovation",
+  title: "Bathroom Remodeling",
   description:
     "Transform your bathroom with Axiom Renovation. Expert Bay Area bathroom remodeling, renovation, and design. Free consultations.",
 };

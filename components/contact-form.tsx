@@ -22,6 +22,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import ConsultationStepper from "@/components/consultation-stepper";
+import { trackLeadSubmit } from "@/lib/analytics";
 import { redirectToThankYouPage } from "@/lib/thank-you";
 
 const fieldClass =
@@ -70,6 +71,13 @@ export default function ContactForm({ flow, onBack }: ContactFormProps) {
 
       form.reset();
       setIsSent(true);
+      // Fire-and-forget GTM lead event; must never delay or block the
+      // conversion redirect below.
+      trackLeadSubmit({
+        formId: "contact_form",
+        email: data.email,
+        phone: data.phone,
+      });
       redirectToThankYouPage();
     } catch (error) {
       toast.error("Failed to send message. Please try again.");

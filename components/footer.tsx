@@ -4,6 +4,7 @@ import { Facebook, Instagram, Youtube } from "lucide-react";
 import AreasGrid from "@/components/location/AreasGrid";
 
 import FooterClientActions from "./footer-client-actions";
+import PhoneLink from "./phone-link";
 
 const sitemapLinks = [
   { href: "/", label: "Home" },
@@ -103,12 +104,13 @@ export default async function Footer() {
 
           <div className="space-y-1 border-t border-brand-light-gray pt-4 text-sm text-brand-dark-gray">
             <p>
-              <a
+              <PhoneLink
                 href="tel:+14087022022"
+                location="footer"
                 className="transition-colors hover:text-brand-black"
               >
                 408-702-2022
-              </a>
+              </PhoneLink>
             </p>
             <p>office@axiom-renovation.com</p>
           </div>

@@ -14,6 +14,7 @@ import Link from "next/link";
 import { CONSULTATION_PROJECT_OPTIONS } from "@/lib/consultation-project-options";
 import type { PlanAttachmentRef } from "@/lib/consultation-upload-config";
 import { ConsultationPlanDropzone } from "@/components/consultation-plan-dropzone";
+import { trackLeadSubmit } from "@/lib/analytics";
 import { redirectToThankYouPage } from "@/lib/thank-you";
 import { InlineWidget, useCalendlyEventListener } from "react-calendly";
 
@@ -189,6 +190,13 @@ export default function ConsultationStepper({
       if (!response.ok) throw new Error("Failed");
       setSubmitted(true);
       toast.success("Consultation scheduled");
+      // Fire-and-forget GTM lead event; must never delay or block the
+      // conversion redirect below. This flow collects no phone number (the
+      // Calendly invitee provides name/email only).
+      trackLeadSubmit({
+        formId: "consultation_stepper",
+        email: data.inviteeEmail,
+      });
       redirectToThankYouPage();
     } catch {
       toast.error("Something went wrong. Please try again.");

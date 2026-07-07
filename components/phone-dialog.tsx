@@ -8,6 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Phone } from "lucide-react";
+import { trackPhoneClick } from "@/lib/analytics";
 
 export type PhoneDialogHandle = {
   open: () => void;
@@ -36,6 +37,7 @@ const PhoneDialog = forwardRef<PhoneDialogHandle>((_, ref) => {
             TEL:{" "}
             <a
               href={phoneHref}
+              onClick={() => trackPhoneClick("phone_dialog")}
               className="font-geist-mono text-sky-600 hover:underline cursor-pointer"
             >
               {phoneNumber}

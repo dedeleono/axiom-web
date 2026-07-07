@@ -5,6 +5,8 @@ import ScrollToTop from "@/components/scroll-to-top";
 import { Toaster } from "sonner";
 import SmoothScrolling from "@/components/smooth-scrolling";
 import { GoogleTagManager } from "@next/third-parties/google";
+import JsonLd from "@/components/json-ld";
+import { localBusinessJsonLd } from "@/lib/structured-data";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://axiom-web-six.vercel.app";
 
@@ -50,6 +52,7 @@ export default function RootLayout({
     <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
       <GoogleTagManager gtmId="GTM-P8S2X875" />
       <body className="font-geist antialiased">
+        <JsonLd data={localBusinessJsonLd} />
         <SmoothScrolling>{children}</SmoothScrolling>
       </body>
       <ScrollToTop />

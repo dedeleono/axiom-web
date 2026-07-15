@@ -15,12 +15,14 @@ import { sendGTMEvent } from "@next/third-parties/google";
  * a form submit or the /thank-you redirect.
  */
 
-export type LeadFormId = "contact_form" | "consultation_stepper";
+export type LeadFormId = "contact_form" | "consultation_stepper" | "quick_lead";
 
 export interface TrackLeadSubmitInput {
   formId: LeadFormId;
   email?: string;
   phone?: string;
+  service?: string;
+  context?: Record<string, string | undefined>;
 }
 
 /** user_data shape consumed by Google Ads Enhanced Conversions for Leads. */
@@ -70,6 +72,8 @@ export function trackLeadSubmit(input: TrackLeadSubmitInput): void {
     sendGTMEvent({
       event: "generate_lead",
       form_id: input.formId,
+      ...(input.service ? { service: input.service } : {}),
+      ...(input.context ? { lead_context: input.context } : {}),
       ...(Object.keys(userData).length > 0 ? { user_data: userData } : {}),
     });
   } catch {

@@ -113,6 +113,8 @@ export default async function Footer() {
               </PhoneLink>
             </p>
             <p>office@axiom-renovation.com</p>
+            <p>Mon–Sat: 8am–6pm</p>
+            <p className="text-brand-black">CA Lic. #1105006 · Licensed &amp; Insured</p>
           </div>
 
           <div className="flex space-x-4 border-t border-brand-light-gray pt-4">

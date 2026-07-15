@@ -45,6 +45,14 @@ export const localBusinessJsonLd = {
     value: "1105006",
   },
   areaServed: AREA_SERVED,
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      opens: "08:00",
+      closes: "18:00",
+    },
+  ],
   sameAs: [
     "https://www.instagram.com/axiomrenovation/",
     "https://www.facebook.com/axiomrenovationinc",

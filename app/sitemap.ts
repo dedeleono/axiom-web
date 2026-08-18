@@ -3,7 +3,7 @@ import { MetadataRoute } from "next";
 import { client } from "@/sanity/lib/client";
 import { locationSlugsQuery } from "@/sanity/lib/queries";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://axiom-web-six.vercel.app";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.axiom-remodel.com";
 
 function isSlugRow(row: unknown): row is { slug: string } {
   return (

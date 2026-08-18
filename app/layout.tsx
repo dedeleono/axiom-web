@@ -8,7 +8,7 @@ import { GoogleTagManager } from "@next/third-parties/google";
 import JsonLd from "@/components/json-ld";
 import { localBusinessJsonLd } from "@/lib/structured-data";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://axiom-web-six.vercel.app";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.axiom-remodel.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -18,6 +18,9 @@ export const metadata: Metadata = {
   },
   description:
     "Transform your Bay Area home with Axiom Renovation. Licensed contractors specializing in kitchen remodeling, bathroom renovation, ADUs, and full home renovations. Free consultations.",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",

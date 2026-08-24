@@ -22,6 +22,33 @@ const nextConfig = {
         destination: "/services/adu",
         permanent: true,
       },
+      // Legacy URLs reported by Google Search Console. Keep their equity on
+      // current pages instead of serving soft dead ends after the site migration.
+      {
+        source: "/contact-us",
+        destination: "/contact",
+        permanent: true,
+      },
+      {
+        source: "/san-jose-bathroom-remodeling",
+        destination: "/services/bathroom-remodeling",
+        permanent: true,
+      },
+      {
+        source: "/portfolio-collections/my-portfolio/sunnyvale-bathroom-remodel",
+        destination: "/projects",
+        permanent: true,
+      },
+      {
+        source: "/how-long-does-a-bathroom-remodel-take",
+        destination: "/blog",
+        permanent: true,
+      },
+      {
+        source: "/service-areas/:slug",
+        destination: "/areas",
+        permanent: true,
+      },
     ];
   },
   images: {

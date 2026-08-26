@@ -9,6 +9,7 @@ const ADMIN_EMAILS = [
   "amit@axiom-renovation.com",
   "scott@axiom-renovation.com",
   "dgxagent@gmail.com",
+  "elinor@axiom-renovation.com"
 ];
 
 const ADMIN_SUBJECT = "New potential client from website";

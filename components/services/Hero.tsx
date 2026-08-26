@@ -59,6 +59,7 @@ async function fetchInnovationByServiceSlug(
       "adu": ["ADU Construction", "ADU", "ADU & Home Additions"],
       "new-construction": ["New Construction", "Custom Home Construction", "Garage"],
       "outdoor-remodeling": ["Outdoor Remodeling", "Outdoor Remodel", "Outdoor Living"],
+      landscaping: ["Landscaping", "Landscape Design & Build", "Outdoor Living", "Outdoor Remodeling"],
     };
     for (const title of titlesToTry[slug] ?? []) {
       row = await client.fetch<ServiceDetailHeroData | null>(
@@ -79,6 +80,10 @@ async function fetchInnovationByServiceSlug(
       all?.find(
         (s) => normalized(s.title).includes(slug) || slug.includes(normalized(s.title))
       ) ?? null;
+  }
+
+  if (slug === "landscaping") {
+    return row ? { ...row, title: "Bay Area Landscaping" } : { title: "Bay Area Landscaping" };
   }
 
   return row;

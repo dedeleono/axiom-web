@@ -36,6 +36,11 @@ const SERVICE_ENTRIES = [
     title: "Outdoor Remodeling",
     line: "Patios, decks, outdoor kitchens, and yards built to extend the home.",
   },
+  {
+    slug: "landscaping" as const,
+    title: "Landscaping",
+    line: "Integrated landscape design, hardscaping, planting, and outdoor living spaces.",
+  },
 ] as const;
 
 export default function ServicesHub() {

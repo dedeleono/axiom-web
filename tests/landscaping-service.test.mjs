@@ -26,3 +26,9 @@ test("the landscaping service landing page is complete and discoverable", async 
   assert.match(sitemap, /\/services\/landscaping/);
   assert.match(servicesHub, /slug:\s*["']landscaping["']/);
 });
+
+test("root metadata does not force service pages to canonicalize to the homepage", async () => {
+  const layout = await read("app/layout.tsx");
+
+  assert.doesNotMatch(layout, /alternates:\s*\{\s*canonical:\s*["']\/["']/s);
+});

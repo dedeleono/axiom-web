@@ -18,9 +18,6 @@ export const metadata: Metadata = {
   },
   description:
     "Transform your Bay Area home with Axiom Renovation. Licensed contractors specializing in kitchen remodeling, bathroom renovation, ADUs, and full home renovations. Free consultations.",
-  alternates: {
-    canonical: "/",
-  },
   openGraph: {
     type: "website",
     locale: "en_US",

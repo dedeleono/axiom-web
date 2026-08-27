@@ -4,6 +4,9 @@ import { useState, useEffect, useCallback } from "react";
 import { client } from "@/sanity/lib/client";
 import type { Image as SanityImage } from "sanity";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type Slide = {
   _id: string;
@@ -21,14 +24,28 @@ type ProjectsProps = {
   initialSlides?: Slide[];
 };
 
-export default function Projects({ initialSlides = [] }: ProjectsProps) {
-  const [slides, setSlides] = useState<Slide[]>(initialSlides);
+type UsableSlide = Slide & { imageUrl: string };
+
+const EMPTY_SLIDES: Slide[] = [];
+
+function hasUsableProjectImage(slide: Slide): slide is UsableSlide {
+  return Boolean(slide.image?.asset && slide.imageUrl);
+}
+
+export default function Projects({ initialSlides = EMPTY_SLIDES }: ProjectsProps) {
+  const router = useRouter();
+  const [slides, setSlides] = useState<UsableSlide[]>(() =>
+    initialSlides.filter(hasUsableProjectImage)
+  );
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isLoading, setIsLoading] = useState(initialSlides.length === 0);
+  const [isLoading, setIsLoading] = useState(
+    !initialSlides.some(hasUsableProjectImage)
+  );
 
   useEffect(() => {
-    if (initialSlides.length > 0) {
-      setSlides(initialSlides);
+    const validInitialSlides = initialSlides.filter(hasUsableProjectImage);
+    if (validInitialSlides.length > 0) {
+      setSlides(validInitialSlides);
       setIsLoading(false);
       return;
     }
@@ -43,9 +60,7 @@ export default function Projects({ initialSlides = [] }: ProjectsProps) {
           "imageUrl": image.asset->url
         }`;
         const fetchedSlides = await client.fetch<Slide[]>(query);
-        const withImages = (fetchedSlides ?? []).filter(
-          (s): s is Slide => s.image != null && s.image.asset != null && s.imageUrl != null
-        );
+        const withImages = (fetchedSlides ?? []).filter(hasUsableProjectImage);
         setSlides(withImages);
       } catch (e) {
         console.error("Error fetching projects:", e);
@@ -99,12 +114,12 @@ export default function Projects({ initialSlides = [] }: ProjectsProps) {
           <p className="text-sm opacity-80 mb-6">
             Add projects with a cover image in Sanity Studio to display them here.
           </p>
-          <a
+          <Link
             href="/studio"
             className="inline-block border border-white px-6 py-3 text-sm transition-colors hover:bg-white hover:text-black rounded-none"
           >
             Open Sanity Studio
-          </a>
+          </Link>
         </div>
       </div>
     );
@@ -129,10 +144,13 @@ export default function Projects({ initialSlides = [] }: ProjectsProps) {
                 }}
               >
                 <div className="absolute inset-0">
-                  <img
+                  <Image
                     src={slide.imageUrl}
                     alt={slide.title}
-                    className="h-full w-full object-cover object-center"
+                    fill
+                    sizes="100vw"
+                    className="object-cover object-center"
+                    priority
                     fetchPriority="high"
                   />
                 </div>
@@ -153,7 +171,7 @@ export default function Projects({ initialSlides = [] }: ProjectsProps) {
                     className="text-xl md:text-5xl font-bold text-white uppercase hover:opacity-80 cursor-pointer wrap-break-word indent-[-0.5em] ps-[0.5em]"
                     onClick={(e) => {
                       e.stopPropagation();
-                      window.location.href = `/projects/${slide.projectSlug?.current ?? ""}`;
+                      router.push(`/projects/${slide.projectSlug?.current ?? ""}`);
                     }}
                   >
                     {slide.title}

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { VisualEditing, toPlainText } from "next-sanity";
+import { toPlainText } from "next-sanity";
+import { VisualEditing } from "next-sanity/visual-editing";
 import { draftMode } from "next/headers";
-import Link from "next/link";
+
 
 import AlertBanner from "./alert-banner";
 

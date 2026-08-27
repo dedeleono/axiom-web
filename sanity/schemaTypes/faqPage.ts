@@ -1,4 +1,4 @@
-import { HelpCircleIcon } from "@sanity/icons";
+import { HelpCircleIcon } from "@sanity/icons/HelpCircle";
 import { defineArrayMember, defineField, defineType } from "sanity";
 
 export default defineType({

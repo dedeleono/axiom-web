@@ -1,7 +1,7 @@
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import ServiceHero from "@/components/services/Hero";
-import ServiceTabs from "@/components/services/ServiceTabs";
+
 
 export default function ServicesLayout({
   children,

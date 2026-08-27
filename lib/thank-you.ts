@@ -7,5 +7,7 @@ export const THANK_YOU_PATH = "/thank-you";
  */
 export function redirectToThankYouPage() {
   if (typeof window === "undefined") return;
-  window.location.assign(THANK_YOU_PATH);
+  // A same-origin absolute URL preserves the full document navigation needed
+  // for the GTM conversion pageview without using a relative destination.
+  window.location.assign(new URL(THANK_YOU_PATH, window.location.origin));
 }

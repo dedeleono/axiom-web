@@ -4,14 +4,12 @@ import Philosophy from "@/components/home/philosophy";
 // import Awards from "@/components/home/awards";
 import Services from "@/components/home/services";
 import ServicesIntro from "@/components/home/services-intro";
-import InspirationCTA from "@/components/home/inspiration-cta";
-import WhyChooseUsGrid from "@/components/home/why-choose-us-grid";
+
 import Testimonials from "@/components/home/testimonials";
 import Footer from "@/components/footer";
 import Hero from "@/components/home/Hero";
 import Header from "@/components/header";
-import { client } from "@/sanity/lib/client";
-import Awards from "@/components/home/awards";
+
 import { CTAStrip } from "@/components/cta-strip";
 import LeadForm from "@/components/lead-form";
 import HomeFaq from "@/components/home/home-faq";

@@ -64,7 +64,6 @@ export default {
       description: 'Use "home" for the main homepage. Leave empty or set to "home". Only lowercase letters, numbers, hyphens.',
       initialValue: 'home',
       validation: (Rule: { optional: () => unknown }) =>
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (Rule.optional() as any).regex(/^[a-z0-9-]*$/),
     },
     {

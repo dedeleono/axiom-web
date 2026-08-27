@@ -1,12 +1,10 @@
 import { definePlugin, type DocumentDefinition } from "sanity";
 import { type StructureResolver } from "sanity/structure";
-import {
-  CaseIcon,
-  ComposeIcon,
-  HelpCircleIcon,
-  HomeIcon,
-  PinIcon,
-} from "@sanity/icons";
+import { CaseIcon } from "@sanity/icons/Case";
+import { ComposeIcon } from "@sanity/icons/Compose";
+import { HelpCircleIcon } from "@sanity/icons/HelpCircle";
+import { HomeIcon } from "@sanity/icons/Home";
+import { PinIcon } from "@sanity/icons/Pin";
 
 export const singletonPlugin = definePlugin((types: string[]) => {
   return {

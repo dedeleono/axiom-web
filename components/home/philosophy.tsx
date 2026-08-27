@@ -96,7 +96,6 @@ export default function Philosophy() {
 
   const eyebrow = data?.eyebrow?.trim() || FALLBACK.eyebrow;
   const headline = data?.headline?.trim() || FALLBACK.headline;
-  const paragraphOne = data?.paragraphOne?.trim() || FALLBACK.paragraphOne;
   const paragraphTwo = data?.paragraphTwo?.trim() || FALLBACK.paragraphTwo;
 
   return (

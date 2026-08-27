@@ -66,7 +66,6 @@ export default {
       type: 'array',
       of: [{ type: 'image' }],
       validation: (Rule: { required: () => unknown }) =>
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (Rule.required() as any).min(1).max(2),
     },
     {

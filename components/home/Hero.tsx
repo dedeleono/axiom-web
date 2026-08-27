@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { HeroData } from "@/lib/interfaces";
-import { ArrowUp, ChevronDown } from "lucide-react";
+import { ArrowUp } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useScrollPastViewportFraction } from "@/lib/use-scroll-past-viewport-fraction";
 
@@ -27,17 +28,6 @@ const Hero: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const showScrollUp = useScrollPastViewportFraction(0.3);
 
-  const scrollToNextSection = () => {
-    const heroSection = document.querySelector("section");
-    if (heroSection) {
-      const sectionBottom =
-        heroSection.offsetTop + heroSection.offsetHeight;
-      window.scrollTo({
-        top: sectionBottom,
-        behavior: "smooth",
-      });
-    }
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -127,11 +117,13 @@ const Hero: React.FC = () => {
     <>
       <section className="relative flex h-screen w-full overflow-hidden">
         <div className="absolute inset-0 z-10 bg-black/40" />
-        {/* Native img to avoid Next.js Image loader issues with Sanity CDN */}
-        <img
+        <Image
           src={imageUrl}
           alt={projectsData.img.imgAlt || "Hero image"}
-          className="absolute inset-0 h-full w-full object-cover"
+          fill
+          sizes="100vw"
+          className="object-cover"
+          priority
           fetchPriority="high"
         />
 

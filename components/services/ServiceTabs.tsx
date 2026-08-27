@@ -29,7 +29,7 @@ export default function ServiceTabs() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let result = await client.fetch<{ slug?: string; title: string; icon: SanityImage }[]>(
+        const result = await client.fetch<{ slug?: string; title: string; icon: SanityImage }[]>(
           `*[_type == "innovation"]{
             "slug": slug.current,
             title,

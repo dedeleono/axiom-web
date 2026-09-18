@@ -6,6 +6,7 @@ export const metadata = {
   title: "Kitchen Remodeling",
   description:
     "Expert kitchen remodeling in the Bay Area. Axiom Renovation delivers custom kitchens, modern design, and quality craftsmanship. Free consultations.",
+  alternates: { canonical: "/services/kitchen-remodeling" },
 };
 
 const kitchenServiceJsonLd = serviceJsonLd({

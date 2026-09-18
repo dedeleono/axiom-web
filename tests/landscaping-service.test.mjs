@@ -32,3 +32,20 @@ test("root metadata does not force service pages to canonicalize to the homepage
 
   assert.doesNotMatch(layout, /alternates:\s*\{\s*canonical:\s*["']\/["']/s);
 });
+
+test("paid service pages declare self-referencing canonicals", async () => {
+  const pages = [
+    ["app/(services)/services/adu/page.tsx", "/services/adu"],
+    ["app/(services)/services/kitchen-remodeling/page.tsx", "/services/kitchen-remodeling"],
+    ["app/(services)/services/landscaping/page.tsx", "/services/landscaping"],
+  ];
+
+  for (const [file, canonical] of pages) {
+    const page = await read(file);
+    assert.match(
+      page,
+      new RegExp(`alternates:\\s*\\{\\s*canonical:\\s*["']${canonical}["']\\s*\\}`),
+      `${file} should declare ${canonical} as its canonical URL`,
+    );
+  }
+});

@@ -14,6 +14,7 @@ export const metadata = {
   title: "ADU Construction",
   description:
     "Design and build the perfect accessory dwelling unit with Axiom Renovation. Detached ADUs, attached ADUs, and garage conversions in San Jose and the Bay Area. Free consultations.",
+  alternates: { canonical: "/services/adu" },
 };
 
 const containerClass =

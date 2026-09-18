@@ -7,6 +7,7 @@ export const metadata = {
   title: "Bay Area Landscaping | Design, Hardscaping & Outdoor Living",
   description:
     "Bay Area landscape design and build services from Axiom Renovation. Create a complete outdoor space with hardscaping, patios, planting, and outdoor living features. Book a free consultation.",
+  alternates: { canonical: "/services/landscaping" },
 };
 
 const landscapingServiceJsonLd = serviceJsonLd({
